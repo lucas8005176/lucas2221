@@ -255,5 +255,30 @@
   <!-- Alternativa caso o link acima pare de funcionar algum dia:
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0c6c5d6d2.mp3?filename=click-interface-button-01-165056.mp3" type="audio/mpeg">
   -->
+  // Configuração do som de clique global
+const clickAudio = document.getElementById('clickAudio');
+
+// Função que toca o som (reinicia para permitir cliques rápidos)
+function playGlobalClick() {
+  if (clickAudio) {
+    clickAudio.currentTime = 0;     // reinicia o áudio
+    clickAudio.volume = 0.4;        // volume mais suave (0 a 1) — ajuste se quiser mais alto/baixo
+    clickAudio.play().catch(() => {
+      // ignora erro de autoplay (alguns navegadores bloqueiam sem interação prévia)
+    });
+  }
+}
+
+// Captura TODOS os cliques no documento (todo o site)
+document.addEventListener('click', function(event) {
+  // Evita tocar som em cliques dentro de textarea ou input (opcional, mas melhora UX)
+  const target = event.target;
+  if (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT') {
+    return; // não toca som ao clicar para escrever
+  }
+
+  // Toca o som em qualquer clique (exceto os casos acima)
+  playGlobalClick();
+}, true); // true = captura na fase de captura (antes dos eventos dos elementos)
 </audio>
 </html>
