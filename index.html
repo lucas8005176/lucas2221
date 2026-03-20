@@ -3,107 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mochila Digital</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <title>Minha Mochila Digital</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200 min-h-screen">
-  <div class="flex h-screen overflow-hidden">
-    
-    <!-- Sidebar -->
-    <div class="w-80 bg-zinc-900 border-r border-zinc-800 flex flex-col">
-      <div class="p-6 border-b border-zinc-800">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-violet-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">👜</div>
-          <div>
-            <h1 class="text-2xl font-bold tracking-tight">Mochila Digital</h1>
-            <p class="text-zinc-500 text-sm">Suas anotações seguras</p>
-          </div>
-        </div>
-      </div>
+<body>
+  <div class="container">
+    <h1>👜 Minha Mochila Digital</h1>
 
-      <!-- Adicionar Matéria -->
-      <div class="p-6">
-        <div class="flex gap-3">
-          <input 
-            type="text" 
-            id="novaMateria" 
-            placeholder="Nova matéria..." 
-            class="flex-1 bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-3 focus:outline-none focus:border-violet-500 transition-colors text-sm"
-            onkeypress="if(event.key === 'Enter') adicionarMateria()">
-          <button 
-            onclick="adicionarMateria()"
-            class="bg-violet-600 hover:bg-violet-700 px-6 rounded-2xl font-medium flex items-center gap-2 transition-all active:scale-95">
-            <i class="fas fa-plus"></i>
-            <span>Adicionar</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Lista de Matérias -->
-      <div class="flex-1 overflow-y-auto px-3" id="listaMaterias">
-        <!-- Preenchido pelo JavaScript -->
-      </div>
-
-      <div class="p-6 border-t border-zinc-800 text-xs text-zinc-500 flex items-center justify-between">
-        <span>Feito com ❤️ para estudantes</span>
-        <button onclick="limparTudo()" class="hover:text-red-400 transition-colors">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
+    <!-- Adicionar Matéria -->
+    <div class="add-materia">
+      <input type="text" id="novaMateria" placeholder="Nome da matéria (ex: Matemática)">
+      <button onclick="adicionarMateria()">+ Adicionar Matéria</button>
     </div>
 
-    <!-- Área Principal -->
-    <div class="flex-1 flex flex-col">
+    <!-- Lista de Matérias -->
+    <div class="materias" id="listaMaterias"></div>
+
+    <!-- Área de Anotações -->
+    <div class="anotacoes" id="areaAnotacoes" style="display: none;">
+      <div class="header-anotacoes">
+        <h2 id="tituloMateria"></h2>
+        <button onclick="voltarParaMaterias()">← Voltar</button>
+      </div>
       
-      <!-- Cabeçalho da Matéria -->
-      <div id="headerMateria" class="hidden bg-zinc-900 border-b border-zinc-800 px-8 py-5 items-center justify-between">
-        <div class="flex items-center gap-4">
-          <button onclick="voltarParaMaterias()" 
-                  class="text-zinc-400 hover:text-white transition-colors text-2xl">
-            ←
-          </button>
-          <h2 id="tituloMateria" class="text-3xl font-semibold tracking-tight"></h2>
-        </div>
-        <div class="text-zinc-500 text-sm" id="contadorAnotacoes"></div>
-      </div>
+      <textarea id="novaAnotacao" placeholder="Escreva sua anotação aqui..."></textarea>
+      <button onclick="salvarAnotacao()">Salvar Anotação</button>
 
-      <!-- Tela Inicial (quando nenhuma matéria está aberta) -->
-      <div id="telaInicial" class="flex-1 flex items-center justify-center flex-col text-center px-8">
-        <div class="text-8xl mb-6 opacity-75">👜</div>
-        <h2 class="text-4xl font-light text-zinc-300 mb-3">Bem-vindo à sua Mochila</h2>
-        <p class="max-w-md text-zinc-400 text-lg">
-          Escolha uma matéria da barra lateral ou crie uma nova para começar a organizar suas anotações.
-        </p>
-      </div>
-
-      <!-- Área de Anotações -->
-      <div id="areaAnotacoes" class="hidden flex-1 flex flex-col">
-        
-        <!-- Nova Anotação -->
-        <div class="p-8 border-b border-zinc-800 bg-zinc-900">
-          <textarea 
-            id="novaAnotacao" 
-            rows="3"
-            placeholder="Escreva sua anotação aqui... Use markdown se quiser (suporte simples em breve)"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-6 py-5 focus:outline-none focus:border-violet-500 resize-none text-lg placeholder-zinc-500"></textarea>
-          
-          <div class="flex justify-end mt-4">
-            <button 
-              onclick="salvarAnotacao()"
-              class="bg-violet-600 hover:bg-violet-700 px-8 py-3 rounded-2xl font-semibold flex items-center gap-3 transition-all active:scale-95">
-              <i class="fas fa-save"></i>
-              Salvar Anotação
-            </button>
-          </div>
-        </div>
-
-        <!-- Lista de Anotações -->
-        <div class="flex-1 overflow-y-auto p-8 space-y-6" id="listaAnotacoes">
-          <!-- Preenchido pelo JavaScript -->
-        </div>
-      </div>
+      <div class="lista-anotacoes" id="listaAnotacoes"></div>
     </div>
   </div>
 
