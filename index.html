@@ -1,38 +1,167 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minha Mochila Digital</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h1>👜 Minha Mochila Digital</h1>
+let materiaAtual = null;
+let materias = [];
 
-    <!-- Adicionar Matéria -->
-    <div class="add-materia">
-      <input type="text" id="novaMateria" placeholder="Nome da matéria (ex: Matemática)">
-      <button onclick="adicionarMateria()">+ Adicionar Matéria</button>
-    </div>
+// Carregar dados
+function carregarDados() {
+  materias = JSON.parse(localStorage.getItem('materias')) || [];
+  renderizarMaterias();
+}
 
-    <!-- Lista de Matérias -->
-    <div class="materias" id="listaMaterias"></div>
+function salvarDados() {
+  localStorage.setItem('materias', JSON.stringify(materias));
+}
 
-    <!-- Área de Anotações -->
-    <div class="anotacoes" id="areaAnotacoes" style="display: none;">
-      <div class="header-anotacoes">
-        <h2 id="tituloMateria"></h2>
-        <button onclick="voltarParaMaterias()">← Voltar</button>
+// Renderizar sidebar
+function renderizarMaterias() {
+  const container = document.getElementById('listaMaterias');
+  container.innerHTML = '';
+
+  if (materias.length === 0) {
+    container.innerHTML = `
+      <div class="px-6 py-12 text-center text-zinc-500">
+        <i class="fas fa-book text-4xl mb-4 opacity-50"></i>
+        <p>Nenhuma matéria ainda</p>
+      </div>`;
+    return;
+  }
+
+  materias.forEach((materia, index) => {
+    const div = document.createElement('div');
+    div.className = `materia-card mx-3 mb-2 px-5 py-4 rounded-3xl cursor-pointer flex items-center gap-4 ${materiaAtual && materiaAtual.index === index ? 'bg-violet-900/30 border border-violet-500' : 'hover:bg-zinc-800'}`;
+    div.innerHTML = `
+      <div class="flex-1">
+        <h3 class="font-medium text-lg">${materia.nome}</h3>
+        <p class="text-zinc-500 text-sm">${materia.anotacoes.length} anotação${materia.anotacoes.length !== 1 ? 's' : ''}</p>
       </div>
-      
-      <textarea id="novaAnotacao" placeholder="Escreva sua anotação aqui..."></textarea>
-      <button onclick="salvarAnotacao()">Salvar Anotação</button>
+      <div class="text-violet-400">
+        <i class="fas fa-chevron-right"></i>
+      </div>
+    `;
+    div.onclick = () => abrirMateria(index);
+    container.appendChild(div);
+  });
+}
 
-      <div class="lista-anotacoes" id="listaAnotacoes"></div>
-    </div>
-  </div>
+// Adicionar matéria
+function adicionarMateria() {
+  const input = document.getElementById('novaMateria');
+  const nome = input.value.trim();
 
-  <script src="script.js"></script>
-</body>
-</html>
+  if (!nome) return;
+
+  if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) {
+    alert("Essa matéria já existe!");
+    return;
+  }
+
+  materias.unshift({
+    nome: nome,
+    anotacoes: []
+  });
+
+  salvarDados();
+  renderizarMaterias();
+  input.value = '';
+}
+
+// Abrir matéria
+function abrirMateria(index) {
+  materiaAtual = { index, ...materias[index] };
+
+  document.getElementById('telaInicial').classList.add('hidden');
+  document.getElementById('areaAnotacoes').classList.remove('hidden');
+  document.getElementById('headerMateria').classList.remove('hidden');
+
+  document.getElementById('tituloMateria').textContent = materiaAtual.nome;
+  document.getElementById('contadorAnotacoes').textContent = `${materiaAtual.anotacoes.length} anotação${materiaAtual.anotacoes.length !== 1 ? 's' : ''}`;
+
+  renderizarAnotacoes();
+}
+
+function voltarParaMaterias() {
+  materiaAtual = null;
+  document.getElementById('areaAnotacoes').classList.add('hidden');
+  document.getElementById('headerMateria').classList.add('hidden');
+  document.getElementById('telaInicial').classList.remove('hidden');
+  renderizarMaterias();
+}
+
+// Salvar anotação
+function salvarAnotacao() {
+  if (!materiaAtual) return;
+
+  const texto = document.getElementById('novaAnotacao').value.trim();
+  if (!texto) return alert("Escreva algo antes de salvar!");
+
+  const data = new Date().toLocaleDateString('pt-BR', { 
+    day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+  });
+
+  materias[materiaAtual.index].anotacoes.unshift({
+    texto: texto,
+    data: data
+  });
+
+  salvarDados();
+  materiaAtual.anotacoes = materias[materiaAtual.index].anotacoes;
+
+  document.getElementById('novaAnotacao').value = '';
+  renderizarAnotacoes();
+  document.getElementById('contadorAnotacoes').textContent = `${materiaAtual.anotacoes.length} anotação${materiaAtual.anotacoes.length !== 1 ? 's' : ''}`;
+}
+
+// Renderizar anotações
+function renderizarAnotacoes() {
+  const container = document.getElementById('listaAnotacoes');
+  container.innerHTML = '';
+
+  if (materiaAtual.anotacoes.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-20 text-zinc-500">
+        <i class="fas fa-feather text-6xl mb-6 opacity-30"></i>
+        <p class="text-xl">Nenhuma anotação ainda...</p>
+        <p class="text-sm mt-2">Escreva algo acima e salve!</p>
+      </div>`;
+    return;
+  }
+
+  materiaAtual.anotacoes.forEach((anotacao, i) => {
+    const div = document.createElement('div');
+    div.className = 'anotacao bg-zinc-900 border border-zinc-800 rounded-3xl p-7 group';
+    div.innerHTML = `
+      <div class="flex justify-between text-xs text-zinc-500 mb-4">
+        <span>${anotacao.data}</span>
+        <button onclick="excluirAnotacao(${i}); event.stopImmediatePropagation()" 
+                class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500 transition-all">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+      <p class="text-zinc-200 leading-relaxed whitespace-pre-wrap">${anotacao.texto}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function excluirAnotacao(indice) {
+  if (!confirm("Excluir esta anotação permanentemente?")) return;
+
+  materias[materiaAtual.index].anotacoes.splice(indice, 1);
+  salvarDados();
+  materiaAtual.anotacoes = materias[materiaAtual.index].anotacoes;
+  renderizarAnotacoes();
+  document.getElementById('contadorAnotacoes').textContent = `${materiaAtual.anotacoes.length} anotação${materiaAtual.anotacoes.length !== 1 ? 's' : ''}`;
+}
+
+function limparTudo() {
+  if (confirm("⚠️ Isso vai apagar TODAS as matérias e anotações. Tem certeza?")) {
+    localStorage.removeItem('materias');
+    materias = [];
+    voltarParaMaterias();
+    renderizarMaterias();
+  }
+}
+
+// Inicializar
+window.onload = () => {
+  carregarDados();
+};
