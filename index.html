@@ -1,110 +1,211 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mochila Digital • Suas Anotações</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    body { font-family: 'Inter', system_ui, sans-serif; }
-    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); }
-  </style>
-</head>
-<body class="bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-zinc-200 min-h-screen">
+let materias = [];
+let materiaAtual = null;
 
-  <div class="flex h-screen overflow-hidden">
+// ====================== CARREGAR E SALVAR ======================
+function carregarDados() {
+  const salvos = localStorage.getItem('materias');
+  materias = salvos ? JSON.parse(salvos) : [];
+  renderizarListaMaterias();
+}
 
-    <!-- Sidebar elegante -->
-    <div class="w-80 bg-zinc-900/90 border-r border-zinc-800 flex flex-col shadow-2xl">
-      <div class="p-8 border-b border-zinc-800 flex items-center gap-4">
-        <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-3xl flex items-center justify-center text-3xl shadow-xl">👜</div>
-        <div>
-          <h1 class="text-3xl font-bold tracking-tighter">Mochila</h1>
-          <p class="text-zinc-400 text-sm -mt-1">Digital</p>
-        </div>
+function salvarDados() {
+  localStorage.setItem('materias', JSON.stringify(materias));
+}
+
+// ====================== RENDERIZAR LISTA DE MATÉRIAS (SIDEBAR) ======================
+function renderizarListaMaterias() {
+  const container = document.getElementById('listaMaterias');
+  container.innerHTML = '';
+
+  if (materias.length === 0) {
+    container.innerHTML = `
+      <div class="px-8 py-12 text-center text-zinc-500">
+        <i class="fas fa-book-open text-5xl mb-4 opacity-40"></i>
+        <p class="text-lg">Nenhuma matéria ainda</p>
+        <p class="text-sm mt-2">Crie uma acima para começar</p>
+      </div>`;
+    return;
+  }
+
+  materias.forEach((materia, index) => {
+    const isActive = materiaAtual && materiaAtual.index === index;
+
+    const div = document.createElement('div');
+    div.className = `materia-card mx-3 my-1 px-6 py-5 rounded-3xl cursor-pointer flex items-center gap-4 transition-all ${isActive ? 'bg-violet-900/30 border border-violet-500' : 'hover:bg-zinc-800'}`;
+    
+    div.innerHTML = `
+      <div class="flex-1 min-w-0">
+        <h3 class="font-medium text-lg truncate">${materia.nome}</h3>
+        <p class="text-zinc-500 text-sm">${materia.anotacoes.length} anotação${materia.anotacoes.length !== 1 ? 's' : ''}</p>
       </div>
+      <i class="fas fa-chevron-right text-violet-400"></i>
+    `;
 
-      <!-- Adicionar matéria -->
-      <div class="p-6">
-        <div class="flex gap-3">
-          <input 
-            id="novaMateria" 
-            type="text" 
-            placeholder="Nome da matéria..." 
-            class="flex-1 bg-zinc-800 border border-zinc-700 focus:border-violet-500 rounded-3xl px-6 py-4 text-sm outline-none transition-all"
-            onkeypress="if(event.key === 'Enter') adicionarMateria()">
-          <button 
-            onclick="adicionarMateria()"
-            class="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 px-7 rounded-3xl font-semibold flex items-center gap-2 shadow-lg active:scale-95 transition-all">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-      </div>
+    div.onclick = () => abrirMateria(index);
+    container.appendChild(div);
+  });
+}
 
-      <!-- Lista de matérias -->
-      <div class="flex-1 overflow-y-auto px-4 py-2" id="listaMaterias">
-        <!-- JS preenche aqui -->
-      </div>
+// ====================== ADICIONAR MATÉRIA ======================
+function adicionarMateria() {
+  const input = document.getElementById('novaMateria');
+  const nome = input.value.trim();
 
-      <div class="p-6 border-t border-zinc-800 text-xs text-zinc-500 flex justify-between items-center">
-        <span>Organize seu estudo com amor ❤️</span>
-        <button onclick="limparTudo()" class="hover:text-red-400 transition-colors">
-          <i class="fas fa-trash-alt"></i>
+  if (nome === '') {
+    alert("Digite o nome da matéria!");
+    input.focus();
+    return;
+  }
+
+  // Verifica se já existe
+  if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) {
+    alert("Essa matéria já existe!");
+    return;
+  }
+
+  // Adiciona no início da lista
+  materias.unshift({
+    nome: nome,
+    anotacoes: []
+  });
+
+  salvarDados();
+  renderizarListaMaterias();
+
+  // Limpa o campo
+  input.value = '';
+  input.focus();
+}
+
+// ====================== ABRIR MATÉRIA ======================
+function abrirMateria(index) {
+  materiaAtual = {
+    index: index,
+    ...materias[index]
+  };
+
+  // Esconde tela inicial e mostra área de anotações
+  document.getElementById('telaInicial').classList.add('hidden');
+  document.getElementById('areaAnotacoes').classList.remove('hidden');
+  document.getElementById('headerMateria').classList.remove('hidden');
+
+  document.getElementById('tituloMateria').textContent = materiaAtual.nome;
+  atualizarContador();
+
+  renderizarAnotacoes();
+}
+
+function voltarParaMaterias() {
+  materiaAtual = null;
+  document.getElementById('telaInicial').classList.remove('hidden');
+  document.getElementById('areaAnotacoes').classList.add('hidden');
+  document.getElementById('headerMateria').classList.add('hidden');
+  renderizarListaMaterias();
+}
+
+function atualizarContador() {
+  const contador = document.getElementById('contadorAnotacoes');
+  const qtd = materiaAtual.anotacoes.length;
+  contador.textContent = `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
+}
+
+// ====================== SALVAR ANOTAÇÃO ======================
+function salvarAnotacao() {
+  if (!materiaAtual) return;
+
+  const textarea = document.getElementById('novaAnotacao');
+  const texto = textarea.value.trim();
+
+  if (texto === '') {
+    alert("Escreva algo antes de salvar!");
+    return;
+  }
+
+  const agora = new Date();
+  const dataFormatada = agora.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  materias[materiaAtual.index].anotacoes.unshift({
+    texto: texto,
+    data: dataFormatada
+  });
+
+  salvarDados();
+  materiaAtual.anotacoes = materias[materiaAtual.index].anotacoes;
+
+  textarea.value = '';
+  renderizarAnotacoes();
+  atualizarContador();
+}
+
+// ====================== RENDERIZAR ANOTAÇÕES ======================
+function renderizarAnotacoes() {
+  const container = document.getElementById('listaAnotacoes');
+  container.innerHTML = '';
+
+  if (materiaAtual.anotacoes.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-20 text-zinc-500">
+        <i class="fas fa-feather-pointed text-7xl mb-6 opacity-30"></i>
+        <p class="text-2xl font-light">Ainda não há anotações...</p>
+        <p class="mt-3">Escreva acima e clique em Salvar</p>
+      </div>`;
+    return;
+  }
+
+  materiaAtual.anotacoes.forEach((anotacao, i) => {
+    const div = document.createElement('div');
+    div.className = `anotacao bg-zinc-900 border border-zinc-800 rounded-3xl p-8 group hover:border-violet-500/30`;
+
+    div.innerHTML = `
+      <div class="flex justify-between items-start mb-5">
+        <span class="text-xs text-zinc-500">${anotacao.data}</span>
+        <button onclick="excluirAnotacao(${i}); event.stopImmediatePropagation()" 
+                class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
+          <i class="fas fa-trash"></i>
         </button>
       </div>
-    </div>
+      <p class="text-zinc-100 leading-relaxed whitespace-pre-wrap text-[17px]">${anotacao.texto}</p>
+    `;
 
-    <!-- Área principal -->
-    <div class="flex-1 flex flex-col">
+    container.appendChild(div);
+  });
+}
 
-      <!-- Header da matéria aberta -->
-      <div id="headerMateria" class="hidden px-10 py-6 border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md items-center justify-between">
-        <div class="flex items-center gap-5">
-          <button onclick="voltarParaMaterias()" class="text-4xl text-zinc-400 hover:text-white transition-colors">←</button>
-          <h2 id="tituloMateria" class="text-4xl font-semibold tracking-tight"></h2>
-        </div>
-        <div id="contadorAnotacoes" class="text-zinc-400"></div>
-      </div>
+function excluirAnotacao(indice) {
+  if (!confirm("Excluir esta anotação?")) return;
 
-      <!-- Tela de boas-vindas -->
-      <div id="telaInicial" class="flex-1 flex flex-col items-center justify-center text-center px-10">
-        <div class="text-[180px] mb-8 opacity-80 animate-bounce-slow">👜</div>
-        <h2 class="text-5xl font-light text-white mb-4">Sua mochila está pronta</h2>
-        <p class="text-xl text-zinc-400 max-w-md">Escolha ou crie uma matéria ao lado para começar a guardar suas anotações importantes.</p>
-      </div>
+  materias[materiaAtual.index].anotacoes.splice(indice, 1);
+  salvarDados();
+  materiaAtual.anotacoes = materias[materiaAtual.index].anotacoes;
 
-      <!-- Área de anotações -->
-      <div id="areaAnotacoes" class="hidden flex-1 flex flex-col">
+  renderizarAnotacoes();
+  atualizarContador();
+}
 
-        <!-- Campo para nova anotação -->
-        <div class="p-10 bg-zinc-900 border-b border-zinc-800">
-          <textarea 
-            id="novaAnotacao" 
-            rows="4"
-            placeholder="Escreva aqui sua anotação... (dica: você pode usar quebras de linha)"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-8 py-7 text-lg placeholder-zinc-500 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 outline-none resize-none transition-all"></textarea>
+// ====================== LIMPAR TUDO ======================
+function limparTudo() {
+  if (confirm("⚠️ APAGAR TODAS as matérias e anotações?\n\nEssa ação não pode ser desfeita!")) {
+    localStorage.removeItem('materias');
+    materias = [];
+    materiaAtual = null;
+    voltarParaMaterias();
+    renderizarListaMaterias();
+  }
+}
 
-          <div class="flex justify-end mt-5">
-            <button 
-              onclick="salvarAnotacao()"
-              class="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 px-10 py-4 rounded-3xl font-semibold flex items-center gap-3 shadow-xl active:scale-95 transition-all">
-              <i class="fas fa-save"></i>
-              <span>Salvar Anotação</span>
-            </button>
-          </div>
-        </div>
+// ====================== INICIALIZAR ======================
+window.onload = () => {
+  carregarDados();
 
-        <!-- Lista de anotações -->
-        <div class="flex-1 overflow-y-auto p-10 space-y-8" id="listaAnotacoes">
-          <!-- JS preenche aqui -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+  // Permite adicionar com Enter no input
+  const inputMateria = document.getElementById('novaMateria');
+  inputMateria.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') adicionarMateria();
+  });
+};
