@@ -105,8 +105,18 @@
     // ==================== MATÉRIAS INICIAIS ====================
     function criarMateriasIniciais() {
       const iniciais = [
-        "Português", "Matemática", "História", "Geografia",
-        "Filosofia", "Sociologia", "HTML", "Programação Web", "Lógica de Programação"
+        "Português", 
+        "Matemática", 
+        "História", 
+        "Geografia",
+        "Filosofia", 
+        "Sociologia", 
+        "HTML", 
+        "Programação Web", 
+        "Lógica de Programação",
+        "Gestão de Tempo",
+        "Estudos Orientados",
+        "Projeto de Vida"
       ];
 
       materias = iniciais.map(nome => ({
@@ -123,7 +133,7 @@
       if (salvos) {
         materias = JSON.parse(salvos);
       } else {
-        criarMateriasIniciais();   // primeira vez que abre → cria as matérias
+        criarMateriasIniciais(); // primeira vez → cria todas as matérias
       }
       
       renderizarListaMaterias();
@@ -268,7 +278,7 @@
         localStorage.clear();
         materias = [];
         materiaAtual = null;
-        criarMateriasIniciais();   // recria as matérias iniciais após limpar
+        criarMateriasIniciais(); // recria todas as matérias após limpar
         voltarParaMaterias();
         renderizarListaMaterias();
         playActionSound();
