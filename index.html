@@ -22,7 +22,6 @@
   </style>
 </head>
 <body class="min-h-screen text-white">
-
   <div class="flex h-screen">
     <!-- Sidebar -->
     <div class="w-80 bg-zinc-900 border-r border-violet-500/30 flex flex-col">
@@ -30,18 +29,15 @@
         <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🎒</div>
         <h1 class="text-3xl font-bold tracking-tight">Minha Mochila</h1>
       </div>
-
       <div class="p-4">
-        <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Matemática)" 
+        <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Biologia)"
                class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 focus:outline-none focus:border-violet-400 text-lg"/>
-        <button onclick="adicionarMateria()" 
+        <button onclick="adicionarMateria()"
                 class="mt-3 w-full bg-violet-600 hover:bg-violet-500 py-3 rounded-3xl font-semibold flex items-center justify-center gap-2">
           <i class="fas fa-plus"></i> Colocar na mochila
         </button>
       </div>
-
       <div id="listaMaterias" class="flex-1 overflow-y-auto px-3"></div>
-
       <div class="p-4 border-t border-zinc-700">
         <button onclick="limparTudo()" class="text-red-400 hover:text-red-500 text-sm flex items-center gap-2">
           <i class="fas fa-trash"></i> Esvaziar mochila
@@ -58,7 +54,7 @@
         <h2 id="tituloMateria" class="text-2xl font-bold"></h2>
         <div class="flex items-center gap-4">
           <span id="contadorAnotacoes" class="bg-zinc-800 px-4 py-1 rounded-3xl text-sm"></span>
-          <button onclick="salvarAnotacao()" 
+          <button onclick="salvarAnotacao()"
                   class="bg-emerald-500 hover:bg-emerald-600 px-6 py-2 rounded-3xl font-semibold flex items-center gap-2">
             <i class="fas fa-save"></i> Salvar Aula
           </button>
@@ -69,11 +65,7 @@
         <div class="text-center">
           <div class="text-8xl mb-6 animate-bounce">🎒</div>
           <h2 class="text-4xl font-bold mb-3">Bem-vindo à sua Mochila!</h2>
-          <p class="text-zinc-400 text-lg">Adicione matérias no lado esquerdo e comece a anotar suas aulas</p>
-          <button onclick="document.getElementById('novaMateria').focus()" 
-                  class="mt-8 bg-white text-zinc-900 px-8 py-3 rounded-3xl font-bold text-lg hover:scale-105 transition">
-            🎯 Adicionar primeira matéria
-          </button>
+          <p class="text-zinc-400 text-lg">Suas matérias já foram adicionadas automaticamente</p>
         </div>
       </div>
 
@@ -82,40 +74,58 @@
           <textarea id="novaAnotacao" rows="3" placeholder="O que aconteceu na aula hoje? ✍️"
                     class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl p-5 text-lg resize-none focus:outline-none focus:border-emerald-400"></textarea>
           <div class="flex justify-end mt-3">
-            <button onclick="salvarAnotacao()" 
+            <button onclick="salvarAnotacao()"
                     class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-3xl font-semibold flex items-center gap-2">
               📌 Salvar anotação da aula
             </button>
           </div>
         </div>
-
         <div id="listaAnotacoes" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
       </div>
     </div>
   </div>
 
-  <!-- Efeito sonoro (clique positivo curto - Mixkit royalty-free) -->
   <audio id="actionSound" preload="auto">
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Função para tocar o som
     function playActionSound() {
       const audio = document.getElementById('actionSound');
       if (audio) {
         audio.currentTime = 0;
-        audio.volume = 0.35; // volume suave – ajuste se quiser mais alto (0.0 a 1.0)
-        audio.play().catch(() => {}); // ignora erro de autoplay
+        audio.volume = 0.35;
+        audio.play().catch(() => {});
       }
     }
 
     let materias = [];
     let materiaAtual = null;
 
+    // ==================== MATÉRIAS INICIAIS ====================
+    function criarMateriasIniciais() {
+      const iniciais = [
+        "Português", "Matemática", "História", "Geografia",
+        "Filosofia", "Sociologia", "HTML", "Programação Web", "Lógica de Programação"
+      ];
+
+      materias = iniciais.map(nome => ({
+        nome: nome,
+        anotacoes: []
+      }));
+
+      salvarDados();
+    }
+
     function carregarDados() {
       const salvos = localStorage.getItem('mochilaEscolar');
-      materias = salvos ? JSON.parse(salvos) : [];
+      
+      if (salvos) {
+        materias = JSON.parse(salvos);
+      } else {
+        criarMateriasIniciais();   // primeira vez que abre → cria as matérias
+      }
+      
       renderizarListaMaterias();
     }
 
@@ -126,10 +136,12 @@
     function renderizarListaMaterias() {
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
+
       if (materias.length === 0) {
         container.innerHTML = `<div class="px-6 py-8 text-center text-zinc-500"><i class="fas fa-book-open text-5xl opacity-30"></i><p class="mt-3">Sua mochila está vazia...</p></div>`;
         return;
       }
+
       materias.forEach((m, i) => {
         const active = materiaAtual && materiaAtual.index === i;
         const div = document.createElement('div');
@@ -142,7 +154,7 @@
           </div>
         `;
         div.onclick = () => {
-          playActionSound(); // som ao abrir matéria
+          playActionSound();
           abrirMateria(i);
         };
         container.appendChild(div);
@@ -161,17 +173,17 @@
       renderizarListaMaterias();
       input.value = '';
       input.focus();
-      playActionSound(); // som ao adicionar
+      playActionSound();
     }
 
     function abrirMateria(index) {
       materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
-      
+     
       document.getElementById('telaInicial').classList.add('hidden');
       document.getElementById('areaAnotacoes').classList.remove('hidden');
       document.getElementById('headerMateria').classList.remove('hidden');
       document.getElementById('tituloMateria').textContent = materiaAtual.nome;
-      
+     
       atualizarContador();
       renderizarAnotacoes();
     }
@@ -182,7 +194,7 @@
       document.getElementById('areaAnotacoes').classList.add('hidden');
       document.getElementById('headerMateria').classList.add('hidden');
       renderizarListaMaterias();
-      playActionSound(); // som ao voltar
+      playActionSound();
     }
 
     function atualizarContador() {
@@ -194,18 +206,26 @@
       if (!materiaAtual) return;
       const texto = document.getElementById('novaAnotacao').value.trim();
       if (!texto) return alert("Escreva o que aconteceu na aula!");
-      const data = new Date().toLocaleString('pt-BR', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+
+      const data = new Date().toLocaleString('pt-BR', { 
+        day:'2-digit', 
+        month:'short', 
+        hour:'2-digit', 
+        minute:'2-digit' 
+      });
+
       materias[materiaAtual.index].anotacoes.unshift({ texto, data });
       salvarDados();
       document.getElementById('novaAnotacao').value = '';
       renderizarAnotacoes();
       atualizarContador();
-      playActionSound(); // som ao salvar anotação
+      playActionSound();
     }
 
     function renderizarAnotacoes() {
       const container = document.getElementById('listaAnotacoes');
       container.innerHTML = '';
+
       if (materiaAtual.anotacoes.length === 0) {
         container.innerHTML = `
           <div class="text-center py-16 text-zinc-400">
@@ -215,6 +235,7 @@
           </div>`;
         return;
       }
+
       materiaAtual.anotacoes.forEach((a, i) => {
         const div = document.createElement('div');
         div.className = "card bg-zinc-800 border border-zinc-700 rounded-3xl p-6";
@@ -227,6 +248,7 @@
           </div>
           <p class="leading-relaxed whitespace-pre-wrap">${a.texto}</p>
         `;
+
         div.querySelector('button').onclick = (e) => {
           e.stopPropagation();
           if (confirm("Apagar esta anotação?")) {
@@ -234,7 +256,7 @@
             salvarDados();
             renderizarAnotacoes();
             atualizarContador();
-            playActionSound(); // som ao excluir
+            playActionSound();
           }
         };
         container.appendChild(div);
@@ -246,19 +268,19 @@
         localStorage.clear();
         materias = [];
         materiaAtual = null;
+        criarMateriasIniciais();   // recria as matérias iniciais após limpar
         voltarParaMaterias();
         renderizarListaMaterias();
-        playActionSound(); // som ao limpar tudo
+        playActionSound();
       }
     }
 
     // Inicializar
     window.onload = () => {
       carregarDados();
+
       document.getElementById('novaMateria').addEventListener('keypress', e => {
-        if (e.key === 'Enter') {
-          adicionarMateria();
-        }
+        if (e.key === 'Enter') adicionarMateria();
       });
     };
   </script>
