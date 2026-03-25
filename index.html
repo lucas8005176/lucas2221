@@ -7,7 +7,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
   <script>
-    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Poppins', 'sans-serif'] } } } }
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Poppins', 'sans-serif'] }
+        }
+      }
+    }
   </script>
   <style>
     body { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
@@ -16,15 +22,24 @@
     .materia-item { transition: all 0.2s; }
     .tab-active { border-bottom: 4px solid #a78bfa; font-weight: 600; }
     .toast { animation: slideIn 0.3s ease forwards; }
-    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    .horario-slot { cursor: pointer; transition: all 0.2s; }
-    .horario-slot:hover { background-color: #4f46e5; transform: scale(1.02); }
+    @keyframes slideIn { 
+      from { transform: translateX(100%); opacity: 0; } 
+      to { transform: translateX(0); opacity: 1; } 
+    }
+    .horario-slot { 
+      cursor: pointer; 
+      transition: all 0.2s; 
+    }
+    .horario-slot:hover { 
+      background-color: #4f46e5; 
+      transform: scale(1.02); 
+    }
   </style>
 </head>
 <body class="min-h-screen text-white">
 
   <div class="flex h-screen">
-    <!-- Sidebar -->
+    <!-- ==================== SIDEBAR ==================== -->
     <div class="w-80 bg-zinc-900 border-r border-violet-500/30 flex flex-col">
       <div class="p-6 border-b border-zinc-700 flex items-center gap-3">
         <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🎒</div>
@@ -57,8 +72,9 @@
       </div>
     </div>
 
-    <!-- Área Principal -->
+    <!-- ==================== ÁREA PRINCIPAL ==================== -->
     <div class="flex-1 flex flex-col">
+
       <!-- Tabs -->
       <div class="bg-zinc-900 border-b border-zinc-700 px-6">
         <div class="flex gap-8 text-lg">
@@ -68,7 +84,7 @@
         </div>
       </div>
 
-      <!-- ABA 0: Aulas & Anotações -->
+      <!-- ==================== ABA 0: AULAS & ANOTAÇÕES ==================== -->
       <div id="conteudoAba0" class="flex-1 flex flex-col">
         <header id="headerMateria" class="hidden border-b border-zinc-700 bg-zinc-900 px-6 py-4 flex items-center justify-between">
           <button onclick="voltarParaMaterias()" class="flex items-center gap-2 text-violet-400 hover:text-violet-300">
@@ -99,7 +115,8 @@
               <div id="charCount" class="absolute bottom-4 right-6 text-xs text-zinc-500">0 / 2000</div>
             </div>
             <div class="flex justify-end mt-4">
-              <button onclick="salvarAnotacao()" class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-3xl font-semibold flex items-center gap-2 text-lg">
+              <button onclick="salvarAnotacao()" 
+                      class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-3xl font-semibold flex items-center gap-2 text-lg">
                 📌 Salvar anotação
               </button>
             </div>
@@ -108,20 +125,21 @@
         </div>
       </div>
 
-      <!-- ABA 1: Horários (Segunda a Sexta) -->
+      <!-- ==================== ABA 1: HORÁRIOS ==================== -->
       <div id="conteudoAba1" class="hidden flex-1 p-6 overflow-auto">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-3xl font-bold">Horário Escolar</h2>
           <div class="flex gap-3 bg-zinc-800 rounded-3xl p-1">
-            <button onclick="mudarTurno('matutino')" id="btnMatutino" class="px-6 py-2 rounded-3xl font-semibold bg-violet-600">Matutino</button>
-            <button onclick="mudarTurno('vespertino')" id="btnVespertino" class="px-6 py-2 rounded-3xl font-semibold">Vespertino</button>
+            <button onclick="mudarTurno('matutino')" id="btnMatutino" 
+                    class="px-6 py-2 rounded-3xl font-semibold bg-violet-600">Matutino</button>
+            <button onclick="mudarTurno('vespertino')" id="btnVespertino" 
+                    class="px-6 py-2 rounded-3xl font-semibold">Vespertino</button>
           </div>
         </div>
-
         <div class="grid grid-cols-6 gap-3" id="gradeHorario"></div>
       </div>
 
-      <!-- ABA 2: Planilha -->
+      <!-- ==================== ABA 2: PLANILHA ==================== -->
       <div id="conteudoAba2" class="hidden flex-1 p-6 overflow-auto">
         <h2 class="text-3xl font-bold mb-6">Planilha de Controle</h2>
         <table class="w-full bg-zinc-900 rounded-3xl overflow-hidden">
@@ -156,25 +174,26 @@
     let filtroAtual = '';
     let turnoAtual = 'matutino';
 
-    let horarios = {
-      matutino: {},
-      vespertino: {}
-    };
+    let horarios = { matutino: {}, vespertino: {} };
 
     const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
-    const horariosBase = ["07:00-07:50", "07:50-08:40", "08:50-09:40", "09:40-10:30", "10:40-11:30", "11:30-12:20"];
+    const horariosMatutino = ["07:00-07:50", "07:50-08:40", "08:50-09:40", "09:40-10:30", "10:40-11:30", "11:30-12:20"];
     const horariosVespertino = ["13:00-13:50", "13:50-14:40", "14:50-15:40", "15:40-16:30", "16:40-17:30", "17:30-18:20"];
 
-    // ==================== FUNÇÕES BÁSICAS ====================
+    // ==================== FUNÇÕES COMUNS ====================
     function playActionSound() {
       const audio = document.getElementById('actionSound');
-      audio.currentTime = 0; audio.volume = 0.4; audio.play().catch(() => {});
+      audio.currentTime = 0;
+      audio.volume = 0.4;
+      audio.play().catch(() => {});
     }
 
     function showToast(msg, tipo = 'success') {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
-      toast.className = `fixed bottom-6 right-6 px-6 py-3 rounded-3xl shadow-2xl ${tipo === 'error' ? 'bg-red-900 border-red-500' : 'bg-zinc-800 border-violet-500'}`;
+      toast.className = `fixed bottom-6 right-6 px-6 py-3 rounded-3xl shadow-2xl ${
+        tipo === 'error' ? 'bg-red-900 border-red-500' : 'bg-zinc-800 border-violet-500'
+      }`;
       toast.classList.remove('hidden');
       setTimeout(() => toast.classList.add('hidden'), 3000);
     }
@@ -184,75 +203,118 @@
       localStorage.setItem('mochilaHorarios', JSON.stringify(horarios));
     }
 
-    function carregarTodosDados() {
-      const salvosMaterias = localStorage.getItem('mochilaEscolar');
-      if (salvosMaterias) materias = JSON.parse(salvosMaterias);
-      else criarMateriasIniciais();
-
-      const salvosHorarios = localStorage.getItem('mochilaHorarios');
-      if (salvosHorarios) horarios = JSON.parse(salvosHorarios);
-      else inicializarHorarios();
-
-      renderizarListaMaterias();
-    }
-
+    // ==================== INICIALIZAÇÃO DE DADOS ====================
     function inicializarHorarios() {
       horarios.matutino = {};
       horarios.vespertino = {};
       diasSemana.forEach(dia => {
-        horarios.matutino[dia] = horariosBase.map(hora => ({ hora, aula: "" }));
+        horarios.matutino[dia] = horariosMatutino.map(hora => ({ hora, aula: "" }));
         horarios.vespertino[dia] = horariosVespertino.map(hora => ({ hora, aula: "" }));
       });
     }
 
     function criarMateriasIniciais() {
-      const iniciais = ["Língua Portuguesa", "Literatura", "Redação", "Matemática", "Física", "Química", "Biologia", "História", "Geografia", "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes", "Educação Física", "Lógica de Programação", "HTML & CSS", "Programação Web", "Gestão de Tempo", "Estudos Orientados", "Projeto de Vida", "Empreendedorismo"];
-      materias = iniciais.map(nome => ({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] }));
+      const iniciais = [
+        "Língua Portuguesa", "Literatura", "Redação", "Matemática", "Física", "Química", "Biologia",
+        "História", "Geografia", "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes",
+        "Educação Física", "Lógica de Programação", "HTML & CSS", "Programação Web",
+        "Gestão de Tempo", "Estudos Orientados", "Projeto de Vida", "Empreendedorismo"
+      ];
+      materias = iniciais.map(nome => ({
+        nome,
+        anotacoes: [],
+        faltas: 0,
+        notas: [0, 0, 0]
+      }));
       salvarTodosDados();
     }
 
-    // ==================== MATÉRIAS ====================
+    function carregarTodosDados() {
+      const salvosMaterias = localStorage.getItem('mochilaEscolar');
+      if (salvosMaterias) {
+        materias = JSON.parse(salvosMaterias);
+      } else {
+        criarMateriasIniciais();
+      }
+
+      const salvosHorarios = localStorage.getItem('mochilaHorarios');
+      if (salvosHorarios) {
+        horarios = JSON.parse(salvosHorarios);
+      } else {
+        inicializarHorarios();
+      }
+      renderizarListaMaterias();
+    }
+
+    // ==================== ABA 0 - MATÉRIAS E ANOTAÇÕES ====================
     function getIconeMateria(nome) {
-      const icons = { "Matemática": "fa-calculator", "Física": "fa-atom", "Química": "fa-flask", "Biologia": "fa-dna", "História": "fa-landmark", "Geografia": "fa-globe", "Filosofia": "fa-lightbulb", "Sociologia": "fa-users", "Inglês": "fa-language", "Artes": "fa-palette", "Educação Física": "fa-dumbbell", "default": "fa-book" };
+      const icons = {
+        "Matemática": "fa-calculator",
+        "Física": "fa-atom",
+        "Química": "fa-flask",
+        "Biologia": "fa-dna",
+        "História": "fa-landmark",
+        "Geografia": "fa-globe",
+        "Filosofia": "fa-lightbulb",
+        "Sociologia": "fa-users",
+        "Inglês": "fa-language",
+        "Artes": "fa-palette",
+        "Educação Física": "fa-dumbbell",
+        "default": "fa-book"
+      };
       return icons[nome] || icons.default;
     }
 
     function renderizarListaMaterias() {
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
-      const filtradas = materias.filter(m => m.nome.toLowerCase().includes(filtroAtual.toLowerCase()));
+
+      const filtradas = materias.filter(m => 
+        m.nome.toLowerCase().includes(filtroAtual.toLowerCase())
+      );
 
       if (filtradas.length === 0) {
-        container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500"><i class="fas fa-search text-5xl opacity-30"></i><p class="mt-4">Nenhuma matéria encontrada</p></div>`;
+        container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500">
+          <i class="fas fa-search text-5xl opacity-30"></i>
+          <p class="mt-4">Nenhuma matéria encontrada</p>
+        </div>`;
         return;
       }
 
-      filtradas.forEach((m) => {
+      filtradas.forEach(m => {
         const idx = materias.findIndex(mat => mat.nome === m.nome);
+        const active = materiaAtual && materiaAtual.index === idx;
+
         const div = document.createElement('div');
-        div.className = `materia-item group mx-3 my-2 px-5 py-4 rounded-3xl flex items-center gap-4 cursor-pointer transition-all ${materiaAtual && materiaAtual.index === idx ? 'bg-violet-600 shadow-xl' : 'hover:bg-zinc-800'}`;
+        div.className = `materia-item group mx-3 my-2 px-5 py-4 rounded-3xl flex items-center gap-4 cursor-pointer transition-all 
+                         ${active ? 'bg-violet-600 shadow-xl' : 'hover:bg-zinc-800'}`;
+
         div.innerHTML = `
-          <i class="fas ${getIconeMateria(m.nome)} text-2xl ${materiaAtual && materiaAtual.index === idx ? 'text-white' : 'text-violet-400'}"></i>
+          <i class="fas ${getIconeMateria(m.nome)} text-2xl ${active ? 'text-white' : 'text-violet-400'}"></i>
           <div class="flex-1 min-w-0">
             <h3 class="font-semibold truncate">${m.nome}</h3>
             <p class="text-xs text-zinc-400">${m.anotacoes.length} anotação${m.anotacoes.length !== 1 ? 's' : ''}</p>
           </div>
-          <button onclick="event.stopImmediatePropagation(); excluirMateria(${idx});" class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100">
+          <button onclick="event.stopImmediatePropagation(); excluirMateria(${idx});" 
+                  class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100">
             <i class="fas fa-trash"></i>
           </button>
         `;
+
         div.onclick = () => { playActionSound(); abrirMateria(idx); };
         container.appendChild(div);
       });
+
       document.getElementById('totalMaterias').textContent = `${materias.length} matérias`;
     }
 
     function adicionarMateria() {
       const nome = document.getElementById('novaMateria').value.trim();
       if (!nome) return showToast("Digite o nome da matéria!", "error");
-      if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) return showToast("Essa matéria já está na mochila!", "error");
+      if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) 
+        return showToast("Essa matéria já está na mochila!", "error");
 
-      materias.unshift({ nome, anotacoes: [], faltas: 0, notas: [0,0,0] });
+      materias.unshift({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] });
       salvarTodosDados();
       renderizarListaMaterias();
       document.getElementById('novaMateria').value = '';
@@ -272,13 +334,13 @@
       }
     }
 
-    // ==================== ANOTAÇÕES ====================
     function abrirMateria(index) {
       materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
       document.getElementById('telaInicial').classList.add('hidden');
       document.getElementById('areaAnotacoes').classList.remove('hidden');
       document.getElementById('headerMateria').classList.remove('hidden');
-      document.getElementById('tituloMateria').innerHTML = `<i class="fas ${getIconeMateria(materiaAtual.nome)}"></i> ${materiaAtual.nome}`;
+      document.getElementById('tituloMateria').innerHTML = 
+        `<i class="fas ${getIconeMateria(materiaAtual.nome)}"></i> ${materiaAtual.nome}`;
       atualizarContador();
       renderizarAnotacoes();
       playActionSound();
@@ -294,7 +356,8 @@
 
     function atualizarContador() {
       const qtd = materiaAtual.anotacoes.length;
-      document.getElementById('contadorAnotacoes').textContent = `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
+      document.getElementById('contadorAnotacoes').textContent = 
+        `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
     }
 
     function salvarAnotacao() {
@@ -302,7 +365,11 @@
       const texto = document.getElementById('novaAnotacao').value.trim();
       if (!texto) return showToast("Escreva algo antes de salvar!", "error");
 
-      const data = new Date().toLocaleString('pt-BR', { weekday:'short', day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+      const data = new Date().toLocaleString('pt-BR', {
+        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+
       materias[materiaAtual.index].anotacoes.unshift({ texto, data });
       salvarTodosDados();
       document.getElementById('novaAnotacao').value = '';
@@ -316,10 +383,17 @@
     function renderizarAnotacoes() {
       const container = document.getElementById('listaAnotacoes');
       container.innerHTML = '';
+
       if (materiaAtual.anotacoes.length === 0) {
-        container.innerHTML = `<div class="text-center py-20 text-zinc-400"><i class="fas fa-feather-alt text-8xl opacity-30"></i><p class="text-2xl mt-6">Nenhuma anotação ainda...</p><p class="mt-2">Comece escrevendo acima!</p></div>`;
+        container.innerHTML = `
+          <div class="text-center py-20 text-zinc-400">
+            <i class="fas fa-feather-alt text-8xl opacity-30"></i>
+            <p class="text-2xl mt-6">Nenhuma anotação ainda...</p>
+            <p class="mt-2">Comece escrevendo acima!</p>
+          </div>`;
         return;
       }
+
       materiaAtual.anotacoes.forEach((a, i) => {
         const div = document.createElement('div');
         div.className = "card bg-zinc-800 border border-zinc-700 rounded-3xl p-6";
@@ -330,6 +404,7 @@
           </div>
           <p class="leading-relaxed whitespace-pre-wrap text-lg">${a.texto}</p>
         `;
+
         div.querySelector('button').onclick = (e) => {
           e.stopPropagation();
           if (confirm("Apagar esta anotação?")) {
@@ -345,10 +420,11 @@
       });
     }
 
-    // ==================== HORÁRIOS (Segunda a Sexta) ====================
+    // ==================== ABA 1 - HORÁRIOS ====================
     function mudarAba(n) {
       document.querySelectorAll('[id^="conteudoAba"]').forEach(el => el.classList.add('hidden'));
       document.getElementById(`conteudoAba${n}`).classList.remove('hidden');
+
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
       document.getElementById(`tab${n}`).classList.add('tab-active');
 
@@ -368,11 +444,11 @@
       container.innerHTML = '';
       const turno = horarios[turnoAtual];
 
-      // Cabeçalho com dias da semana
+      // Cabeçalho
       const header = document.createElement('div');
       header.className = "grid grid-cols-6 gap-3 mb-2";
-      header.innerHTML = `<div class="text-center text-xs text-zinc-400 py-2">Horário</div>` + 
-                        diasSemana.map(dia => `<div class="text-center font-semibold text-violet-300">${dia}</div>`).join('');
+      header.innerHTML = `<div class="text-center text-xs text-zinc-400 py-2">Horário</div>` +
+        diasSemana.map(dia => `<div class="text-center font-semibold text-violet-300">${dia}</div>`).join('');
       container.appendChild(header);
 
       // Linhas de horários
@@ -380,20 +456,20 @@
         const row = document.createElement('div');
         row.className = "grid grid-cols-6 gap-3";
 
-        // Hora
+        // Coluna do horário
         const horaDiv = document.createElement('div');
         horaDiv.className = "bg-zinc-800 border border-zinc-700 rounded-2xl p-3 text-center text-sm font-medium";
         horaDiv.textContent = turno[diasSemana[0]][h].hora;
         row.appendChild(horaDiv);
 
-        // Cada dia
+        // Colunas dos dias
         diasSemana.forEach(dia => {
           const slot = turno[dia][h];
           const div = document.createElement('div');
           div.className = `horario-slot bg-zinc-800 border border-zinc-700 rounded-3xl p-4 text-center text-sm`;
-          div.innerHTML = slot.aula ? 
-            `<span class="font-semibold text-white">${slot.aula}</span>` : 
-            `<span class="text-zinc-500">—</span>`;
+          div.innerHTML = slot.aula 
+            ? `<span class="font-semibold text-white">${slot.aula}</span>` 
+            : `<span class="text-zinc-500">—</span>`;
 
           div.onclick = () => {
             const aula = prompt(`Matéria para ${dia} - ${slot.hora}`, slot.aula || "");
@@ -410,10 +486,11 @@
       }
     }
 
-    // ==================== PLANILHA ====================
+    // ==================== ABA 2 - PLANILHA ====================
     function renderizarPlanilha() {
       const tbody = document.getElementById('tabelaPlanilha');
       tbody.innerHTML = '';
+
       materias.forEach((m, i) => {
         const media = (m.notas[0] + m.notas[1] + m.notas[2]) / 3 || 0;
         const situacao = media >= 6 ? '✅ Aprovado' : '⚠️ Recuperação';
@@ -422,12 +499,32 @@
         tr.className = "hover:bg-zinc-800";
         tr.innerHTML = `
           <td class="px-6 py-4 font-medium">${m.nome}</td>
-          <td class="px-6 py-4 text-center"><input type="number" min="0" value="${m.faltas}" onchange="atualizarFaltas(${i}, this.value)" class="bg-zinc-800 w-16 text-center rounded-xl py-1 text-white"></td>
-          <td class="px-6 py-4 text-center"><input type="number" step="0.1" value="${m.notas[0]}" onchange="atualizarNota(${i},0,this.value)" class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white"></td>
-          <td class="px-6 py-4 text-center"><input type="number" step="0.1" value="${m.notas[1]}" onchange="atualizarNota(${i},1,this.value)" class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white"></td>
-          <td class="px-6 py-4 text-center"><input type="number" step="0.1" value="${m.notas[2]}" onchange="atualizarNota(${i},2,this.value)" class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white"></td>
-          <td class="px-6 py-4 text-center font-bold ${media >= 6 ? 'text-emerald-400' : 'text-orange-400'}">${media.toFixed(1)}</td>
-          <td class="px-6 py-4 text-center ${media >= 6 ? 'text-emerald-400' : 'text-orange-400'}">${situacao}</td>
+          <td class="px-6 py-4 text-center">
+            <input type="number" min="0" value="${m.faltas}" 
+                   onchange="atualizarFaltas(${i}, this.value)" 
+                   class="bg-zinc-800 w-16 text-center rounded-xl py-1 text-white">
+          </td>
+          <td class="px-6 py-4 text-center">
+            <input type="number" step="0.1" value="${m.notas[0]}" 
+                   onchange="atualizarNota(${i},0,this.value)" 
+                   class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white">
+          </td>
+          <td class="px-6 py-4 text-center">
+            <input type="number" step="0.1" value="${m.notas[1]}" 
+                   onchange="atualizarNota(${i},1,this.value)" 
+                   class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white">
+          </td>
+          <td class="px-6 py-4 text-center">
+            <input type="number" step="0.1" value="${m.notas[2]}" 
+                   onchange="atualizarNota(${i},2,this.value)" 
+                   class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white">
+          </td>
+          <td class="px-6 py-4 text-center font-bold ${media >= 6 ? 'text-emerald-400' : 'text-orange-400'}">
+            ${media.toFixed(1)}
+          </td>
+          <td class="px-6 py-4 text-center ${media >= 6 ? 'text-emerald-400' : 'text-orange-400'}">
+            ${situacao}
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -444,6 +541,7 @@
       renderizarPlanilha();
     }
 
+    // ==================== LIMPAR TUDO ====================
     function limparTudo() {
       if (confirm("⚠️ Apagar TODA a mochila? Isso não tem volta!")) {
         localStorage.clear();
@@ -464,7 +562,7 @@
       carregarTodosDados();
       mudarAba(0);
 
-      // Eventos
+      // Eventos da sidebar
       document.getElementById('buscaMateria').addEventListener('input', e => {
         filtroAtual = e.target.value;
         renderizarListaMaterias();
@@ -474,6 +572,7 @@
         if (e.key === 'Enter') adicionarMateria();
       });
 
+      // Contador de caracteres
       const textarea = document.getElementById('novaAnotacao');
       textarea.addEventListener('input', () => {
         const count = textarea.value.length;
