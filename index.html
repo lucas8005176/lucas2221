@@ -18,10 +18,11 @@
     .toast { animation: slideIn 0.3s ease forwards; }
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     .horario-slot { cursor: pointer; transition: all 0.2s; }
-    .horario-slot:hover { background-color: #4f46e5; transform: scale(1.03); }
+    .horario-slot:hover { background-color: #4f46e5; transform: scale(1.02); }
   </style>
 </head>
 <body class="min-h-screen text-white">
+
   <div class="flex h-screen">
     <!-- Sidebar -->
     <div class="w-80 bg-zinc-900 border-r border-violet-500/30 flex flex-col">
@@ -39,7 +40,8 @@
         <div class="flex gap-2">
           <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Física)"
                  class="flex-1 bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 focus:outline-none focus:border-violet-400 text-lg"/>
-          <button onclick="adicionarMateria()" class="bg-violet-600 hover:bg-violet-500 px-6 py-3 rounded-3xl font-semibold flex items-center gap-2">
+          <button onclick="adicionarMateria()" 
+                  class="bg-violet-600 hover:bg-violet-500 px-6 py-3 rounded-3xl font-semibold flex items-center gap-2">
             <i class="fas fa-plus"></i>
           </button>
         </div>
@@ -49,7 +51,7 @@
 
       <div class="p-4 border-t border-zinc-700 flex justify-between text-sm">
         <button onclick="limparTudo()" class="text-red-400 hover:text-red-500 flex items-center gap-2">
-          <i class="fas fa-trash"></i> Esvaziar
+          <i class="fas fa-trash"></i> Esvaziar mochila
         </button>
         <span id="totalMaterias" class="text-zinc-400"></span>
       </div>
@@ -66,7 +68,7 @@
         </div>
       </div>
 
-      <!-- === ABA 0: Aulas & Anotações === -->
+      <!-- ABA 0: Aulas & Anotações -->
       <div id="conteudoAba0" class="flex-1 flex flex-col">
         <header id="headerMateria" class="hidden border-b border-zinc-700 bg-zinc-900 px-6 py-4 flex items-center justify-between">
           <button onclick="voltarParaMaterias()" class="flex items-center gap-2 text-violet-400 hover:text-violet-300">
@@ -85,14 +87,14 @@
           <div class="text-center">
             <div class="text-9xl mb-6 animate-bounce">🎒</div>
             <h2 class="text-5xl font-bold mb-4">Bem-vindo à sua Mochila!</h2>
-            <p class="text-zinc-400 text-xl max-w-md mx-auto">Suas matérias do ensino médio já estão aqui.</p>
+            <p class="text-zinc-400 text-xl">Organize suas aulas, horários e notas aqui.</p>
           </div>
         </div>
 
         <div id="areaAnotacoes" class="hidden flex-1 flex flex-col">
           <div class="p-6 bg-zinc-900 border-b border-zinc-700">
             <div class="relative">
-              <textarea id="novaAnotacao" rows="4" placeholder="O que rolou na aula hoje? ✍️ Escreva tudo que precisar..."
+              <textarea id="novaAnotacao" rows="4" placeholder="O que rolou na aula hoje? ✍️"
                         class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl p-5 text-lg resize-none focus:outline-none focus:border-emerald-400"></textarea>
               <div id="charCount" class="absolute bottom-4 right-6 text-xs text-zinc-500">0 / 2000</div>
             </div>
@@ -106,7 +108,7 @@
         </div>
       </div>
 
-      <!-- === ABA 1: Horários === -->
+      <!-- ABA 1: Horários (Segunda a Sexta) -->
       <div id="conteudoAba1" class="hidden flex-1 p-6 overflow-auto">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-3xl font-bold">Horário Escolar</h2>
@@ -115,10 +117,11 @@
             <button onclick="mudarTurno('vespertino')" id="btnVespertino" class="px-6 py-2 rounded-3xl font-semibold">Vespertino</button>
           </div>
         </div>
-        <div class="grid grid-cols-6 gap-4" id="gradeHorario"></div>
+
+        <div class="grid grid-cols-6 gap-3" id="gradeHorario"></div>
       </div>
 
-      <!-- === ABA 2: Planilha === -->
+      <!-- ABA 2: Planilha -->
       <div id="conteudoAba2" class="hidden flex-1 p-6 overflow-auto">
         <h2 class="text-3xl font-bold mb-6">Planilha de Controle</h2>
         <table class="w-full bg-zinc-900 rounded-3xl overflow-hidden">
@@ -147,16 +150,22 @@
   </audio>
 
   <script>
+    // ==================== VARIÁVEIS GLOBAIS ====================
     let materias = [];
     let materiaAtual = null;
     let filtroAtual = '';
     let turnoAtual = 'matutino';
 
     let horarios = {
-      matutino: Array(6).fill().map((_, i) => ({ hora: ["07:00-07:50","07:50-08:40","08:50-09:40","09:40-10:30","10:40-11:30","11:30-12:20"][i], aula: "" })),
-      vespertino: Array(6).fill().map((_, i) => ({ hora: ["13:00-13:50","13:50-14:40","14:50-15:40","15:40-16:30","16:40-17:30","17:30-18:20"][i], aula: "" }))
+      matutino: {},
+      vespertino: {}
     };
 
+    const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+    const horariosBase = ["07:00-07:50", "07:50-08:40", "08:50-09:40", "09:40-10:30", "10:40-11:30", "11:30-12:20"];
+    const horariosVespertino = ["13:00-13:50", "13:50-14:40", "14:50-15:40", "15:40-16:30", "16:40-17:30", "17:30-18:20"];
+
+    // ==================== FUNÇÕES BÁSICAS ====================
     function playActionSound() {
       const audio = document.getElementById('actionSound');
       audio.currentTime = 0; audio.volume = 0.4; audio.play().catch(() => {});
@@ -177,29 +186,32 @@
 
     function carregarTodosDados() {
       const salvosMaterias = localStorage.getItem('mochilaEscolar');
-      if (salvosMaterias) {
-        materias = JSON.parse(salvosMaterias);
-      } else {
-        criarMateriasIniciais();
-      }
+      if (salvosMaterias) materias = JSON.parse(salvosMaterias);
+      else criarMateriasIniciais();
 
       const salvosHorarios = localStorage.getItem('mochilaHorarios');
       if (salvosHorarios) horarios = JSON.parse(salvosHorarios);
+      else inicializarHorarios();
 
       renderizarListaMaterias();
     }
 
+    function inicializarHorarios() {
+      horarios.matutino = {};
+      horarios.vespertino = {};
+      diasSemana.forEach(dia => {
+        horarios.matutino[dia] = horariosBase.map(hora => ({ hora, aula: "" }));
+        horarios.vespertino[dia] = horariosVespertino.map(hora => ({ hora, aula: "" }));
+      });
+    }
+
     function criarMateriasIniciais() {
       const iniciais = ["Língua Portuguesa", "Literatura", "Redação", "Matemática", "Física", "Química", "Biologia", "História", "Geografia", "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes", "Educação Física", "Lógica de Programação", "HTML & CSS", "Programação Web", "Gestão de Tempo", "Estudos Orientados", "Projeto de Vida", "Empreendedorismo"];
-      materias = iniciais.map(nome => ({
-        nome,
-        anotacoes: [],
-        faltas: 0,
-        notas: [0, 0, 0]
-      }));
+      materias = iniciais.map(nome => ({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] }));
       salvarTodosDados();
     }
 
+    // ==================== MATÉRIAS ====================
     function getIconeMateria(nome) {
       const icons = { "Matemática": "fa-calculator", "Física": "fa-atom", "Química": "fa-flask", "Biologia": "fa-dna", "História": "fa-landmark", "Geografia": "fa-globe", "Filosofia": "fa-lightbulb", "Sociologia": "fa-users", "Inglês": "fa-language", "Artes": "fa-palette", "Educação Física": "fa-dumbbell", "default": "fa-book" };
       return icons[nome] || icons.default;
@@ -225,7 +237,7 @@
             <h3 class="font-semibold truncate">${m.nome}</h3>
             <p class="text-xs text-zinc-400">${m.anotacoes.length} anotação${m.anotacoes.length !== 1 ? 's' : ''}</p>
           </div>
-          <button onclick="event.stopImmediatePropagation(); excluirMateria(${idx});" class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
+          <button onclick="event.stopImmediatePropagation(); excluirMateria(${idx});" class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100">
             <i class="fas fa-trash"></i>
           </button>
         `;
@@ -244,7 +256,7 @@
       salvarTodosDados();
       renderizarListaMaterias();
       document.getElementById('novaMateria').value = '';
-      showToast(`"${nome}" adicionada!`);
+      showToast(`"${nome}" adicionada com sucesso!`);
       playActionSound();
     }
 
@@ -260,6 +272,7 @@
       }
     }
 
+    // ==================== ANOTAÇÕES ====================
     function abrirMateria(index) {
       materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
       document.getElementById('telaInicial').classList.add('hidden');
@@ -296,7 +309,7 @@
       document.getElementById('charCount').textContent = '0 / 2000';
       renderizarAnotacoes();
       atualizarContador();
-      showToast("Anotação salva! 📌");
+      showToast("Anotação salva com sucesso! 📌");
       playActionSound();
     }
 
@@ -319,7 +332,7 @@
         `;
         div.querySelector('button').onclick = (e) => {
           e.stopPropagation();
-          if (confirm("Apagar anotação?")) {
+          if (confirm("Apagar esta anotação?")) {
             materias[materiaAtual.index].anotacoes.splice(i, 1);
             salvarTodosDados();
             renderizarAnotacoes();
@@ -332,12 +345,15 @@
       });
     }
 
-    // ==================== HORÁRIOS ====================
+    // ==================== HORÁRIOS (Segunda a Sexta) ====================
     function mudarAba(n) {
       document.querySelectorAll('[id^="conteudoAba"]').forEach(el => el.classList.add('hidden'));
       document.getElementById(`conteudoAba${n}`).classList.remove('hidden');
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
       document.getElementById(`tab${n}`).classList.add('tab-active');
+
+      if (n === 1) renderizarHorarios();
+      if (n === 2) renderizarPlanilha();
     }
 
     function mudarTurno(turno) {
@@ -350,21 +366,48 @@
     function renderizarHorarios() {
       const container = document.getElementById('gradeHorario');
       container.innerHTML = '';
-      horarios[turnoAtual].forEach((slot, i) => {
-        const div = document.createElement('div');
-        div.className = "horario-slot bg-zinc-800 border border-zinc-700 rounded-3xl p-4 text-center";
-        div.innerHTML = `<p class="text-xs text-zinc-400">${slot.hora}</p><p class="font-semibold mt-2 text-lg ${slot.aula ? '' : 'text-zinc-500'}">${slot.aula || 'Clique para adicionar'}</p>`;
-        div.onclick = () => {
-          const aula = prompt("Qual matéria nessa aula?", slot.aula || "");
-          if (aula !== null) {
-            horarios[turnoAtual][i].aula = aula.trim();
-            salvarTodosDados();
-            renderizarHorarios();
-            showToast("Horário salvo!");
-          }
-        };
-        container.appendChild(div);
-      });
+      const turno = horarios[turnoAtual];
+
+      // Cabeçalho com dias da semana
+      const header = document.createElement('div');
+      header.className = "grid grid-cols-6 gap-3 mb-2";
+      header.innerHTML = `<div class="text-center text-xs text-zinc-400 py-2">Horário</div>` + 
+                        diasSemana.map(dia => `<div class="text-center font-semibold text-violet-300">${dia}</div>`).join('');
+      container.appendChild(header);
+
+      // Linhas de horários
+      for (let h = 0; h < 6; h++) {
+        const row = document.createElement('div');
+        row.className = "grid grid-cols-6 gap-3";
+
+        // Hora
+        const horaDiv = document.createElement('div');
+        horaDiv.className = "bg-zinc-800 border border-zinc-700 rounded-2xl p-3 text-center text-sm font-medium";
+        horaDiv.textContent = turno[diasSemana[0]][h].hora;
+        row.appendChild(horaDiv);
+
+        // Cada dia
+        diasSemana.forEach(dia => {
+          const slot = turno[dia][h];
+          const div = document.createElement('div');
+          div.className = `horario-slot bg-zinc-800 border border-zinc-700 rounded-3xl p-4 text-center text-sm`;
+          div.innerHTML = slot.aula ? 
+            `<span class="font-semibold text-white">${slot.aula}</span>` : 
+            `<span class="text-zinc-500">—</span>`;
+
+          div.onclick = () => {
+            const aula = prompt(`Matéria para ${dia} - ${slot.hora}`, slot.aula || "");
+            if (aula !== null) {
+              slot.aula = aula.trim();
+              salvarTodosDados();
+              renderizarHorarios();
+              showToast("Horário atualizado!");
+            }
+          };
+          row.appendChild(div);
+        });
+        container.appendChild(row);
+      }
     }
 
     // ==================== PLANILHA ====================
@@ -405,23 +448,23 @@
       if (confirm("⚠️ Apagar TODA a mochila? Isso não tem volta!")) {
         localStorage.clear();
         materias = [];
-        horarios = { matutino: [...horarios.matutino.map(h => ({...h, aula: ""}))], vespertino: [...horarios.vespertino.map(h => ({...h, aula: ""}))] };
+        horarios = {};
         criarMateriasIniciais();
+        inicializarHorarios();
         renderizarListaMaterias();
         renderizarHorarios();
         renderizarPlanilha();
-        showToast("Mochila reiniciada!");
+        showToast("Mochila reiniciada com sucesso!");
         playActionSound();
       }
     }
 
-    // Inicialização
+    // ==================== INICIALIZAÇÃO ====================
     window.onload = () => {
       carregarTodosDados();
       mudarAba(0);
-      renderizarHorarios();
-      renderizarPlanilha();
 
+      // Eventos
       document.getElementById('buscaMateria').addEventListener('input', e => {
         filtroAtual = e.target.value;
         renderizarListaMaterias();
@@ -435,8 +478,7 @@
       textarea.addEventListener('input', () => {
         const count = textarea.value.length;
         document.getElementById('charCount').textContent = `${count} / 2000`;
-        if (count > 2000) document.getElementById('charCount').classList.add('text-red-400');
-        else document.getElementById('charCount').classList.remove('text-red-400');
+        document.getElementById('charCount').classList.toggle('text-red-400', count > 2000);
       });
     };
   </script>
