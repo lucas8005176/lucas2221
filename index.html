@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>📚 Minha Mochila • Aulas & Anotações</title>
+  <title>🎒 Minha Mochila • Aulas & Anotações</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
   <script>
@@ -17,8 +17,16 @@
   </script>
   <style>
     body { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
-    .card { transition: all 0.3s; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3); }
+    .card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4); }
+    .materia-item { transition: all 0.2s; }
+    .toast {
+      animation: slideIn 0.3s ease forwards;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
   </style>
 </head>
 <body class="min-h-screen text-white">
@@ -29,19 +37,34 @@
         <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🎒</div>
         <h1 class="text-3xl font-bold tracking-tight">Minha Mochila</h1>
       </div>
-      <div class="p-4">
-        <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Biologia)"
-               class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 focus:outline-none focus:border-violet-400 text-lg"/>
-        <button onclick="adicionarMateria()"
-                class="mt-3 w-full bg-violet-600 hover:bg-violet-500 py-3 rounded-3xl font-semibold flex items-center justify-center gap-2">
-          <i class="fas fa-plus"></i> Colocar na mochila
-        </button>
+
+      <!-- Busca e Nova Matéria -->
+      <div class="p-4 space-y-3">
+        <div class="relative">
+          <input id="buscaMateria" type="text" placeholder="Buscar matéria..." 
+                 class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 pl-11 focus:outline-none focus:border-violet-400 text-lg"/>
+          <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+        </div>
+        
+        <div class="flex gap-2">
+          <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Física)" 
+                 class="flex-1 bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 focus:outline-none focus:border-violet-400 text-lg"/>
+          <button onclick="adicionarMateria()" 
+                  class="bg-violet-600 hover:bg-violet-500 px-6 py-3 rounded-3xl font-semibold flex items-center gap-2">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
       </div>
-      <div id="listaMaterias" class="flex-1 overflow-y-auto px-3"></div>
-      <div class="p-4 border-t border-zinc-700">
-        <button onclick="limparTudo()" class="text-red-400 hover:text-red-500 text-sm flex items-center gap-2">
-          <i class="fas fa-trash"></i> Esvaziar mochila
+
+      <!-- Lista de Matérias -->
+      <div class="flex-1 overflow-y-auto px-3" id="listaMaterias"></div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="p-4 border-t border-zinc-700 flex justify-between text-sm">
+        <button onclick="limparTudo()" class="text-red-400 hover:text-red-500 flex items-center gap-2">
+          <i class="fas fa-trash"></i> Esvaziar
         </button>
+        <span id="totalMaterias" class="text-zinc-400"></span>
       </div>
     </div>
 
@@ -51,32 +74,37 @@
         <button onclick="voltarParaMaterias()" class="flex items-center gap-2 text-violet-400 hover:text-violet-300">
           <i class="fas fa-arrow-left"></i> Voltar
         </button>
-        <h2 id="tituloMateria" class="text-2xl font-bold"></h2>
+        <h2 id="tituloMateria" class="text-2xl font-bold flex items-center gap-3"></h2>
         <div class="flex items-center gap-4">
           <span id="contadorAnotacoes" class="bg-zinc-800 px-4 py-1 rounded-3xl text-sm"></span>
-          <button onclick="salvarAnotacao()"
+          <button onclick="salvarAnotacao()" 
                   class="bg-emerald-500 hover:bg-emerald-600 px-6 py-2 rounded-3xl font-semibold flex items-center gap-2">
             <i class="fas fa-save"></i> Salvar Aula
           </button>
         </div>
       </header>
 
+      <!-- Tela Inicial -->
       <div id="telaInicial" class="flex-1 flex items-center justify-center">
         <div class="text-center">
-          <div class="text-8xl mb-6 animate-bounce">🎒</div>
-          <h2 class="text-4xl font-bold mb-3">Bem-vindo à sua Mochila!</h2>
-          <p class="text-zinc-400 text-lg">Suas matérias já foram adicionadas automaticamente</p>
+          <div class="text-9xl mb-6 animate-bounce">🎒</div>
+          <h2 class="text-5xl font-bold mb-4">Bem-vindo à sua Mochila!</h2>
+          <p class="text-zinc-400 text-xl max-w-md mx-auto">Suas matérias do ensino médio já estão aqui. Adicione anotações das aulas e organize seus estudos.</p>
         </div>
       </div>
 
+      <!-- Área de Anotações -->
       <div id="areaAnotacoes" class="hidden flex-1 flex flex-col">
         <div class="p-6 bg-zinc-900 border-b border-zinc-700">
-          <textarea id="novaAnotacao" rows="3" placeholder="O que aconteceu na aula hoje? ✍️"
-                    class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl p-5 text-lg resize-none focus:outline-none focus:border-emerald-400"></textarea>
-          <div class="flex justify-end mt-3">
-            <button onclick="salvarAnotacao()"
-                    class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-3xl font-semibold flex items-center gap-2">
-              📌 Salvar anotação da aula
+          <div class="relative">
+            <textarea id="novaAnotacao" rows="4" placeholder="O que rolou na aula hoje? ✍️ Escreva tudo que precisar..."
+                      class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl p-5 text-lg resize-none focus:outline-none focus:border-emerald-400"></textarea>
+            <div id="charCount" class="absolute bottom-4 right-6 text-xs text-zinc-500">0 / 2000</div>
+          </div>
+          <div class="flex justify-end mt-4">
+            <button onclick="salvarAnotacao()" 
+                    class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-3xl font-semibold flex items-center gap-2 text-lg">
+              📌 Salvar anotação
             </button>
           </div>
         </div>
@@ -85,57 +113,59 @@
     </div>
   </div>
 
+  <!-- Toast -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 bg-zinc-800 border border-violet-500 text-white px-6 py-3 rounded-3xl shadow-2xl flex items-center gap-3 toast"></div>
+
   <audio id="actionSound" preload="auto">
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    function playActionSound() {
-      const audio = document.getElementById('actionSound');
-      if (audio) {
-        audio.currentTime = 0;
-        audio.volume = 0.35;
-        audio.play().catch(() => {});
-      }
-    }
-
     let materias = [];
     let materiaAtual = null;
+    let filtroAtual = '';
 
-    // ==================== MATÉRIAS INICIAIS ====================
+    function playActionSound() {
+      const audio = document.getElementById('actionSound');
+      audio.currentTime = 0;
+      audio.volume = 0.4;
+      audio.play().catch(() => {});
+    }
+
+    function showToast(mensagem, tipo = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = mensagem;
+      toast.className = `fixed bottom-6 right-6 px-6 py-3 rounded-3xl shadow-2xl flex items-center gap-3 toast ${
+        tipo === 'error' ? 'bg-red-900 border-red-500' : 'bg-zinc-800 border-violet-500'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    // ==================== MATÉRIAS INICIAIS (Muito mais completas) ====================
     function criarMateriasIniciais() {
       const iniciais = [
-        "Português", 
-        "Matemática", 
-        "História", 
-        "Geografia",
-        "Filosofia", 
-        "Sociologia", 
-        "HTML", 
-        "Programação Web", 
-        "Lógica de Programação",
-        "Gestão de Tempo",
-        "Estudos Orientados",
-        "Projeto de Vida"
+        "Língua Portuguesa", "Literatura", "Redação", "Matemática", 
+        "Física", "Química", "Biologia", "História", "Geografia",
+        "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes",
+        "Educação Física", "Lógica de Programação", "HTML & CSS",
+        "Programação Web", "Gestão de Tempo", "Estudos Orientados",
+        "Projeto de Vida", "Empreendedorismo"
       ];
-
       materias = iniciais.map(nome => ({
         nome: nome,
         anotacoes: []
       }));
-
       salvarDados();
     }
 
     function carregarDados() {
       const salvos = localStorage.getItem('mochilaEscolar');
-      
       if (salvos) {
         materias = JSON.parse(salvos);
       } else {
-        criarMateriasIniciais(); // primeira vez → cria todas as matérias
+        criarMateriasIniciais();
       }
-      
       renderizarListaMaterias();
     }
 
@@ -143,59 +173,115 @@
       localStorage.setItem('mochilaEscolar', JSON.stringify(materias));
     }
 
+    function getIconeMateria(nome) {
+      const icons = {
+        "Matemática": "fa-calculator",
+        "Física": "fa-atom",
+        "Química": "fa-flask",
+        "Biologia": "fa-dna",
+        "História": "fa-landmark",
+        "Geografia": "fa-globe",
+        "Filosofia": "fa-lightbulb",
+        "Sociologia": "fa-users",
+        "Inglês": "fa-language",
+        "Espanhol": "fa-language",
+        "Artes": "fa-palette",
+        "Educação Física": "fa-dumbbell",
+        "default": "fa-book"
+      };
+      return icons[nome] || icons.default;
+    }
+
     function renderizarListaMaterias() {
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
 
-      if (materias.length === 0) {
-        container.innerHTML = `<div class="px-6 py-8 text-center text-zinc-500"><i class="fas fa-book-open text-5xl opacity-30"></i><p class="mt-3">Sua mochila está vazia...</p></div>`;
+      let filtradas = materias.filter(m => 
+        m.nome.toLowerCase().includes(filtroAtual.toLowerCase())
+      );
+
+      if (filtradas.length === 0) {
+        container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500"><i class="fas fa-search text-5xl opacity-30"></i><p class="mt-4">Nenhuma matéria encontrada</p></div>`;
         return;
       }
 
-      materias.forEach((m, i) => {
-        const active = materiaAtual && materiaAtual.index === i;
+      filtradas.forEach((m, i) => {
+        const originalIndex = materias.findIndex(mat => mat.nome === m.nome);
+        const active = materiaAtual && materiaAtual.index === originalIndex;
+        
         const div = document.createElement('div');
-        div.className = `mx-3 my-2 px-5 py-4 rounded-3xl flex items-center gap-3 cursor-pointer transition-all ${active ? 'bg-violet-600 text-white shadow-xl' : 'hover:bg-zinc-800'}`;
+        div.className = `materia-item mx-3 my-2 px-5 py-4 rounded-3xl flex items-center gap-4 cursor-pointer transition-all ${active ? 'bg-violet-600 shadow-xl' : 'hover:bg-zinc-800'}`;
+        
         div.innerHTML = `
-          <i class="fas fa-book text-xl"></i>
-          <div class="flex-1">
-            <h3 class="font-semibold">${m.nome}</h3>
+          <i class="fas ${getIconeMateria(m.nome)} text-2xl ${active ? 'text-white' : 'text-violet-400'}"></i>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold truncate">${m.nome}</h3>
             <p class="text-xs text-zinc-400">${m.anotacoes.length} anotação${m.anotacoes.length !== 1 ? 's' : ''}</p>
           </div>
+          <button onclick="event.stopImmediatePropagation(); excluirMateria(${originalIndex});" 
+                  class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
+            <i class="fas fa-trash"></i>
+          </button>
         `;
+
         div.onclick = () => {
           playActionSound();
-          abrirMateria(i);
+          abrirMateria(originalIndex);
         };
         container.appendChild(div);
       });
+
+      document.getElementById('totalMaterias').textContent = `${materias.length} matérias`;
     }
 
     function adicionarMateria() {
       const input = document.getElementById('novaMateria');
       const nome = input.value.trim();
-      if (!nome) return alert("Digite o nome da matéria!");
+      if (!nome) return showToast("Digite o nome da matéria!", "error");
+
       if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) {
-        return alert("Essa matéria já está na mochila!");
+        return showToast("Essa matéria já está na mochila!", "error");
       }
+
       materias.unshift({ nome, anotacoes: [] });
       salvarDados();
       renderizarListaMaterias();
       input.value = '';
-      input.focus();
+      showToast(`"${nome}" adicionada com sucesso!`);
       playActionSound();
     }
 
+    function excluirMateria(index) {
+      if (confirm(`Excluir a matéria "${materias[index].nome}"?`)) {
+        const nome = materias[index].nome;
+        materias.splice(index, 1);
+        salvarDados();
+        renderizarListaMaterias();
+        if (materiaAtual && materiaAtual.index === index) voltarParaMaterias();
+        showToast(`"${nome}" removida`);
+        playActionSound();
+      }
+    }
+
     function abrirMateria(index) {
-      materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
-     
+      materiaAtual = { 
+        index, 
+        nome: materias[index].nome, 
+        anotacoes: materias[index].anotacoes 
+      };
+
       document.getElementById('telaInicial').classList.add('hidden');
       document.getElementById('areaAnotacoes').classList.remove('hidden');
       document.getElementById('headerMateria').classList.remove('hidden');
-      document.getElementById('tituloMateria').textContent = materiaAtual.nome;
-     
+
+      document.getElementById('tituloMateria').innerHTML = `
+        <i class="fas ${getIconeMateria(materiaAtual.nome)}"></i>
+        ${materiaAtual.nome}
+      `;
+
       atualizarContador();
       renderizarAnotacoes();
+      playActionSound();
     }
 
     function voltarParaMaterias() {
@@ -204,7 +290,6 @@
       document.getElementById('areaAnotacoes').classList.add('hidden');
       document.getElementById('headerMateria').classList.add('hidden');
       renderizarListaMaterias();
-      playActionSound();
     }
 
     function atualizarContador() {
@@ -214,21 +299,27 @@
 
     function salvarAnotacao() {
       if (!materiaAtual) return;
-      const texto = document.getElementById('novaAnotacao').value.trim();
-      if (!texto) return alert("Escreva o que aconteceu na aula!");
+      const textarea = document.getElementById('novaAnotacao');
+      const texto = textarea.value.trim();
+      if (!texto) return showToast("Escreva algo antes de salvar!", "error");
 
-      const data = new Date().toLocaleString('pt-BR', { 
-        day:'2-digit', 
-        month:'short', 
-        hour:'2-digit', 
-        minute:'2-digit' 
+      const data = new Date().toLocaleString('pt-BR', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
       });
 
       materias[materiaAtual.index].anotacoes.unshift({ texto, data });
       salvarDados();
-      document.getElementById('novaAnotacao').value = '';
+      textarea.value = '';
+      document.getElementById('charCount').textContent = '0 / 2000';
+      
       renderizarAnotacoes();
       atualizarContador();
+      showToast("Anotação salva com sucesso! 📌");
       playActionSound();
     }
 
@@ -238,10 +329,10 @@
 
       if (materiaAtual.anotacoes.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-16 text-zinc-400">
-            <i class="fas fa-feather-alt text-7xl opacity-30"></i>
-            <p class="text-xl mt-4">Ainda não tem nada anotado...</p>
-            <p class="text-sm">Escreva acima e salve a aula!</p>
+          <div class="text-center py-20 text-zinc-400">
+            <i class="fas fa-feather-alt text-8xl opacity-30"></i>
+            <p class="text-2xl mt-6">Nenhuma anotação ainda...</p>
+            <p class="mt-2">Comece escrevendo acima!</p>
           </div>`;
         return;
       }
@@ -250,13 +341,13 @@
         const div = document.createElement('div');
         div.className = "card bg-zinc-800 border border-zinc-700 rounded-3xl p-6";
         div.innerHTML = `
-          <div class="flex justify-between text-xs text-zinc-400 mb-3">
-            <span>${a.data}</span>
-            <button class="text-red-400 hover:text-red-500">
+          <div class="flex justify-between items-start mb-4">
+            <span class="text-xs bg-zinc-700 px-3 py-1 rounded-full">${a.data}</span>
+            <button class="text-red-400 hover:text-red-500 text-xl">
               <i class="fas fa-trash"></i>
             </button>
           </div>
-          <p class="leading-relaxed whitespace-pre-wrap">${a.texto}</p>
+          <p class="leading-relaxed whitespace-pre-wrap text-lg">${a.texto}</p>
         `;
 
         div.querySelector('button').onclick = (e) => {
@@ -266,6 +357,7 @@
             salvarDados();
             renderizarAnotacoes();
             atualizarContador();
+            showToast("Anotação excluída");
             playActionSound();
           }
         };
@@ -274,23 +366,41 @@
     }
 
     function limparTudo() {
-      if (confirm("⚠️ Apagar TODA a mochila? Isso não tem volta!")) {
+      if (confirm("⚠️ Tem certeza que quer apagar TODA a mochila? Isso não tem volta!")) {
         localStorage.clear();
         materias = [];
         materiaAtual = null;
-        criarMateriasIniciais(); // recria todas as matérias após limpar
+        criarMateriasIniciais();
         voltarParaMaterias();
         renderizarListaMaterias();
+        showToast("Mochila esvaziada e reiniciada");
         playActionSound();
       }
     }
 
-    // Inicializar
+    // Inicialização
     window.onload = () => {
       carregarDados();
 
+      // Busca em tempo real
+      document.getElementById('buscaMateria').addEventListener('input', (e) => {
+        filtroAtual = e.target.value;
+        renderizarListaMaterias();
+      });
+
+      // Enter para adicionar matéria
       document.getElementById('novaMateria').addEventListener('keypress', e => {
         if (e.key === 'Enter') adicionarMateria();
+      });
+
+      // Contador de caracteres
+      const textarea = document.getElementById('novaAnotacao');
+      const charCount = document.getElementById('charCount');
+      textarea.addEventListener('input', () => {
+        let count = textarea.value.length;
+        charCount.textContent = `${count} / 2000`;
+        if (count > 2000) charCount.classList.add('text-red-400');
+        else charCount.classList.remove('text-red-400');
       });
     };
   </script>
