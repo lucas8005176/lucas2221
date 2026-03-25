@@ -48,7 +48,7 @@
 
       <div class="p-4 space-y-3">
         <div class="relative">
-          <input id="buscaMateria" type="text" placeholder="Buscar matéria..." 
+          <input id="buscaMateria" type="text" placeholder="Buscar matéria..."
                  class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 pl-11 focus:outline-none focus:border-violet-400 text-lg"/>
           <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
         </div>
@@ -80,7 +80,6 @@
         <div class="flex gap-8 text-lg">
           <button onclick="mudarAba(0)" id="tab0" class="tab py-5 tab-active">📝 Aulas & Anotações</button>
           <button onclick="mudarAba(1)" id="tab1" class="tab py-5">⏰ Horários</button>
-          <button onclick="mudarAba(2)" id="tab2" class="tab py-5">📊 Planilha</button>
         </div>
       </div>
 
@@ -103,7 +102,7 @@
           <div class="text-center">
             <div class="text-9xl mb-6 animate-bounce">🎒</div>
             <h2 class="text-5xl font-bold mb-4">Bem-vindo à sua Mochila!</h2>
-            <p class="text-zinc-400 text-xl">Organize suas aulas, horários e notas aqui.</p>
+            <p class="text-zinc-400 text-xl">Organize suas aulas e horários aqui.</p>
           </div>
         </div>
 
@@ -125,7 +124,7 @@
         </div>
       </div>
 
-      <!-- ==================== ABA 1: HORÁRIOS ==================== -->
+      <!-- ==================== ABA 1: HORÁRIOS (Segunda a Domingo) ==================== -->
       <div id="conteudoAba1" class="hidden flex-1 p-6 overflow-auto">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-3xl font-bold">Horário Escolar</h2>
@@ -136,26 +135,7 @@
                     class="px-6 py-2 rounded-3xl font-semibold">Vespertino</button>
           </div>
         </div>
-        <div class="grid grid-cols-6 gap-3" id="gradeHorario"></div>
-      </div>
-
-      <!-- ==================== ABA 2: PLANILHA ==================== -->
-      <div id="conteudoAba2" class="hidden flex-1 p-6 overflow-auto">
-        <h2 class="text-3xl font-bold mb-6">Planilha de Controle</h2>
-        <table class="w-full bg-zinc-900 rounded-3xl overflow-hidden">
-          <thead class="bg-zinc-800">
-            <tr>
-              <th class="px-6 py-4 text-left">Matéria</th>
-              <th class="px-6 py-4 text-center">Faltas</th>
-              <th class="px-6 py-4 text-center">Nota 1</th>
-              <th class="px-6 py-4 text-center">Nota 2</th>
-              <th class="px-6 py-4 text-center">Nota 3</th>
-              <th class="px-6 py-4 text-center">Média</th>
-              <th class="px-6 py-4 text-center">Situação</th>
-            </tr>
-          </thead>
-          <tbody id="tabelaPlanilha" class="divide-y divide-zinc-700"></tbody>
-        </table>
+        <div class="grid grid-cols-8 gap-3" id="gradeHorario"></div>
       </div>
     </div>
   </div>
@@ -176,7 +156,8 @@
 
     let horarios = { matutino: {}, vespertino: {} };
 
-    const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+    const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+    
     const horariosMatutino = ["07:00-07:50", "07:50-08:40", "08:50-09:40", "09:40-10:30", "10:40-11:30", "11:30-12:20"];
     const horariosVespertino = ["13:00-13:50", "13:50-14:40", "14:50-15:40", "15:40-16:30", "16:40-17:30", "17:30-18:20"];
 
@@ -203,7 +184,7 @@
       localStorage.setItem('mochilaHorarios', JSON.stringify(horarios));
     }
 
-    // ==================== INICIALIZAÇÃO DE DADOS ====================
+    // ==================== INICIALIZAÇÃO ====================
     function inicializarHorarios() {
       horarios.matutino = {};
       horarios.vespertino = {};
@@ -249,18 +230,9 @@
     // ==================== ABA 0 - MATÉRIAS E ANOTAÇÕES ====================
     function getIconeMateria(nome) {
       const icons = {
-        "Matemática": "fa-calculator",
-        "Física": "fa-atom",
-        "Química": "fa-flask",
-        "Biologia": "fa-dna",
-        "História": "fa-landmark",
-        "Geografia": "fa-globe",
-        "Filosofia": "fa-lightbulb",
-        "Sociologia": "fa-users",
-        "Inglês": "fa-language",
-        "Artes": "fa-palette",
-        "Educação Física": "fa-dumbbell",
-        "default": "fa-book"
+        "Matemática": "fa-calculator", "Física": "fa-atom", "Química": "fa-flask", "Biologia": "fa-dna",
+        "História": "fa-landmark", "Geografia": "fa-globe", "Filosofia": "fa-lightbulb", "Sociologia": "fa-users",
+        "Inglês": "fa-language", "Artes": "fa-palette", "Educação Física": "fa-dumbbell", "default": "fa-book"
       };
       return icons[nome] || icons.default;
     }
@@ -269,14 +241,11 @@
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
 
-      const filtradas = materias.filter(m => 
-        m.nome.toLowerCase().includes(filtroAtual.toLowerCase())
-      );
+      const filtradas = materias.filter(m => m.nome.toLowerCase().includes(filtroAtual.toLowerCase()));
 
       if (filtradas.length === 0) {
         container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500">
-          <i class="fas fa-search text-5xl opacity-30"></i>
-          <p class="mt-4">Nenhuma matéria encontrada</p>
+          <i class="fas fa-search text-5xl opacity-30"></i><p class="mt-4">Nenhuma matéria encontrada</p>
         </div>`;
         return;
       }
@@ -356,8 +325,7 @@
 
     function atualizarContador() {
       const qtd = materiaAtual.anotacoes.length;
-      document.getElementById('contadorAnotacoes').textContent = 
-        `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
+      document.getElementById('contadorAnotacoes').textContent = `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
     }
 
     function salvarAnotacao() {
@@ -366,8 +334,7 @@
       if (!texto) return showToast("Escreva algo antes de salvar!", "error");
 
       const data = new Date().toLocaleString('pt-BR', {
-        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
+        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
       });
 
       materias[materiaAtual.index].anotacoes.unshift({ texto, data });
@@ -420,7 +387,7 @@
       });
     }
 
-    // ==================== ABA 1 - HORÁRIOS ====================
+    // ==================== ABA 1 - HORÁRIOS (Segunda a Domingo) ====================
     function mudarAba(n) {
       document.querySelectorAll('[id^="conteudoAba"]').forEach(el => el.classList.add('hidden'));
       document.getElementById(`conteudoAba${n}`).classList.remove('hidden');
@@ -429,7 +396,6 @@
       document.getElementById(`tab${n}`).classList.add('tab-active');
 
       if (n === 1) renderizarHorarios();
-      if (n === 2) renderizarPlanilha();
     }
 
     function mudarTurno(turno) {
@@ -444,9 +410,9 @@
       container.innerHTML = '';
       const turno = horarios[turnoAtual];
 
-      // Cabeçalho
+      // Cabeçalho (Horário + 7 dias)
       const header = document.createElement('div');
-      header.className = "grid grid-cols-6 gap-3 mb-2";
+      header.className = "grid grid-cols-8 gap-3 mb-2";
       header.innerHTML = `<div class="text-center text-xs text-zinc-400 py-2">Horário</div>` +
         diasSemana.map(dia => `<div class="text-center font-semibold text-violet-300">${dia}</div>`).join('');
       container.appendChild(header);
@@ -454,7 +420,7 @@
       // Linhas de horários
       for (let h = 0; h < 6; h++) {
         const row = document.createElement('div');
-        row.className = "grid grid-cols-6 gap-3";
+        row.className = "grid grid-cols-8 gap-3";
 
         // Coluna do horário
         const horaDiv = document.createElement('div');
@@ -462,7 +428,7 @@
         horaDiv.textContent = turno[diasSemana[0]][h].hora;
         row.appendChild(horaDiv);
 
-        // Colunas dos dias
+        // Colunas dos dias (Segunda a Domingo)
         diasSemana.forEach(dia => {
           const slot = turno[dia][h];
           const div = document.createElement('div');
@@ -486,61 +452,6 @@
       }
     }
 
-    // ==================== ABA 2 - PLANILHA ====================
-    function renderizarPlanilha() {
-      const tbody = document.getElementById('tabelaPlanilha');
-      tbody.innerHTML = '';
-
-      materias.forEach((m, i) => {
-        const media = (m.notas[0] + m.notas[1] + m.notas[2]) / 3 || 0;
-        const situacao = media >= 6 ? '✅ Aprovado' : '⚠️ Recuperação';
-
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-zinc-800";
-        tr.innerHTML = `
-          <td class="px-6 py-4 font-medium">${m.nome}</td>
-          <td class="px-6 py-4 text-center">
-            <input type="number" min="0" value="${m.faltas}" 
-                   onchange="atualizarFaltas(${i}, this.value)" 
-                   class="bg-zinc-800 w-16 text-center rounded-xl py-1 text-white">
-          </td>
-          <td class="px-6 py-4 text-center">
-            <input type="number" step="0.1" value="${m.notas[0]}" 
-                   onchange="atualizarNota(${i},0,this.value)" 
-                   class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white">
-          </td>
-          <td class="px-6 py-4 text-center">
-            <input type="number" step="0.1" value="${m.notas[1]}" 
-                   onchange="atualizarNota(${i},1,this.value)" 
-                   class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white">
-          </td>
-          <td class="px-6 py-4 text-center">
-            <input type="number" step="0.1" value="${m.notas[2]}" 
-                   onchange="atualizarNota(${i},2,this.value)" 
-                   class="bg-zinc-800 w-20 text-center rounded-xl py-1 text-white">
-          </td>
-          <td class="px-6 py-4 text-center font-bold ${media >= 6 ? 'text-emerald-400' : 'text-orange-400'}">
-            ${media.toFixed(1)}
-          </td>
-          <td class="px-6 py-4 text-center ${media >= 6 ? 'text-emerald-400' : 'text-orange-400'}">
-            ${situacao}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function atualizarFaltas(i, val) {
-      materias[i].faltas = parseInt(val) || 0;
-      salvarTodosDados();
-    }
-
-    function atualizarNota(i, bim, val) {
-      materias[i].notas[bim] = parseFloat(val) || 0;
-      salvarTodosDados();
-      renderizarPlanilha();
-    }
-
     // ==================== LIMPAR TUDO ====================
     function limparTudo() {
       if (confirm("⚠️ Apagar TODA a mochila? Isso não tem volta!")) {
@@ -551,7 +462,6 @@
         inicializarHorarios();
         renderizarListaMaterias();
         renderizarHorarios();
-        renderizarPlanilha();
         showToast("Mochila reiniciada com sucesso!");
         playActionSound();
       }
