@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🖥️ Tipos de Sistemas Operacionais</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Poppins', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { 
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); 
+    }
+    .card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 30px 60px -15px rgb(124 58 237 / 0.5);
+    }
+    .icon-circle {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white pb-12">
+  <div class="max-w-5xl mx-auto px-6 py-8">
+    
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mb-10">
+      <a href="index.html" 
+         class="flex items-center gap-3 text-violet-400 hover:text-violet-300 transition">
+        <i class="fas fa-arrow-left text-2xl"></i>
+        <span class="font-semibold text-lg">Voltar para Minha Mochila</span>
+      </a>
+      
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-2xl">💻</div>
+        <h1 class="text-4xl font-bold tracking-tight">Tipos de Sistemas Operacionais</h1>
+      </div>
+    </div>
+
+    <p class="text-center text-zinc-400 text-xl mb-12 max-w-2xl mx-auto">
+      Explicação rápida e clara dos <span class="text-violet-300 font-semibold">4 principais tipos de S.O.</span>
+    </p>
+
+    <!-- CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Desktop -->
+      <div class="card bg-zinc-900 border border-violet-500/30 rounded-3xl p-8">
+        <div class="icon-circle w-20 h-20 rounded-3xl flex items-center justify-center text-5xl mb-6 mx-auto shadow-xl">
+          💻
+        </div>
+        <h2 class="text-3xl font-bold text-center mb-2">Desktop</h2>
+        <p class="text-violet-400 text-center mb-6 text-lg">Computadores Pessoais</p>
+        
+        <div class="space-y-4 text-zinc-300">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Exemplo principal:</strong> Microsoft Windows, Linux (Ubuntu), macOS</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p>Usado em PCs, notebooks e estações de trabalho</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Foco:</strong> Usuário final, produtividade, jogos, edição de vídeo e programas pesados</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div class="card bg-zinc-900 border border-violet-500/30 rounded-3xl p-8">
+        <div class="icon-circle w-20 h-20 rounded-3xl flex items-center justify-center text-5xl mb-6 mx-auto shadow-xl">
+          📱
+        </div>
+        <h2 class="text-3xl font-bold text-center mb-2">Mobile</h2>
+        <p class="text-violet-400 text-center mb-6 text-lg">Dispositivos Móveis</p>
+        
+        <div class="space-y-4 text-zinc-300">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Exemplo principal:</strong> Android (Google), iOS (Apple)</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p>Usado em smartphones e tablets</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Foco:</strong> Mobilidade, aplicativos, bateria, toque e câmera</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servidores -->
+      <div class="card bg-zinc-900 border border-violet-500/30 rounded-3xl p-8">
+        <div class="icon-circle w-20 h-20 rounded-3xl flex items-center justify-center text-5xl mb-6 mx-auto shadow-xl">
+          🌐
+        </div>
+        <h2 class="text-3xl font-bold text-center mb-2">Servidores</h2>
+        <p class="text-violet-400 text-center mb-6 text-lg">Computadores que Servem</p>
+        
+        <div class="space-y-4 text-zinc-300">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Exemplos:</strong> Linux Server, Windows Server</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p>Não têm tela nem mouse — ficam ligados 24h</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Foco:</strong> Hospedar sites, bancos de dados, jogos online, arquivos e serviços (como este GitHub Pages)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Embarcados -->
+      <div class="card bg-zinc-900 border border-violet-500/30 rounded-3xl p-8">
+        <div class="icon-circle w-20 h-20 rounded-3xl flex items-center justify-center text-5xl mb-6 mx-auto shadow-xl">
+          🤖
+        </div>
+        <h2 class="text-3xl font-bold text-center mb-2">Embarcados</h2>
+        <p class="text-violet-400 text-center mb-6 text-lg">Sistemas Embutidos</p>
+        
+        <div class="space-y-4 text-zinc-300">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Exemplos:</strong> Smart TVs, carros, micro-ondas, relógios, drones, máquinas industriais</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p>Não são visíveis para o usuário</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check text-emerald-400 mt-1"></i>
+            <p><strong>Foco:</strong> Controle específico, baixo consumo de energia e alta confiabilidade</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-16 text-zinc-500 text-sm">
+      Feito para estudos • Parte 2 da Minha Mochila
+    </div>
+  </div>
+</body>
+</html>
