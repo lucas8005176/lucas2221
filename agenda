@@ -3,164 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOCHILA • Sistemas Operacionais</title>
+    <title>MOCHILA • Tipos de Sistemas Operacionais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
-        }
-        header {
-            background: rgba(255,255,255,0.95);
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e2937 0%, #334155 100%);
+            color: white;
         }
         .card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
         }
-        h1, h2 {
-            color: #667eea;
-            margin-bottom: 15px;
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background: #667eea;
-            color: white;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: white;
-            font-size: 0.9rem;
-            margin-top: 40px;
+        .icon-circle {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            border-radius: 9999px;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen py-12">
+    <div class="max-w-6xl mx-auto px-6">
+        
+        <!-- Botão Voltar -->
+        <a href="index.html" 
+           class="inline-flex items-center gap-2 text-white hover:text-violet-300 mb-8">
+            <i class="fas fa-arrow-left"></i> Voltar para a Mochila
+        </a>
 
-    <header>
-        <div class="logo">MOCHILA</div>
-        <h2>Educação • Tecnologia • Conhecimento</h2>
-    </header>
-
-    <div class="container">
-
-        <div class="card">
-            <h1>Sistemas Operacionais</h1>
-            <p><strong>Aula anterior • Resumo</strong></p>
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-4">📟 Tipos de Sistemas Operacionais</h1>
+            <p class="text-xl text-gray-300">Cada tipo foi feito para um objetivo diferente</p>
         </div>
 
-        <div class="card">
-            <h2>📌 O que é um Sistema Operacional?</h2>
-            <p>É um software que gerencia os recursos do computador (hardware) e fornece serviços para os programas de aplicação. Ele atua como intermediário entre o usuário e o hardware.</p>
+        <div class="grid md:grid-cols-2 gap-8">
+
+            <!-- Desktop -->
+            <div class="card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8">
+                <div class="icon-circle bg-blue-500/20 text-blue-400 mx-auto mb-6">💻</div>
+                <h2 class="text-3xl font-bold text-center mb-2">Desktop</h2>
+                <p class="text-center text-blue-400 mb-6">Computadores Pessoais</p>
+                <p class="text-center mb-6"><strong>Ex: Microsoft Windows, macOS, Linux</strong></p>
+                <ul class="space-y-3">
+                    <li>✅ Usado em PCs e Notebooks</li>
+                    <li>✅ Foco no usuário final</li>
+                    <li>✅ Multitarefa e interface gráfica</li>
+                </ul>
+            </div>
+
+            <!-- Mobile -->
+            <div class="card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8">
+                <div class="icon-circle bg-green-500/20 text-green-400 mx-auto mb-6">📱</div>
+                <h2 class="text-3xl font-bold text-center mb-2">Mobile</h2>
+                <p class="text-center text-green-400 mb-6">Dispositivos Móveis</p>
+                <p class="text-center mb-6"><strong>Ex: Android, iOS</strong></p>
+                <ul class="space-y-3">
+                    <li>✅ Smartphones e Tablets</li>
+                    <li>✅ Foco em apps e mobilidade</li>
+                    <li>✅ Otimizado para tela touch</li>
+                </ul>
+            </div>
+
+            <!-- Servidores -->
+            <div class="card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8">
+                <div class="icon-circle bg-purple-500/20 text-purple-400 mx-auto mb-6">🌐</div>
+                <h2 class="text-3xl font-bold text-center mb-2">Servidores</h2>
+                <p class="text-center text-purple-400 mb-6">Computadores que servem outros</p>
+                <p class="text-center mb-6"><strong>Ex: Linux Server, Windows Server</strong></p>
+                <ul class="space-y-3">
+                    <li>✅ Hospedam sites e serviços</li>
+                    <li>✅ Alta estabilidade</li>
+                    <li>✅ Ex: GitHub Pages roda aqui</li>
+                </ul>
+            </div>
+
+            <!-- Embarcados -->
+            <div class="card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8">
+                <div class="icon-circle bg-orange-500/20 text-orange-400 mx-auto mb-6">🤖</div>
+                <h2 class="text-3xl font-bold text-center mb-2">Embarcados</h2>
+                <p class="text-center text-orange-400 mb-6">Sistemas Embutidos</p>
+                <p class="text-center mb-6"><strong>Ex: TV, Carro, Micro-ondas</strong></p>
+                <ul class="space-y-3">
+                    <li>✅ Dentro de outros dispositivos</li>
+                    <li>✅ Recursos limitados</li>
+                    <li>✅ Faz apenas uma tarefa específica</li>
+                </ul>
+            </div>
+
         </div>
 
-        <div class="card">
-            <h2>🔹 Principais Funções</h2>
-            <ul>
-                <li>Gerenciamento de Processos</li>
-                <li>Gerenciamento de Memória</li>
-                <li>Gerenciamento de Arquivos</li>
-                <li>Gerenciamento de Dispositivos (I/O)</li>
-                <li>Interface com o Usuário</li>
-                <li>Segurança e Proteção</li>
-            </ul>
+        <div class="text-center mt-16 text-gray-400">
+            <p>MOCHILA • Desenvolvido por LUCAS • Ipaba, MG • 2026</p>
         </div>
-
-        <div class="card">
-            <h2>📊 Tipos de Sistemas Operacionais</h2>
-            <table>
-                <tr>
-                    <th>Tipo</th>
-                    <th>Exemplos</th>
-                    <th>Características</th>
-                </tr>
-                <tr>
-                    <td>Batch</td>
-                    <td>Antigos (ex: OS/360)</td>
-                    <td>Processamento em lotes</td>
-                </tr>
-                <tr>
-                    <td>Tempo Real</td>
-                    <td>VxWorks, QNX</td>
-                    <td>Resposta imediata</td>
-                </tr>
-                <tr>
-                    <td>Multitarefa</td>
-                    <td>Windows, Linux, macOS</td>
-                    <td>Vários programas ao mesmo tempo</td>
-                </tr>
-                <tr>
-                    <td>Distribuído</td>
-                    <td>Android, Kubernetes</td>
-                    <td>Recursos em várias máquinas</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>💻 Sistemas Operacionais Mais Usados</h2>
-            <ul>
-                <li><strong>Windows</strong> - Microsoft (mais usado em PCs)</li>
-                <li><strong>Linux</strong> - Open Source (servidores e programação)</li>
-                <li><strong>macOS</strong> - Apple</li>
-                <li><strong>Android</strong> - Google (celulares)</li>
-                <li><strong>iOS</strong> - Apple (iPhone)</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>✅ Conceitos Importantes da Aula Anterior</h2>
-            <ul>
-                <li>Kernel (núcleo do SO)</li>
-                <li>Shell (interface de comando)</li>
-                <li>Processo vs Thread</li>
-                <li>Escalonamento de Processos</li>
-                <li>Memória Virtual</li>
-                <li>Drivers de dispositivos</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>✍️ Reflexão / Tarefa da Aula</h2>
-            <p>Qual Sistema Operacional você usa no dia a dia? Quais vantagens e desvantagens você percebe?</p>
-        </div>
-
     </div>
-
-    <footer>
-        <p>MOCHILA • Desenvolvido por LUCAS • Aula de Sistemas Operacionais</p>
-        <p>Ipaba, Minas Gerais • 2026</p>
-    </footer>
-
 </body>
 </html>
+<a href="pagina2.html" class="...">
+    <span>IR PARA SITE 2</span>
+</a>
