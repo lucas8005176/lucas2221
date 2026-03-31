@@ -113,7 +113,7 @@
       <div id="conteudoAba1" class="hidden flex-1 p-6 overflow-auto">
         <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
           <i class="fas fa-desktop text-violet-400"></i> 
-          Sistemas Operacionais de PC
+          Sistemas Operacionais
         </h2>
         <div id="listaSO" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
       </div>
@@ -132,14 +132,16 @@
     let materiaAtual = null;
     let filtroAtual = '';
 
-    // ==================== SISTEMAS OPERACIONAIS ====================
+    // ==================== SISTEMAS OPERACIONAIS (com Android e iOS) ====================
     const sistemasOperacionais = [
       { nome: "Windows 11", icone: "fab fa-windows", cor: "from-blue-600 to-indigo-600", descricao: "Sistema mais popular da Microsoft.", versao: "Versão atual" },
       { nome: "Windows 10", icone: "fab fa-windows", cor: "from-blue-500 to-cyan-600", descricao: "Ainda muito usado em empresas.", versao: "Versão anterior" },
       { nome: "Linux Ubuntu", icone: "fab fa-linux", cor: "from-orange-600 to-red-600", descricao: "Distribuição Linux amigável.", versao: "24.04 LTS" },
       { nome: "Linux Mint", icone: "fab fa-linux", cor: "from-emerald-600 to-teal-600", descricao: "Ótimo para iniciantes no Linux.", versao: "21.3" },
       { nome: "macOS Sequoia", icone: "fab fa-apple", cor: "from-gray-700 to-zinc-800", descricao: "Sistema da Apple para Mac.", versao: "15" },
-      { nome: "Chrome OS", icone: "fab fa-chrome", cor: "from-blue-700 to-sky-600", descricao: "Focado em nuvem e leve.", versao: "Atual" }
+      { nome: "Chrome OS", icone: "fab fa-chrome", cor: "from-blue-700 to-sky-600", descricao: "Focado em nuvem e leve.", versao: "Atual" },
+      { nome: "Android", icone: "fab fa-android", cor: "from-green-600 to-emerald-600", descricao: "Sistema mobile mais usado do mundo.", versao: "15" },
+      { nome: "iOS", icone: "fab fa-apple", cor: "from-blue-500 to-indigo-600", descricao: "Sistema da Apple para iPhone e iPad.", versao: "18" }
     ];
 
     // ==================== FUNÇÕES COMUNS ====================
@@ -164,7 +166,7 @@
       localStorage.setItem('mochilaEscolar', JSON.stringify(materias));
     }
 
-    // ==================== MATÉRIAS E ANOTAÇÕES (mantido igual) ====================
+    // ==================== MATÉRIAS E ANOTAÇÕES ====================
     function criarMateriasIniciais() {
       const iniciais = ["Língua Portuguesa", "Literatura", "Redação", "Matemática", "Física", "Química", "Biologia", "História", "Geografia", "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes", "Educação Física", "Lógica de Programação", "HTML & CSS", "Programação Web"];
       materias = iniciais.map(nome => ({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] }));
@@ -186,10 +188,7 @@
       return icons[nome] || icons.default;
     }
 
-    // ... (todas as funções de adicionarMateria, excluirMateria, abrirMateria, salvarAnotacao, etc. permanecem iguais)
-
-    function renderizarListaMaterias() { /* ... seu código original ... */ 
-      // (Mantive o mesmo código que você enviou)
+    function renderizarListaMaterias() {
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
       const filtradas = materias.filter(m => m.nome.toLowerCase().includes(filtroAtual.toLowerCase()));
@@ -218,7 +217,6 @@
       document.getElementById('totalMaterias').textContent = `${materias.length} matérias`;
     }
 
-    // Funções de Anotações (resumidas para brevidade - use as mesmas que você já tinha)
     function adicionarMateria() {
       const nome = document.getElementById('novaMateria').value.trim();
       if (!nome) return showToast("Digite o nome da matéria!", "error");
@@ -231,7 +229,86 @@
       playActionSound();
     }
 
-    // (excluirMateria, abrirMateria, salvarAnotacao, renderizarAnotacoes, etc. — mantive exatamente como no seu código)
+    function excluirMateria(index) {
+      if (confirm(`Excluir "${materias[index].nome}"?`)) {
+        materias.splice(index, 1);
+        salvarTodosDados();
+        renderizarListaMaterias();
+        if (materiaAtual && materiaAtual.index === index) voltarParaMaterias();
+        showToast("Matéria removida");
+        playActionSound();
+      }
+    }
+
+    function abrirMateria(index) {
+      materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
+      document.getElementById('telaInicial').classList.add('hidden');
+      document.getElementById('areaAnotacoes').classList.remove('hidden');
+      document.getElementById('headerMateria').classList.remove('hidden');
+      document.getElementById('tituloMateria').innerHTML = `<i class="fas ${getIconeMateria(materiaAtual.nome)}"></i> ${materiaAtual.nome}`;
+      atualizarContador();
+      renderizarAnotacoes();
+      playActionSound();
+    }
+
+    function voltarParaMaterias() {
+      materiaAtual = null;
+      document.getElementById('telaInicial').classList.remove('hidden');
+      document.getElementById('areaAnotacoes').classList.add('hidden');
+      document.getElementById('headerMateria').classList.add('hidden');
+      renderizarListaMaterias();
+    }
+
+    function atualizarContador() {
+      const qtd = materiaAtual.anotacoes.length;
+      document.getElementById('contadorAnotacoes').textContent = `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
+    }
+
+    function salvarAnotacao() {
+      if (!materiaAtual) return;
+      const texto = document.getElementById('novaAnotacao').value.trim();
+      if (!texto) return showToast("Escreva algo antes de salvar!", "error");
+      const data = new Date().toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      materias[materiaAtual.index].anotacoes.unshift({ texto, data });
+      salvarTodosDados();
+      document.getElementById('novaAnotacao').value = '';
+      document.getElementById('charCount').textContent = '0 / 2000';
+      renderizarAnotacoes();
+      atualizarContador();
+      showToast("Anotação salva! 📌");
+      playActionSound();
+    }
+
+    function renderizarAnotacoes() {
+      const container = document.getElementById('listaAnotacoes');
+      container.innerHTML = '';
+      if (materiaAtual.anotacoes.length === 0) {
+        container.innerHTML = `<div class="text-center py-20 text-zinc-400"><i class="fas fa-feather-alt text-8xl opacity-30"></i><p class="text-2xl mt-6">Nenhuma anotação ainda...</p></div>`;
+        return;
+      }
+      materiaAtual.anotacoes.forEach((a, i) => {
+        const div = document.createElement('div');
+        div.className = "card bg-zinc-800 border border-zinc-700 rounded-3xl p-6";
+        div.innerHTML = `
+          <div class="flex justify-between items-start mb-4">
+            <span class="text-xs bg-zinc-700 px-3 py-1 rounded-full">${a.data}</span>
+            <button class="text-red-400 hover:text-red-500 text-xl"><i class="fas fa-trash"></i></button>
+          </div>
+          <p class="leading-relaxed whitespace-pre-wrap text-lg">${a.texto}</p>
+        `;
+        div.querySelector('button').onclick = () => {
+          if (confirm("Apagar anotação?")) {
+            materias[materiaAtual.index].anotacoes.splice(i, 1);
+            salvarTodosDados();
+            renderizarAnotacoes();
+            atualizarContador();
+            showToast("Anotação excluída");
+            playActionSound();
+          }
+        };
+        container.appendChild(div);
+      });
+    }
 
     // ==================== ABA SISTEMAS OPERACIONAIS ====================
     function renderizarSistemasOperacionais() {
