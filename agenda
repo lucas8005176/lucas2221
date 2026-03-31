@@ -1,214 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎒 Minha Mochila • Aulas & Anotações</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-  <script>
-    tailwind.config = {
-      theme: { extend: { fontFamily: { sans: ['Poppins', 'sans-serif'] } } }
-    }
-  </script>
-  <style>
-    body { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
-    .card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5); }
-    .materia-item { transition: all 0.2s; }
-    .toast { animation: slideIn 0.3s ease forwards; }
-    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOCHILA • Sistemas Operacionais</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(255,255,255,0.95);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+    </style>
 </head>
-<body class="min-h-screen text-white">
-  <div class="flex h-screen">
-    <!-- SIDEBAR (mantido igual) -->
-    <div class="w-80 bg-zinc-900 border-r border-violet-500/30 flex flex-col">
-      <div class="p-6 border-b border-zinc-700 flex items-center gap-3">
-        <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🎒</div>
-        <h1 class="text-3xl font-bold tracking-tight">Minha Mochila</h1>
-      </div>
-      <div class="p-4 space-y-3">
-        <div class="relative">
-          <input id="buscaMateria" type="text" placeholder="Buscar matéria..." class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 pl-11 focus:outline-none focus:border-violet-400 text-lg"/>
-          <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
-        </div>
-        <div class="flex gap-2">
-          <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Física)" class="flex-1 bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 focus:outline-none focus:border-violet-400 text-lg"/>
-          <button onclick="adicionarMateria()" class="bg-violet-600 hover:bg-violet-500 px-6 py-3 rounded-3xl font-semibold flex items-center gap-2">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="flex-1 overflow-y-auto px-3" id="listaMaterias"></div>
-      <div class="p-4 border-t border-zinc-700 flex justify-between text-sm">
-        <button onclick="limparTudo()" class="text-red-400 hover:text-red-500 flex items-center gap-2">
-          <i class="fas fa-trash"></i> Esvaziar mochila
-        </button>
-        <span id="totalMaterias" class="text-zinc-400"></span>
-      </div>
-    </div>
+<body>
 
-    <!-- ÁREA PRINCIPAL -->
-    <div class="flex-1 flex flex-col">
-      <!-- Tabs -->
-      <div class="bg-zinc-900 border-b border-zinc-700 px-6">
-        <div class="flex gap-8 text-lg">
-          <button onclick="mudarAba(0)" id="tab0" class="tab py-5 tab-active">📝 Aulas & Anotações</button>
-          <button onclick="mudarAba(1)" id="tab1" class="tab py-5">📟 Sistemas Operacionais</button>
-        </div>
-      </div>
+    <header>
+        <div class="logo">MOCHILA</div>
+        <h2>Educação • Tecnologia • Conhecimento</h2>
+    </header>
 
-      <!-- ABA 0: ANOTAÇÕES (mantida igual) -->
-      <div id="conteudoAba0" class="flex-1 flex flex-col"> ... (código original mantido) ... </div>
+    <div class="container">
 
-      <!-- ABA 1: SISTEMAS OPERACIONAIS - VERSÃO APRIMORADA -->
-      <div id="conteudoAba1" class="hidden flex-1 overflow-auto p-8">
-        <h2 class="text-4xl font-bold mb-2 flex items-center gap-4">
-          <i class="fas fa-desktop text-violet-400"></i> Sistemas Operacionais
-        </h2>
-        <p class="text-zinc-400 text-lg mb-8">Organização e gerenciamento de recursos de hardware e software.</p>
-
-        <!-- Introdução -->
-        <div class="bg-zinc-800/70 border border-violet-500/30 rounded-3xl p-8 mb-10">
-          <h3 class="text-2xl font-semibold mb-4 text-violet-300">O que é um Sistema Operacional?</h3>
-          <p class="text-zinc-300 leading-relaxed">
-            É um software que atua como intermediário entre o usuário e o hardware do computador. 
-            Ele gerencia recursos (CPU, memória, disco, periféricos) e fornece uma interface amigável.
-          </p>
+        <div class="card">
+            <h1>Sistemas Operacionais</h1>
+            <p><strong>Aula anterior • Resumo</strong></p>
         </div>
 
-        <!-- Funções Principais -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          <div class="bg-zinc-800 rounded-3xl p-6">
-            <h4 class="font-bold text-lg mb-4 text-emerald-400">Funções Principais</h4>
-            <ul class="space-y-3 text-zinc-300">
-              <li><i class="fas fa-check text-emerald-500 mr-3"></i> Gerenciamento de Processos</li>
-              <li><i class="fas fa-check text-emerald-500 mr-3"></i> Gerenciamento de Memória</li>
-              <li><i class="fas fa-check text-emerald-500 mr-3"></i> Gerenciamento de Arquivos</li>
-              <li><i class="fas fa-check text-emerald-500 mr-3"></i> Gerenciamento de Dispositivos</li>
-              <li><i class="fas fa-check text-emerald-500 mr-3"></i> Interface com o Usuário</li>
-              <li><i class="fas fa-check text-emerald-500 mr-3"></i> Segurança e Proteção</li>
+        <div class="card">
+            <h2>📌 O que é um Sistema Operacional?</h2>
+            <p>É um software que gerencia os recursos do computador (hardware) e fornece serviços para os programas de aplicação. Ele atua como intermediário entre o usuário e o hardware.</p>
+        </div>
+
+        <div class="card">
+            <h2>🔹 Principais Funções</h2>
+            <ul>
+                <li>Gerenciamento de Processos</li>
+                <li>Gerenciamento de Memória</li>
+                <li>Gerenciamento de Arquivos</li>
+                <li>Gerenciamento de Dispositivos (I/O)</li>
+                <li>Interface com o Usuário</li>
+                <li>Segurança e Proteção</li>
             </ul>
-          </div>
-          <div class="bg-zinc-800 rounded-3xl p-6">
-            <h4 class="font-bold text-lg mb-4 text-amber-400">Tipos de S.O.</h4>
-            <div class="space-y-4">
-              <div><span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">Batch</span> - Processamento em lote</div>
-              <div><span class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm">Multiprogramação</span> - Vários programas na memória</div>
-              <div><span class="bg-pink-500/20 text-pink-400 px-3 py-1 rounded-full text-sm">Time-Sharing</span> - Tempo compartilhado (ex: Unix)</div>
-              <div><span class="bg-rose-500/20 text-rose-400 px-3 py-1 rounded-full text-sm">Tempo Real</span> - Resposta imediata (ex: sistemas embarcados)</div>
-              <div><span class="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm">Distribuído</span> - Múltiplas máquinas trabalhando juntas</div>
-            </div>
-          </div>
         </div>
 
-        <!-- Lista de SOs -->
-        <h3 class="text-2xl font-bold mb-6">Principais Sistemas Operacionais</h3>
-        <div id="listaSO" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-        <!-- Tabela Comparativa -->
-        <div class="mt-12">
-          <h3 class="text-2xl font-bold mb-6">Tabela Comparativa</h3>
-          <div class="overflow-x-auto bg-zinc-900 rounded-3xl p-6">
-            <table class="w-full text-sm">
-              <thead>
-                <tr class="border-b border-zinc-700">
-                  <th class="text-left py-4">Sistema</th>
-                  <th class="text-left py-4">Fabricante</th>
-                  <th class="text-left py-4">Kernel</th>
-                  <th class="text-left py-4">Uso Principal</th>
+        <div class="card">
+            <h2>📊 Tipos de Sistemas Operacionais</h2>
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Exemplos</th>
+                    <th>Características</th>
                 </tr>
-              </thead>
-              <tbody id="tabelaSO" class="text-zinc-300"></tbody>
+                <tr>
+                    <td>Batch</td>
+                    <td>Antigos (ex: OS/360)</td>
+                    <td>Processamento em lotes</td>
+                </tr>
+                <tr>
+                    <td>Tempo Real</td>
+                    <td>VxWorks, QNX</td>
+                    <td>Resposta imediata</td>
+                </tr>
+                <tr>
+                    <td>Multitarefa</td>
+                    <td>Windows, Linux, macOS</td>
+                    <td>Vários programas ao mesmo tempo</td>
+                </tr>
+                <tr>
+                    <td>Distribuído</td>
+                    <td>Android, Kubernetes</td>
+                    <td>Recursos em várias máquinas</td>
+                </tr>
             </table>
-          </div>
         </div>
-      </div>
+
+        <div class="card">
+            <h2>💻 Sistemas Operacionais Mais Usados</h2>
+            <ul>
+                <li><strong>Windows</strong> - Microsoft (mais usado em PCs)</li>
+                <li><strong>Linux</strong> - Open Source (servidores e programação)</li>
+                <li><strong>macOS</strong> - Apple</li>
+                <li><strong>Android</strong> - Google (celulares)</li>
+                <li><strong>iOS</strong> - Apple (iPhone)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>✅ Conceitos Importantes da Aula Anterior</h2>
+            <ul>
+                <li>Kernel (núcleo do SO)</li>
+                <li>Shell (interface de comando)</li>
+                <li>Processo vs Thread</li>
+                <li>Escalonamento de Processos</li>
+                <li>Memória Virtual</li>
+                <li>Drivers de dispositivos</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>✍️ Reflexão / Tarefa da Aula</h2>
+            <p>Qual Sistema Operacional você usa no dia a dia? Quais vantagens e desvantagens você percebe?</p>
+        </div>
+
     </div>
-  </div>
 
-  <!-- Toast e Audio (mantidos) -->
-  <div id="toast" class="hidden fixed bottom-6 right-6 bg-zinc-800 border border-violet-500 text-white px-6 py-3 rounded-3xl shadow-2xl"></div>
-  <audio id="actionSound" preload="auto">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
-  </audio>
+    <footer>
+        <p>MOCHILA • Desenvolvido por LUCAS • Aula de Sistemas Operacionais</p>
+        <p>Ipaba, Minas Gerais • 2026</p>
+    </footer>
 
-  <script>
-    // ... (todo o código JavaScript original mantido - sidebar, anotações, etc.) ...
-
-    const sistemasOperacionais = [
-      { nome: "Windows 11", icone: "fab fa-windows", cor: "from-blue-600 to-indigo-600", fabricante: "Microsoft", kernel: "NT", uso: "Desktop / Corporativo", descricao: "Interface moderna, integração com nuvem e segurança avançada." },
-      { nome: "Linux Ubuntu", icone: "fab fa-linux", cor: "from-orange-600 to-red-600", fabricante: "Canonical", kernel: "Linux", uso: "Servidores / Desenvolvedores", descricao: "Gratuito, estável e altamente personalizável." },
-      { nome: "macOS Sequoia", icone: "fab fa-apple", cor: "from-gray-700 to-zinc-800", fabricante: "Apple", kernel: "XNU", uso: "Design / Desenvolvimento", descricao: "Excelente ecossistema e otimização de hardware." },
-      { nome: "Android", icone: "fab fa-android", cor: "from-green-600 to-emerald-600", fabricante: "Google", kernel: "Linux", uso: "Dispositivos móveis", descricao: "Sistema mais usado do mundo em smartphones." },
-      { nome: "iOS", icone: "fab fa-apple", cor: "from-blue-500 to-indigo-600", fabricante: "Apple", kernel: "XNU", uso: "iPhone / iPad", descricao: "Foco em segurança e experiência premium." },
-      { nome: "Chrome OS", icone: "fab fa-chrome", cor: "from-blue-700 to-sky-600", fabricante: "Google", kernel: "Linux", uso: "Educação / Leve", descricao: "Baseado na web, muito rápido e seguro." }
-    ];
-
-    function renderizarSistemasOperacionais() {
-      const container = document.getElementById('listaSO');
-      container.innerHTML = '';
-
-      sistemasOperacionais.forEach(so => {
-        const div = document.createElement('div');
-        div.className = `card bg-gradient-to-br ${so.cor} border border-white/10 rounded-3xl p-6 text-white h-full flex flex-col`;
-        div.innerHTML = `
-          <div class="flex items-center gap-4 mb-5">
-            <i class="${so.icone} text-5xl"></i>
-            <div>
-              <h3 class="text-2xl font-bold">${so.nome}</h3>
-              <p class="text-sm opacity-75">${so.fabricante}</p>
-            </div>
-          </div>
-          <p class="mb-6 flex-1">${so.descricao}</p>
-          <div class="text-xs bg-white/20 rounded-2xl px-4 py-3 space-y-1">
-            <div><strong>Kernel:</strong> ${so.kernel}</div>
-            <div><strong>Uso principal:</strong> ${so.uso}</div>
-          </div>
-          <button onclick="marcarComoEstudado(this)" class="mt-6 w-full bg-white/20 hover:bg-white/30 py-3 rounded-2xl font-semibold transition-all">
-            ✅ Marcar como Estudado
-          </button>
-        `;
-        container.appendChild(div);
-      });
-
-      // Tabela comparativa
-      const tbody = document.getElementById('tabelaSO');
-      tbody.innerHTML = sistemasOperacionais.map(so => `
-        <tr class="border-b border-zinc-700 hover:bg-zinc-800/50">
-          <td class="py-4 font-medium">${so.nome}</td>
-          <td class="py-4">${so.fabricante}</td>
-          <td class="py-4">${so.kernel}</td>
-          <td class="py-4">${so.uso}</td>
-        </tr>
-      `).join('');
-    }
-
-    function marcarComoEstudado(btn) {
-      btn.innerHTML = '✅ Estudado!';
-      btn.disabled = true;
-      btn.classList.add('!bg-emerald-500', 'text-white');
-      playActionSound();
-      showToast("Conteúdo marcado como estudado!");
-    }
-
-    // Substitua a função mudarAba existente por esta:
-    function mudarAba(n) {
-      document.querySelectorAll('[id^="conteudoAba"]').forEach(el => el.classList.add('hidden'));
-      document.getElementById(`conteudoAba${n}`).classList.remove('hidden');
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
-      document.getElementById(`tab${n}`).classList.add('tab-active');
-      
-      if (n === 1) renderizarSistemasOperacionais();
-    }
-
-    // Inicialização (mantida)
-    window.onload = () => {
-      carregarTodosDados();
-      mudarAba(0);
-      // ... resto do código de inicialização ...
-    };
-  </script>
 </body>
 </html>
