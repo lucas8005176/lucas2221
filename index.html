@@ -87,13 +87,6 @@
             <div class="text-9xl mb-6 animate-bounce">🎒</div>
             <h2 class="text-5xl font-bold mb-4">Bem-vindo à sua Mochila!</h2>
             <p class="text-zinc-400 text-xl mb-10">Organize suas aulas e anotações aqui.</p>
-          
-            <!-- BOTÃO ALTERADO -->
-            <a href="pagina2.html"
-               class="group inline-flex items-center gap-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 px-10 py-5 rounded-3xl font-bold text-2xl shadow-xl shadow-violet-500/50 transition-all hover:scale-105">
-              <span>IR PARA OUTRA MATERIA </span>
-              <i class="fas fa-arrow-right text-3xl group-active:translate-x-2 transition"></i>
-            </a>
           </div>
         </div>
 
@@ -176,10 +169,12 @@
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
       const filtradas = materias.filter(m => m.nome.toLowerCase().includes(filtroAtual.toLowerCase()));
+      
       if (filtradas.length === 0) {
         container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500">Nenhuma matéria encontrada</div>`;
         return;
       }
+
       filtradas.forEach(m => {
         const idx = materias.findIndex(mat => mat.nome === m.nome);
         const active = materiaAtual && materiaAtual.index === idx;
@@ -205,6 +200,7 @@
       const nome = document.getElementById('novaMateria').value.trim();
       if (!nome) return showToast("Digite o nome da matéria!", "error");
       if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) return showToast("Matéria já existe!", "error");
+      
       materias.unshift({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] });
       salvarTodosDados();
       renderizarListaMaterias();
@@ -252,6 +248,7 @@
       if (!materiaAtual) return;
       const texto = document.getElementById('novaAnotacao').value.trim();
       if (!texto) return showToast("Escreva algo antes de salvar!", "error");
+      
       const data = new Date().toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
       materias[materiaAtual.index].anotacoes.unshift({ texto, data });
       salvarTodosDados();
@@ -332,6 +329,3 @@
   </script>
 </body>
 </html>
-<a href="pagina2.html" class="...">
-    <span>IR PARA SITE 2</span>
-</a>
