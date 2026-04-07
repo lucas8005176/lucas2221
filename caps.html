@@ -2,37 +2,28 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Meu Site</title>
+    <title>Minha Imagem</title>
 
     <style>
         body {
             margin: 0;
-            padding: 0;
-
-            /* IMAGEM DE FUNDO */
-            background-image: url('fundo.png');
-
-            /* Ajustes do fundo */
-            background-size: cover;       /* cobre toda a tela */
-            background-position: center;  /* centraliza */
-            background-repeat: no-repeat; /* não repete */
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
         }
 
-        .conteudo {
-            color: white;
-            text-align: center;
-            padding-top: 40vh;
-            font-size: 30px;
-            font-family: Arial;
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="conteudo">
-        Meu site com fundo 🔥
-    </div>
+    <img src="imagem.png" alt="Minha imagem">
 
 </body>
 </html>
