@@ -1,208 +1,613 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>🎒 Minha Mochila • Aulas & Anotações</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
   <script>
+
     tailwind.config = {
-      theme: { extend: { fontFamily: { sans: ['Poppins', 'sans-serif'] } } }
+
+      theme: {
+
+        extend: {
+
+          fontFamily: { sans: ['Poppins', 'sans-serif'] }
+
+        }
+
+      }
+
     }
+
   </script>
+
   <style>
+
     body { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
+
     .card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
     .card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4); }
+
     .materia-item { transition: all 0.2s; }
+
     .toast { animation: slideIn 0.3s ease forwards; }
-    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    
-    /* Estilo do Player Mashle */
-    .mashle-player { background: linear-gradient(135deg, #1a0033, #330066); border: 4px solid #00ffff; }
+
+    @keyframes slideIn {
+
+      from { transform: translateX(100%); opacity: 0; }
+
+      to { transform: translateX(0); opacity: 1; }
+
+    }
+
   </style>
+
 </head>
+
 <body class="min-h-screen text-white">
+
   <div class="flex h-screen">
+
     <!-- SIDEBAR -->
+
     <div class="w-80 bg-zinc-900 border-r border-violet-500/30 flex flex-col">
+
       <div class="p-6 border-b border-zinc-700 flex items-center gap-3">
+
         <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🎒</div>
+
         <h1 class="text-3xl font-bold tracking-tight">Minha Mochila</h1>
+
       </div>
+
       <div class="p-4 space-y-3">
+
         <div class="relative">
+
           <input id="buscaMateria" type="text" placeholder="Buscar matéria..."
+
                  class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 pl-11 focus:outline-none focus:border-violet-400 text-lg"/>
+
           <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+
         </div>
+
         <div class="flex gap-2">
+
           <input id="novaMateria" type="text" placeholder="Nova matéria (ex: Física)"
+
                  class="flex-1 bg-zinc-800 border border-zinc-700 rounded-3xl px-5 py-3 focus:outline-none focus:border-violet-400 text-lg"/>
-          <button onclick="adicionarMateria()" class="bg-violet-600 hover:bg-violet-500 px-6 py-3 rounded-3xl font-semibold flex items-center gap-2">
+
+          <button onclick="adicionarMateria()"
+
+                  class="bg-violet-600 hover:bg-violet-500 px-6 py-3 rounded-3xl font-semibold flex items-center gap-2">
+
             <i class="fas fa-plus"></i>
+
           </button>
+
         </div>
+
       </div>
+
       <div class="flex-1 overflow-y-auto px-3" id="listaMaterias"></div>
+
       <div class="p-4 border-t border-zinc-700 flex justify-between text-sm">
+
         <button onclick="limparTudo()" class="text-red-400 hover:text-red-500 flex items-center gap-2">
+
           <i class="fas fa-trash"></i> Esvaziar mochila
+
         </button>
+
         <span id="totalMaterias" class="text-zinc-400"></span>
+
       </div>
+
     </div>
 
     <!-- ÁREA PRINCIPAL -->
+
     <div class="flex-1 flex flex-col">
+
       <div class="bg-zinc-900 border-b border-zinc-700 px-6">
+
         <div class="flex gap-8 text-lg">
+
           <button onclick="mudarAba(0)" id="tab0" class="tab py-5 tab-active">📝 Aulas & Anotações</button>
-          <button onclick="mudarAba(1)" id="tab1" class="tab py-5">🎵 Mashle OST - 1ª Temporada</button>
+
         </div>
+
       </div>
 
       <!-- ABA 0: ANOTAÇÕES -->
+
       <div id="conteudoAba0" class="flex-1 flex flex-col">
-        <!-- ... (seu código de anotações continua igual) ... -->
+
         <header id="headerMateria" class="hidden border-b border-zinc-700 bg-zinc-900 px-6 py-4 flex items-center justify-between">
+
           <button onclick="voltarParaMaterias()" class="flex items-center gap-2 text-violet-400 hover:text-violet-300">
+
             <i class="fas fa-arrow-left"></i> Voltar
+
           </button>
+
           <h2 id="tituloMateria" class="text-2xl font-bold flex items-center gap-3"></h2>
+
           <div class="flex items-center gap-4">
+
             <span id="contadorAnotacoes" class="bg-zinc-800 px-4 py-1 rounded-3xl text-sm"></span>
+
             <button onclick="salvarAnotacao()" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-2 rounded-3xl font-semibold flex items-center gap-2">
+
               <i class="fas fa-save"></i> Salvar Aula
+
             </button>
+
           </div>
+
         </header>
+
         <div id="telaInicial" class="flex-1 flex items-center justify-center">
+
           <div class="text-center max-w-md">
+
             <div class="text-9xl mb-6 animate-bounce">🎒</div>
+
             <h2 class="text-5xl font-bold mb-4">Bem-vindo à sua Mochila!</h2>
+
             <p class="text-zinc-400 text-xl mb-10">Organize suas aulas e anotações aqui.</p>
+
           </div>
+
         </div>
+
         <div id="areaAnotacoes" class="hidden flex-1 flex flex-col">
+
           <div class="p-6 bg-zinc-900 border-b border-zinc-700">
+
             <div class="relative">
+
               <textarea id="novaAnotacao" rows="4" placeholder="O que rolou na aula hoje? ✍️"
+
                         class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl p-5 text-lg resize-none focus:outline-none focus:border-emerald-400"></textarea>
+
               <div id="charCount" class="absolute bottom-4 right-6 text-xs text-zinc-500">0 / 2000</div>
+
             </div>
+
             <div class="flex justify-end mt-4">
+
               <button onclick="salvarAnotacao()" class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-3xl font-semibold flex items-center gap-2 text-lg">
+
                 📌 Salvar anotação
+
               </button>
+
             </div>
+
           </div>
+
           <div id="listaAnotacoes" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
+
         </div>
+
       </div>
 
-      <!-- ABA 1: PLAYER MASHLE -->
-      <div id="conteudoAba1" class="hidden flex-1 p-8 overflow-y-auto">
-        <div class="max-w-4xl mx-auto">
-          <h1 class="text-4xl font-bold text-center mb-2 flex items-center justify-center gap-4">
-            🎵 MASHLE • 1ª Temporada OST
-          </h1>
-          <p class="text-center text-violet-300 mb-8">Toque as músicas enquanto estuda ou anota as aulas!</p>
-          
-          <div class="mashle-player rounded-3xl p-8 shadow-2xl">
-            <div class="now-playing text-center text-xl mb-6 text-cyan-300" id="nowPlaying">Selecione uma música...</div>
-            
-            <audio id="audioPlayer" controls class="w-full mb-8"></audio>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left" id="trackList">
-              <!-- Músicas serão adicionadas via JavaScript -->
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
   </div>
 
   <!-- Toast -->
+
   <div id="toast" class="hidden fixed bottom-6 right-6 bg-zinc-800 border border-violet-500 text-white px-6 py-3 rounded-3xl shadow-2xl"></div>
 
+  <audio id="actionSound" preload="auto">
+
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+
+  </audio>
+
   <script>
-    // ==================== SUAS FUNÇÕES ANTIGAS (mantidas) ====================
+
+    // ==================== VARIÁVEIS GLOBAIS ====================
+
     let materias = [];
+
     let materiaAtual = null;
+
     let filtroAtual = '';
 
-    function playActionSound() { /* ... seu código ... */ }
-    function showToast(msg, tipo = 'success') { /* ... seu código ... */ }
-    function salvarTodosDados() { /* ... seu código ... */ }
-    function criarMateriasIniciais() { /* ... seu código ... */ }
-    function carregarTodosDados() { /* ... seu código ... */ }
-    function getIconeMateria(nome) { /* ... seu código ... */ }
-    function renderizarListaMaterias() { /* ... seu código ... */ }
-    function adicionarMateria() { /* ... seu código ... */ }
-    function excluirMateria(index) { /* ... seu código ... */ }
-    function abrirMateria(index) { /* ... seu código ... */ }
-    function voltarParaMaterias() { /* ... seu código ... */ }
-    function atualizarContador() { /* ... seu código ... */ }
-    function salvarAnotacao() { /* ... seu código ... */ }
-    function renderizarAnotacoes() { /* ... seu código ... */ }
-    function mudarAba(n) {
-      document.getElementById('conteudoAba0').classList.toggle('hidden', n !== 0);
-      document.getElementById('conteudoAba1').classList.toggle('hidden', n !== 1);
+    // ==================== FUNÇÕES COMUNS ====================
+
+    function playActionSound() {
+
+      const audio = document.getElementById('actionSound');
+
+      audio.currentTime = 0;
+
+      audio.volume = 0.4;
+
+      audio.play().catch(() => {});
+
     }
-    function limparTudo() { /* ... seu código ... */ }
 
-    // ==================== PLAYER MASHLE ====================
-    const mashleTracks = [
-      { title: "Opening 1 - Seishun wa Nonstop!", src: "https://example.com/mashle-op1.mp3" },
-      { title: "Ending 1 - Bling-Bang-Bang-Born", src: "https://example.com/mashle-ed1.mp3" },
-      { title: "Opening 2", src: "https://example.com/mashle-op2.mp3" },
-      { title: "Ending 2", src: "https://example.com/mashle-ed2.mp3" },
-      { title: "OST - Magic and Muscles", src: "https://example.com/mashle-ost1.mp3" },
-      // Adicione mais músicas aqui
-    ];
+    function showToast(msg, tipo = 'success') {
 
-    function criarPlayerMashle() {
-      const container = document.getElementById('trackList');
+      const toast = document.getElementById('toast');
+
+      toast.textContent = msg;
+
+      toast.className = `fixed bottom-6 right-6 px-6 py-3 rounded-3xl shadow-2xl ${
+
+        tipo === 'error' ? 'bg-red-900 border-red-500' : 'bg-zinc-800 border-violet-500'
+
+      }`;
+
+      toast.classList.remove('hidden');
+
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+
+    }
+
+    function salvarTodosDados() {
+
+      localStorage.setItem('mochilaEscolar', JSON.stringify(materias));
+
+    }
+
+    // ==================== MATÉRIAS E ANOTAÇÕES ====================
+
+    function criarMateriasIniciais() {
+
+      const iniciais = ["Língua Portuguesa", "Literatura", "Redação", "Matemática", "Física", "Química", "Biologia", "História", "Geografia", "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes", "Educação Física", "Lógica de Programação", "HTML & CSS", "Programação Web"];
+
+      materias = iniciais.map(nome => ({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] }));
+
+      salvarTodosDados();
+
+    }
+
+    function carregarTodosDados() {
+
+      const salvos = localStorage.getItem('mochilaEscolar');
+
+      if (salvos) materias = JSON.parse(salvos);
+
+      else criarMateriasIniciais();
+
+      renderizarListaMaterias();
+
+    }
+
+    function getIconeMateria(nome) {
+
+      const icons = {
+
+        "Matemática": "fa-calculator", "Física": "fa-atom", "Química": "fa-flask", "Biologia": "fa-dna",
+
+        "História": "fa-landmark", "Geografia": "fa-globe", "Filosofia": "fa-lightbulb", "default": "fa-book"
+
+      };
+
+      return icons[nome] || icons.default;
+
+    }
+
+    function renderizarListaMaterias() {
+
+      const container = document.getElementById('listaMaterias');
+
       container.innerHTML = '';
 
-      mashleTracks.forEach(track => {
+      const filtradas = materias.filter(m => m.nome.toLowerCase().includes(filtroAtual.toLowerCase()));
+
+     
+
+      if (filtradas.length === 0) {
+
+        container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500">Nenhuma matéria encontrada</div>`;
+
+        return;
+
+      }
+
+      filtradas.forEach(m => {
+
+        const idx = materias.findIndex(mat => mat.nome === m.nome);
+
+        const active = materiaAtual && materiaAtual.index === idx;
+
         const div = document.createElement('div');
-        div.className = "bg-zinc-800 hover:bg-zinc-700 p-4 rounded-2xl cursor-pointer flex items-center gap-4 transition-all";
+
+        div.className = `materia-item group mx-3 my-2 px-5 py-4 rounded-3xl flex items-center gap-4 cursor-pointer transition-all ${active ? 'bg-violet-600 shadow-xl' : 'hover:bg-zinc-800'}`;
+
         div.innerHTML = `
-          <i class="fas fa-play text-violet-400"></i>
-          <span class="flex-1">${track.title}</span>
+
+          <i class="fas ${getIconeMateria(m.nome)} text-2xl ${active ? 'text-white' : 'text-violet-400'}"></i>
+
+          <div class="flex-1 min-w-0">
+
+            <h3 class="font-semibold truncate">${m.nome}</h3>
+
+            <p class="text-xs text-zinc-400">${m.anotacoes.length} anotação${m.anotacoes.length !== 1 ? 's' : ''}</p>
+
+          </div>
+
+          <button onclick="event.stopImmediatePropagation(); excluirMateria(${idx});" class="text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100">
+
+            <i class="fas fa-trash"></i>
+
+          </button>
+
         `;
-        div.onclick = () => tocarMusica(track);
+
+        div.onclick = () => { playActionSound(); abrirMateria(idx); };
+
         container.appendChild(div);
+
       });
+
+      document.getElementById('totalMaterias').textContent = `${materias.length} matérias`;
+
     }
 
-    function tocarMusica(track) {
-      const audio = document.getElementById('audioPlayer');
-      const nowPlaying = document.getElementById('nowPlaying');
-      
-      audio.src = track.src;
-      audio.play();
-      nowPlaying.textContent = `♪ ${track.title}`;
+    function adicionarMateria() {
+
+      const nome = document.getElementById('novaMateria').value.trim();
+
+      if (!nome) return showToast("Digite o nome da matéria!", "error");
+
+      if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) return showToast("Matéria já existe!", "error");
+
+     
+
+      materias.unshift({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] });
+
+      salvarTodosDados();
+
+      renderizarListaMaterias();
+
+      document.getElementById('novaMateria').value = '';
+
+      showToast(`"${nome}" adicionada!`);
+
+      playActionSound();
+
+    }
+
+    function excluirMateria(index) {
+
+      if (confirm(`Excluir "${materias[index].nome}"?`)) {
+
+        materias.splice(index, 1);
+
+        salvarTodosDados();
+
+        renderizarListaMaterias();
+
+        if (materiaAtual && materiaAtual.index === index) voltarParaMaterias();
+
+        showToast("Matéria removida");
+
+        playActionSound();
+
+      }
+
+    }
+
+    function abrirMateria(index) {
+
+      materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
+
+      document.getElementById('telaInicial').classList.add('hidden');
+
+      document.getElementById('areaAnotacoes').classList.remove('hidden');
+
+      document.getElementById('headerMateria').classList.remove('hidden');
+
+      document.getElementById('tituloMateria').innerHTML = `<i class="fas ${getIconeMateria(materiaAtual.nome)}"></i> ${materiaAtual.nome}`;
+
+      atualizarContador();
+
+      renderizarAnotacoes();
+
+      playActionSound();
+
+    }
+
+    function voltarParaMaterias() {
+
+      materiaAtual = null;
+
+      document.getElementById('telaInicial').classList.remove('hidden');
+
+      document.getElementById('areaAnotacoes').classList.add('hidden');
+
+      document.getElementById('headerMateria').classList.add('hidden');
+
+      renderizarListaMaterias();
+
+    }
+
+    function atualizarContador() {
+
+      const qtd = materiaAtual.anotacoes.length;
+
+      document.getElementById('contadorAnotacoes').textContent = `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
+
+    }
+
+    function salvarAnotacao() {
+
+      if (!materiaAtual) return;
+
+      const texto = document.getElementById('novaAnotacao').value.trim();
+
+      if (!texto) return showToast("Escreva algo antes de salvar!", "error");
+
+     
+
+      const data = new Date().toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+      materias[materiaAtual.index].anotacoes.unshift({ texto, data });
+
+      salvarTodosDados();
+
+      document.getElementById('novaAnotacao').value = '';
+
+      document.getElementById('charCount').textContent = '0 / 2000';
+
+      renderizarAnotacoes();
+
+      atualizarContador();
+
+      showToast("Anotação salva! 📌");
+
+      playActionSound();
+
+    }
+
+    function renderizarAnotacoes() {
+
+      const container = document.getElementById('listaAnotacoes');
+
+      container.innerHTML = '';
+
+      if (materiaAtual.anotacoes.length === 0) {
+
+        container.innerHTML = `<div class="text-center py-20 text-zinc-400"><i class="fas fa-feather-alt text-8xl opacity-30"></i><p class="text-2xl mt-6">Nenhuma anotação ainda...</p></div>`;
+
+        return;
+
+      }
+
+      materiaAtual.anotacoes.forEach((a, i) => {
+
+        const div = document.createElement('div');
+
+        div.className = "card bg-zinc-800 border border-zinc-700 rounded-3xl p-6";
+
+        div.innerHTML = `
+
+          <div class="flex justify-between items-start mb-4">
+
+            <span class="text-xs bg-zinc-700 px-3 py-1 rounded-full">${a.data}</span>
+
+            <button class="text-red-400 hover:text-red-500 text-xl"><i class="fas fa-trash"></i></button>
+
+          </div>
+
+          <p class="leading-relaxed whitespace-pre-wrap text-lg">${a.texto}</p>
+
+        `;
+
+        div.querySelector('button').onclick = () => {
+
+          if (confirm("Apagar anotação?")) {
+
+            materias[materiaAtual.index].anotacoes.splice(i, 1);
+
+            salvarTodosDados();
+
+            renderizarAnotacoes();
+
+            atualizarContador();
+
+            showToast("Anotação excluída");
+
+            playActionSound();
+
+          }
+
+        };
+
+        container.appendChild(div);
+
+      });
+
+    }
+
+    function mudarAba(n) {
+
+      document.getElementById('conteudoAba0').classList.remove('hidden');
+
+    }
+
+    function limparTudo() {
+
+      if (confirm("⚠️ Apagar TODA a mochila?")) {
+
+        localStorage.clear();
+
+        materias = [];
+
+        criarMateriasIniciais();
+
+        renderizarListaMaterias();
+
+        showToast("Mochila reiniciada!");
+
+        playActionSound();
+
+      }
+
     }
 
     // ==================== INICIALIZAÇÃO ====================
-    window.onload = () => {
-      carregarTodosDados();
-      mudarAba(0);
-      criarPlayerMashle();
 
-      // Eventos de busca e enter
+    window.onload = () => {
+
+      carregarTodosDados();
+
+      mudarAba(0);
+
       document.getElementById('buscaMateria').addEventListener('input', e => {
+
         filtroAtual = e.target.value;
+
         renderizarListaMaterias();
+
       });
+
       document.getElementById('novaMateria').addEventListener('keypress', e => {
+
         if (e.key === 'Enter') adicionarMateria();
+
       });
+
+      const textarea = document.getElementById('novaAnotacao');
+
+      textarea.addEventListener('input', () => {
+
+        const count = textarea.value.length;
+
+        document.getElementById('charCount').textContent = `${count} / 2000`;
+
+      });
+
     };
+
   </script>
+
 </body>
+
+  <a href="aula.html"> AULA X </button></a>
+
+   
+
 </html>
+
+ 
