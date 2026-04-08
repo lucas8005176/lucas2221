@@ -603,12 +603,61 @@
   </script>
 
 </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botões Temáticos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e2937);
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
 
-  <a href="aula.html"> AULA X </button></a>
-<a href="caps.html"> aula zueira </button></a>
-<a href="braille.html"> aual do dia do braile </button></a>
-   
+  <div class="grid gap-8 md:grid-cols-3 grid-cols-1 p-8">
 
+    <!-- Botão 1: AULA X -->
+    <a href="aula.html" class="group">
+      <div class="relative overflow-hidden bg-gradient-to-br from-violet-600 to-indigo-600 text-white rounded-3xl p-8 h-64 flex flex-col items-center justify-center shadow-2xl hover:scale-105 transition-all duration-300 border border-violet-400/30">
+        <i class="fa-solid fa-graduation-cap text-6xl mb-4 opacity-80 group-hover:rotate-12 transition-transform"></i>
+        <h2 class="text-4xl font-bold tracking-wider">AULA X</h2>
+        <p class="text-violet-200 mt-2 text-center">A aula principal</p>
+        
+        <div class="absolute -bottom-6 -right-6 text-[120px] font-black text-white/10">X</div>
+      </div>
+    </a>
+
+    <!-- Botão 2: Aula Zueira -->
+    <a href="caps.html" class="group">
+      <div class="relative overflow-hidden bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-3xl p-8 h-64 flex flex-col items-center justify-center shadow-2xl hover:scale-105 transition-all duration-300 border border-amber-400/30">
+        <i class="fa-solid fa-face-laugh-squint text-6xl mb-4 group-hover:scale-125 transition-transform"></i>
+        <h2 class="text-4xl font-bold tracking-wider">AULA ZUEIRA</h2>
+        <p class="text-amber-200 mt-2 text-center">Modo meme ativado 😂</p>
+        
+        <div class="absolute top-4 right-4 text-5xl">🤡</div>
+      </div>
+    </a>
+
+    <!-- Botão 3: Dia do Braille -->
+    <a href="braille.html" class="group">
+      <div class="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-3xl p-8 h-64 flex flex-col items-center justify-center shadow-2xl hover:scale-105 transition-all duration-300 border border-emerald-400/30">
+        <i class="fa-solid fa-braille text-7xl mb-4 group-hover:rotate-6 transition-transform"></i>
+        <h2 class="text-4xl font-bold tracking-wider text-center">DIA DO BRAILLE</h2>
+        <p class="text-emerald-200 mt-2 text-center">Acessibilidade e inclusão</p>
+        
+        <div class="absolute -bottom-4 text-[100px] opacity-20">⠿</div>
+      </div>
+    </a>
+
+  </div>
+
+</body>
 </html>
-
- 
