@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direitos Humanos na Escola</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #f1f5f9;
+        }
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 4px solid #3b82f6;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: #60a5fa;
+        }
+        h2 {
+            color: #93c5fd;
+            margin: 2rem 0 1rem;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        .card {
+            background: rgba(30, 58, 138, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .articles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .article {
+            background: #1e2937;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-top: 4px solid #60a5fa;
+        }
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: #0f172a;
+            margin-top: 3rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #2563eb;
+            transform: scale(1.05);
+        }
+        nav {
+            background: #1e2937;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav a {
+            color: #bae6fd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🛡️ Direitos Humanos na Escola</h1>
+            <p>Educação, Dignidade e Cidadania</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#introducao">Introdução</a></li>
+                <li><a href="#artigos">Artigos</a></li>
+                <li><a href="#atividades">Atividades</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="introducao">
+            <h2>Por que falar de Direitos Humanos na Escola?</h2>
+            <div class="card">
+                <p>A escola é o espaço ideal para formar cidadãos conscientes, respeitosos e capazes de defender seus direitos e os direitos dos outros. Este projeto apresenta os principais direitos humanos relacionados à educação, conforme a <strong>Declaração Universal dos Direitos Humanos</strong> e a <strong>Constituição Brasileira</strong>.</p>
+            </div>
+        </section>
+
+        <section id="artigos">
+            <h2>Principais Direitos na Escola</h2>
+            <div class="articles">
+                <div class="article">
+                    <h3>1. Direito à Educação</h3>
+                    <p>Todo ser humano tem direito à educação. A educação deve ser gratuita, pelo menos nos graus elementares e fundamentais.</p>
+                    <small>Artigo 26 da Declaração Universal</small>
+                </div>
+                <div class="article">
+                    <h3>2. Direito à Não Discriminação</h3>
+                    <p>Todos são iguais perante a lei, sem distinção de raça, cor, sexo, religião ou origem.</p>
+                    <small>Artigo 7º da Constituição Federal</small>
+                </div>
+                <div class="article">
+                    <h3>3. Direito à Liberdade de Expressão</h3>
+                    <p>Direito de manifestar opiniões e participar da vida escolar de forma democrática.</p>
+                </div>
+                <div class="article">
+                    <h3>4. Direito à Proteção contra Violência</h3>
+                    <p>Proteção contra bullying, violência física, psicológica e sexual no ambiente escolar.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="atividades">
+            <h2>Atividades Educativas</h2>
+            <div class="card">
+                <h3>Atividade 1: Debate em Sala</h3>
+                <p>"A escola tem o dever de combater o racismo e a homofobia?"</p>
+                <a href="#" class="btn">Baixar material em PDF</a>
+            </div>
+            <div class="card">
+                <h3>Atividade 2: Cartaz dos Direitos</h3>
+                <p>Peça aos alunos que criem cartazes ilustrando um direito humano importante para eles.</p>
+            </div>
+        </section>
+
+        <section id="recursos">
+            <h2>Recursos Úteis</h2>
+            <ul>
+                <li><a href="https://www.ohchr.org/" target="_blank">Alto Comissariado da ONU para Direitos Humanos</a></li>
+                <li><a href="https://www.gov.br/mdh" target="_blank">Ministério dos Direitos Humanos (Brasil)</a></li>
+                <li><a href="https://unesco.org.br/" target="_blank">UNESCO Brasil</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>Projeto educacional • Licença MIT • Feito com ❤️ para uma escola mais justa</p>
+        <p><strong>Contribua no GitHub!</strong></p>
+    </footer>
+
+    <script>
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        console.log("%c✅ Site de Direitos Humanos na Escola carregado com sucesso!", "color: #60a5fa; font-size: 16px;");
+    </script>
+</body>
+</html>
