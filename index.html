@@ -35,7 +35,6 @@
         <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-fuchsia-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🎒</div>
         <h1 class="text-3xl font-bold tracking-tight">Minha Mochila</h1>
       </div>
-      
       <div class="p-4 space-y-3">
         <div class="relative">
           <input id="buscaMateria" type="text" placeholder="Buscar matéria..."
@@ -51,28 +50,27 @@
           </button>
         </div>
       </div>
-
       <div class="flex-1 overflow-y-auto px-3" id="listaMaterias"></div>
 
-      <!-- === BOTÕES PARA OUTROS ARQUIVOS === -->
+      <!-- === BOTÕES PARA OUTROS ARQUIVOS (NOVO) === -->
       <div class="p-4 border-t border-zinc-700">
-        <p class="text-xs uppercase text-zinc-500 mb-3 px-3 tracking-widest">Outros Projetos</p>
-        <div class="grid grid-cols-1 gap-2">
+        <p class="text-xs uppercase text-zinc-500 mb-3 px-3">Outros Projetos</p>
+        <div class="space-y-2">
           <a href="braille.html" target="_blank"
-             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-violet-600/30 rounded-3xl transition-all">
-            <i class="fas fa-blind text-2xl text-violet-400"></i>
+             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-violet-600 rounded-3xl transition-all group">
+            <i class="fas fa-blind text-2xl text-violet-400 group-hover:text-white"></i>
             <span class="font-medium">Braille</span>
           </a>
           
           <a href="aula.html" target="_blank"
-             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-emerald-600/30 rounded-3xl transition-all">
-            <i class="fas fa-chalkboard text-2xl text-emerald-400"></i>
+             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-emerald-600 rounded-3xl transition-all group">
+            <i class="fas fa-chalkboard-teacher text-2xl text-emerald-400 group-hover:text-white"></i>
             <span class="font-medium">Aulas</span>
           </a>
           
           <a href="caps.html" target="_blank"
-             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-amber-600/30 rounded-3xl transition-all">
-            <i class="fas fa-graduation-cap text-2xl text-amber-400"></i>
+             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-amber-600 rounded-3xl transition-all group">
+            <i class="fas fa-graduation-cap text-2xl text-amber-400 group-hover:text-white"></i>
             <span class="font-medium">CAPS</span>
           </a>
         </div>
@@ -86,14 +84,13 @@
       </div>
     </div>
 
-    <!-- ÁREA PRINCIPAL (igual ao seu original) -->
+    <!-- ÁREA PRINCIPAL (totalmente igual ao seu) -->
     <div class="flex-1 flex flex-col">
       <div class="bg-zinc-900 border-b border-zinc-700 px-6">
         <div class="flex gap-8 text-lg">
           <button onclick="mudarAba(0)" id="tab0" class="tab py-5 tab-active">📝 Aulas & Anotações</button>
         </div>
       </div>
-      
       <div id="conteudoAba0" class="flex-1 flex flex-col">
         <header id="headerMateria" class="hidden border-b border-zinc-700 bg-zinc-900 px-6 py-4 flex items-center justify-between">
           <button onclick="voltarParaMaterias()" class="flex items-center gap-2 text-violet-400 hover:text-violet-300">
@@ -104,7 +101,6 @@
             <span id="contadorAnotacoes" class="bg-zinc-800 px-4 py-1 rounded-3xl text-sm"></span>
           </div>
         </header>
-        
         <div id="telaInicial" class="flex-1 flex items-center justify-center">
           <div class="text-center max-w-md">
             <div class="text-9xl mb-6 animate-bounce">🎒</div>
@@ -112,7 +108,6 @@
             <p class="text-zinc-400 text-xl mb-10">Organize suas aulas e anotações aqui.</p>
           </div>
         </div>
-        
         <div id="areaAnotacoes" class="hidden flex-1 flex flex-col">
           <div class="p-6 bg-zinc-900 border-b border-zinc-700">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
@@ -154,19 +149,17 @@
   </audio>
 
   <script>
-    // ==================== VARIÁVEIS GLOBAIS ====================
+    // Todo o seu JavaScript original permanece EXATAMENTE igual
     let materias = [];
     let materiaAtual = null;
     let filtroAtual = '';
 
-    // ==================== FUNÇÕES (todas iguais às suas) ====================
     function playActionSound() {
       const audio = document.getElementById('actionSound');
       audio.currentTime = 0;
       audio.volume = 0.4;
       audio.play().catch(() => {});
     }
-
     function showToast(msg, tipo = 'success') {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
@@ -176,26 +169,20 @@
       toast.classList.remove('hidden');
       setTimeout(() => toast.classList.add('hidden'), 3000);
     }
-
     function salvarTodosDados() {
       localStorage.setItem('mochilaEscolar', JSON.stringify(materias));
     }
-
     function criarMateriasIniciais() {
       const iniciais = ["Língua Portuguesa", "Literatura", "Redação", "Matemática", "Física", "Química", "Biologia", "História", "Geografia", "Filosofia", "Sociologia", "Inglês", "Espanhol", "Artes", "Educação Física", "Lógica de Programação", "HTML & CSS", "Programação Web"];
       materias = iniciais.map(nome => ({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] }));
       salvarTodosDados();
     }
-
     function carregarTodosDados() {
       const salvos = localStorage.getItem('mochilaEscolar');
       if (salvos) materias = JSON.parse(salvos);
       else criarMateriasIniciais();
       renderizarListaMaterias();
     }
-
-    // ... (Todo o resto do seu JavaScript original continua aqui - não alterei nada)
-
     function getIconeMateria(nome) {
       const icons = {
         "Matemática": "fa-calculator", "Física": "fa-atom", "Química": "fa-flask", "Biologia": "fa-dna",
@@ -203,7 +190,6 @@
       };
       return icons[nome] || icons.default;
     }
-
     function renderizarListaMaterias() {
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
@@ -233,20 +219,117 @@
       });
       document.getElementById('totalMaterias').textContent = `${materias.length} matérias`;
     }
+    function adicionarMateria() {
+      const nome = document.getElementById('novaMateria').value.trim();
+      if (!nome) return showToast("Digite o nome da matéria!", "error");
+      if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) return showToast("Matéria já existe!", "error");
+     
+      materias.unshift({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] });
+      salvarTodosDados();
+      renderizarListaMaterias();
+      document.getElementById('novaMateria').value = '';
+      showToast(`"${nome}" adicionada!`);
+      playActionSound();
+    }
+    function excluirMateria(index) {
+      if (confirm(`Excluir "${materias[index].nome}"?`)) {
+        materias.splice(index, 1);
+        salvarTodosDados();
+        renderizarListaMaterias();
+        if (materiaAtual && materiaAtual.index === index) voltarParaMaterias();
+        showToast("Matéria removida");
+        playActionSound();
+      }
+    }
+    function abrirMateria(index) {
+      materiaAtual = { index, nome: materias[index].nome, anotacoes: materias[index].anotacoes };
+      document.getElementById('telaInicial').classList.add('hidden');
+      document.getElementById('areaAnotacoes').classList.remove('hidden');
+      document.getElementById('headerMateria').classList.remove('hidden');
+      document.getElementById('tituloMateria').innerHTML = `<i class="fas ${getIconeMateria(materiaAtual.nome)}"></i> ${materiaAtual.nome}`;
+      atualizarContador();
+      renderizarAnotacoes();
+      playActionSound();
+    }
+    function voltarParaMaterias() {
+      materiaAtual = null;
+      document.getElementById('telaInicial').classList.remove('hidden');
+      document.getElementById('areaAnotacoes').classList.add('hidden');
+      document.getElementById('headerMateria').classList.add('hidden');
+      renderizarListaMaterias();
+    }
+    function atualizarContador() {
+      const qtd = materiaAtual.anotacoes.length;
+      document.getElementById('contadorAnotacoes').textContent = `${qtd} anotação${qtd !== 1 ? 's' : ''}`;
+    }
+    function salvarAnotacao() {
+      if (!materiaAtual) return;
+      const texto = document.getElementById('novaAnotacao').value.trim();
+      if (!texto) return showToast("Escreva algo antes de salvar!", "error");
+      const dataSelecionada = document.getElementById('dataAnotacao').value;
+      const horaSelecionada = document.getElementById('horaAnotacao').value;
+      if (!dataSelecionada || !horaSelecionada) {
+        return showToast("Selecione data e hora!", "error");
+      }
+      const dataFormatada = new Date(dataSelecionada + 'T' + horaSelecionada).toLocaleString('pt-BR', {
+        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      materias[materiaAtual.index].anotacoes.unshift({
+        texto,
+        data: dataFormatada
+      });
+      salvarTodosDados();
+      document.getElementById('novaAnotacao').value = '';
+      document.getElementById('charCount').textContent = '0 / 2000';
+      renderizarAnotacoes();
+      atualizarContador();
+      showToast("Anotação salva! 📌");
+      playActionSound();
+    }
+    function renderizarAnotacoes() {
+      const container = document.getElementById('listaAnotacoes');
+      container.innerHTML = '';
+      if (materiaAtual.anotacoes.length === 0) {
+        container.innerHTML = `<div class="text-center py-20 text-zinc-400"><i class="fas fa-feather-alt text-8xl opacity-30"></i><p class="text-2xl mt-6">Nenhuma anotação ainda...</p></div>`;
+        return;
+      }
+      materiaAtual.anotacoes.forEach((a, i) => {
+        const div = document.createElement('div');
+        div.className = "card bg-zinc-800 border border-zinc-700 rounded-3xl p-6";
+        div.innerHTML = `
+          <div class="flex justify-between items-start mb-4">
+            <span class="text-xs bg-zinc-700 px-3 py-1 rounded-full">${a.data}</span>
+            <button class="text-red-400 hover:text-red-500 text-xl"><i class="fas fa-trash"></i></button>
+          </div>
+          <p class="leading-relaxed whitespace-pre-wrap text-lg">${a.texto}</p>
+        `;
+        div.querySelector('button').onclick = () => {
+          if (confirm("Apagar anotação?")) {
+            materias[materiaAtual.index].anotacoes.splice(i, 1);
+            salvarTodosDados();
+            renderizarAnotacoes();
+            atualizarContador();
+            showToast("Anotação excluída");
+            playActionSound();
+          }
+        };
+        container.appendChild(div);
+      });
+    }
+    function mudarAba(n) {
+      document.getElementById('conteudoAba0').classList.remove('hidden');
+    }
+    function limparTudo() {
+      if (confirm("⚠️ Apagar TODA a mochila?")) {
+        localStorage.clear();
+        materias = [];
+        criarMateriasIniciais();
+        renderizarListaMaterias();
+        showToast("Mochila reiniciada!");
+        playActionSound();
+      }
+    }
 
-    // (O resto das funções: adicionarMateria, excluirMateria, abrirMateria, etc. permanecem iguais ao seu código original)
-
-    function adicionarMateria() { /* ... seu código original ... */ }
-    function excluirMateria(index) { /* ... seu código original ... */ }
-    function abrirMateria(index) { /* ... seu código original ... */ }
-    function voltarParaMaterias() { /* ... seu código original ... */ }
-    function atualizarContador() { /* ... seu código original ... */ }
-    function salvarAnotacao() { /* ... seu código original ... */ }
-    function renderizarAnotacoes() { /* ... seu código original ... */ }
-    function mudarAba(n) { /* ... seu código original ... */ }
-    function limparTudo() { /* ... seu código original ... */ }
-
-    // ==================== INICIALIZAÇÃO ====================
     window.onload = () => {
       carregarTodosDados();
       mudarAba(0);
