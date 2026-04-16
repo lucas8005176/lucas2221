@@ -51,8 +51,8 @@
         </div>
       </div>
       <div class="flex-1 overflow-y-auto px-3" id="listaMaterias"></div>
-
-      <!-- === BOTÕES PARA OUTROS ARQUIVOS (NOVO) === -->
+      
+      <!-- === BOTÕES PARA OUTROS PROJETOS === -->
       <div class="p-4 border-t border-zinc-700">
         <p class="text-xs uppercase text-zinc-500 mb-3 px-3">Outros Projetos</p>
         <div class="space-y-2">
@@ -61,17 +61,24 @@
             <i class="fas fa-blind text-2xl text-violet-400 group-hover:text-white"></i>
             <span class="font-medium">Braille</span>
           </a>
-          
+         
           <a href="aula.html" target="_blank"
              class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-emerald-600 rounded-3xl transition-all group">
             <i class="fas fa-chalkboard-teacher text-2xl text-emerald-400 group-hover:text-white"></i>
             <span class="font-medium">Aulas</span>
           </a>
-          
+         
           <a href="caps.html" target="_blank"
              class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-amber-600 rounded-3xl transition-all group">
             <i class="fas fa-graduation-cap text-2xl text-amber-400 group-hover:text-white"></i>
             <span class="font-medium">CAPS</span>
+          </a>
+
+          <!-- === NOVO BOTÃO d.h === -->
+          <a href="#" target="_blank"
+             class="flex items-center gap-3 px-5 py-4 bg-zinc-800 hover:bg-sky-600 rounded-3xl transition-all group">
+            <i class="fab fa-github text-2xl text-sky-400 group-hover:text-white"></i>
+            <span class="font-medium">d.h</span>
           </a>
         </div>
       </div>
@@ -84,7 +91,7 @@
       </div>
     </div>
 
-    <!-- ÁREA PRINCIPAL (totalmente igual ao seu) -->
+    <!-- ÁREA PRINCIPAL (inalterada) -->
     <div class="flex-1 flex flex-col">
       <div class="bg-zinc-900 border-b border-zinc-700 px-6">
         <div class="flex gap-8 text-lg">
@@ -149,11 +156,10 @@
   </audio>
 
   <script>
-    // Todo o seu JavaScript original permanece EXATAMENTE igual
+    // Todo o JavaScript permanece exatamente igual ao que você enviou
     let materias = [];
     let materiaAtual = null;
     let filtroAtual = '';
-
     function playActionSound() {
       const audio = document.getElementById('actionSound');
       audio.currentTime = 0;
@@ -194,7 +200,7 @@
       const container = document.getElementById('listaMaterias');
       container.innerHTML = '';
       const filtradas = materias.filter(m => m.nome.toLowerCase().includes(filtroAtual.toLowerCase()));
-     
+    
       if (filtradas.length === 0) {
         container.innerHTML = `<div class="px-6 py-12 text-center text-zinc-500">Nenhuma matéria encontrada</div>`;
         return;
@@ -223,7 +229,7 @@
       const nome = document.getElementById('novaMateria').value.trim();
       if (!nome) return showToast("Digite o nome da matéria!", "error");
       if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) return showToast("Matéria já existe!", "error");
-     
+    
       materias.unshift({ nome, anotacoes: [], faltas: 0, notas: [0, 0, 0] });
       salvarTodosDados();
       renderizarListaMaterias();
@@ -329,7 +335,6 @@
         playActionSound();
       }
     }
-
     window.onload = () => {
       carregarTodosDados();
       mudarAba(0);
@@ -353,9 +358,4 @@
     };
   </script>
 </body>
-  <a href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO" 
-   target="_blank" 
-   class="github-button">
-   <i class="fab fa-github"></i> d.h
-</a>
 </html>
