@@ -362,4 +362,30 @@
     };
   </script>
 </body>
+  <!-- Botão para adicionar "Direito" rapidamente -->
+<button 
+  onclick="adicionarMateriaDireito()" 
+  class="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 px-5 py-3 rounded-3xl font-medium transition-all active:scale-95">
+  <i class="fas fa-gavel"></i>
+  <span>Direito</span>function adicionarMateriaDireito() {
+  const nome = "Direito";
+  
+  if (materias.some(m => m.nome.toLowerCase() === nome.toLowerCase())) {
+    showToast("Direito já existe!", "error");
+    return;
+  }
+
+  materias.unshift({ 
+    nome, 
+    anotacoes: [], 
+    faltas: 0, 
+    notas: [0, 0, 0] 
+  });
+  
+  salvarTodosDados();
+  renderizarListaMaterias();
+  showToast('"Direito" adicionada com sucesso! ⚖️');
+  playActionSound();
+}
+</button>
 </html>
