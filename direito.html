@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direitos Humanos na Escola</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --primary: #0077be;
+            --accent: #00a86b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6f0fa 100%);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #005a8f);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 119, 190, 0.3);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        nav {
+            background: rgba(255,255,255,0.95);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            margin-bottom: 4rem;
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 119, 190, 0.1);
+        }
+        
+        h1, h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            text-align: center;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #0077be, #00a86b);
+            color: white;
+            border-radius: 30px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            color: white;
+            font-size: 3.2rem;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background: #f8fbff;
+            border-radius: 15px;
+            padding: 2rem;
+            border-left: 6px solid var(--accent);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 168, 107, 0.2);
+        }
+        
+        .highlight {
+            background: #e6f7f0;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid var(--accent);
+            margin: 2rem 0;
+        }
+        
+        footer {
+            background: #002b4d;
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #008c5a;
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">🛡️ Direitos Humanos na Escola</div>
+            <p style="font-size: 1.4rem; opacity: 0.95;">Relação entre Professores, Alunos e Outros Profissionais</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#introducao" class="nav-link">📖 Introdução</a>
+            <a href="#alunos" class="nav-link">👦 Direitos dos Alunos</a>
+            <a href="#professores" class="nav-link">👩‍🏫 Direitos dos Professores</a>
+            <a href="#profissionais" class="nav-link">🧑‍💼 Outros Profissionais</a>
+            <a href="#relacoes" class="nav-link">🤝 Relações Saudáveis</a>
+            <a href="#recursos" class="nav-link">📚 Recursos</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <!-- HERO -->
+        <div class="hero">
+            <h1>Uma escola com direitos humanos é uma escola melhor</h1>
+            <p style="font-size: 1.4rem; max-width: 800px; margin: 1.5rem auto; opacity: 0.95;">
+                Respeito, dignidade e inclusão são direitos de todos: alunos, professores, diretores, auxiliares e toda a comunidade escolar.
+            </p>
+            <a href="#relacoes" class="btn">Explorar as relações saudáveis →</a>
+        </div>
+
+        <!-- INTRODUÇÃO -->
+        <section id="introducao">
+            <h2>📖 Introdução aos Direitos Humanos na Escola</h2>
+            <p>Os direitos humanos na escola não são apenas regras — são o fundamento para uma educação de qualidade, democrática e inclusiva. Baseados na <strong>Declaração Universal dos Direitos Humanos</strong>, na <strong>Constituição Federal do Brasil</strong> e no <strong>Estatuto da Criança e do Adolescente (ECA)</strong>, eles garantem que a escola seja um espaço de respeito mútuo.</p>
+            
+            <div class="highlight">
+                <strong>Princípio fundamental:</strong> Toda pessoa tem direito à educação (art. 26 da Declaração Universal). Na escola, esse direito se concretiza na relação diária entre professores, alunos e profissionais.
+            </div>
+            
+            <p>Este projeto foi criado para ser usado em escolas, formações de professores e atividades pedagógicas. Você pode hospedá-lo gratuitamente no GitHub Pages!</p>
+        </section>
+
+        <!-- ALUNOS -->
+        <section id="alunos">
+            <h2>👦 Direitos dos Alunos</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>1. Direito à dignidade</h3>
+                    <p>Não sofrer violência física, psicológica ou bullying. O professor deve tratar o aluno com respeito.</p>
+                </div>
+                <div class="card">
+                    <h3>2. Direito à participação</h3>
+                    <p>Ser ouvido em decisões que afetam sua vida escolar (grêmios, conselhos de classe).</p>
+                </div>
+                <div class="card">
+                    <h3>3. Direito à inclusão</h3>
+                    <p>Não ser discriminado por raça, gênero, orientação sexual, deficiência ou origem.</p>
+                </div>
+                <div class="card">
+                    <h3>4. Direito à aprendizagem</h3>
+                    <p>Receber ensino de qualidade e ter acesso a materiais adequados.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFESSORES -->
+        <section id="professores">
+            <h2>👩‍🏫 Direitos dos Professores</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>1. Direito ao respeito</h3>
+                    <p>Não sofrer desrespeito ou agressão verbal/física de alunos ou pais.</p>
+                </div>
+                <div class="card">
+                    <h3>2. Direito à formação</h3>
+                    <p>Receber capacitação contínua sobre direitos humanos e mediação de conflitos.</p>
+                </div>
+                <div class="card">
+                    <h3>3. Direito à autonomia pedagógica</h3>
+                    <p>Planejar aulas e avaliar dentro dos parâmetros legais.</p>
+                </div>
+                <div class="card">
+                    <h3>4. Direito à saúde mental</h3>
+                    <p>Ter condições de trabalho que evitem burnout e esgotamento.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUTROS PROFISSIONAIS -->
+        <section id="profissionais">
+            <h2>🧑‍💼 Outros Profissionais da Escola</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Diretores e coordenadores</h3>
+                    <p>Responsáveis por garantir o cumprimento da Lei de Diretrizes e Bases (LDB) e criar um clima escolar democrático.</p>
+                </div>
+                <div class="card">
+                    <h3>Auxiliares, merendeiras e serventes</h3>
+                    <p>Têm direito ao mesmo respeito e devem ser incluídos nas ações de direitos humanos da escola.</p>
+                </div>
+                <div class="card">
+                    <h3>Psicólogos e orientadores</h3>
+                    <p>Atuam na prevenção de conflitos e na promoção do bem-estar emocional de toda a comunidade.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RELAÇÕES -->
+        <section id="relacoes">
+            <h2>🤝 Relações Saudáveis entre Todos</h2>
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">O que cada um pode fazer:</h3>
+            <ul style="font-size: 1.1rem; line-height: 2; padding-left: 1.5rem;">
+                <li><strong>Professores:</strong> Escutar ativamente, usar mediação restaurativa, valorizar a diversidade.</li>
+                <li><strong>Alunos:</strong> Respeitar o professor e colegas, denunciar violações de forma segura.</li>
+                <li><strong>Diretores:</strong> Criar políticas claras de direitos humanos e capacitar toda a equipe.</li>
+                <li><strong>Todos:</strong> Praticar a escuta empática e resolver conflitos de forma pacífica.</li>
+            </ul>
+            
+            <div style="margin-top: 2rem; text-align: center; background: #e6f0fa; padding: 2rem; border-radius: 20px;">
+                <h3>Frase para refletir:</h3>
+                <p style="font-size: 1.5rem; font-style: italic; color: #005a8f;">
+                    “A educação é o caminho para a paz. Quando respeitamos os direitos de cada um na escola, construímos uma sociedade mais justa.” 
+                </p>
+                <p style="margin-top: 1rem; font-size: 1.1rem;">— Adaptado da Declaração Universal dos Direitos Humanos</p>
+            </div>
+        </section>
+
+        <!-- RECURSOS -->
+        <section id="recursos">
+            <h2>📚 Recursos e Referências</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Documentos legais</h3>
+                    <ul>
+                        <li>Declaração Universal dos Direitos Humanos (1948)</li>
+                        <li>Constituição Federal de 1988 (art. 205-214)</li>
+                        <li>ECA – Lei 8.069/1990</li>
+                        <li>Plano Nacional de Educação em Direitos Humanos</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Atividades pedagógicas</h3>
+                    <p>1. Círculos de diálogo<br>2. Teatro do oprimido<br>3. Cartazes interativos de direitos<br>4. Simulação de Conselho de Direitos Humanos</p>
+                </div>
+                <div class="card">
+                    <h3>Como usar este projeto</h3>
+                    <p>Este site foi feito para ser um material aberto. Compartilhe, adapte e use em sala de aula!</p>
+                    <a href="https://github.com/SEU-USUARIO/direitos-humanos-escola" class="btn" style="font-size: 1rem; padding: 0.8rem 1.5rem;">Ver repositório no GitHub</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p><strong>Projeto educacional aberto • Licença MIT</strong></p>
+            <p>Feito com ❤️ para professores, alunos e toda a comunidade escolar do Brasil</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                Como usar: Clone este repositório → ative o GitHub Pages → compartilhe o link com sua escola!
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll suave para os links da navegação
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        console.log('%c✅ Projeto Direitos Humanos na Escola carregado com sucesso!', 'color: #00a86b; font-size: 16px; font-weight: bold');
+        console.log('Copie todos os arquivos abaixo e crie seu repositório no GitHub!');
+    </script>
+</body>
+</html>
