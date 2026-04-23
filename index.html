@@ -11,45 +11,48 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* LAYOUT */
+/* LAYOUT GERAL */
 body {
   display: flex;
   height: 100vh;
-  background: #0f0f1a;
+  background: #0b0f1a;
+  overflow: hidden;
 }
 
-/* SIDEBAR */
+/* SIDEBAR MODERNA */
 .sidebar {
-  width: 260px;
-  background: rgba(20, 20, 40, 0.95);
-  backdrop-filter: blur(10px);
+  width: 280px;
+  background: rgba(18, 18, 35, 0.95);
+  backdrop-filter: blur(15px);
   padding: 20px;
   display: flex;
   flex-direction: column;
+  color: white;
 }
 
 /* TÍTULO */
-.sidebar h2 {
-  color: white;
+.logo {
+  font-size: 22px;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
-/* INPUT */
-.sidebar input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
+/* INPUTS */
+input {
+  padding: 12px;
+  border-radius: 12px;
   border: none;
   margin-bottom: 10px;
-  background: #1f1f3a;
+  background: #1c1f3a;
   color: white;
+  outline: none;
 }
 
 /* BOTÃO + */
-.add-button {
+.add {
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -57,89 +60,90 @@ body {
   background: linear-gradient(135deg, #6c63ff, #8b5cf6);
   color: white;
   font-size: 22px;
-  margin: 10px 0;
   cursor: pointer;
+  margin: 10px 0;
   transition: 0.3s;
 }
 
-.add-button:hover {
-  transform: scale(1.1) rotate(10deg);
+.add:hover {
+  transform: scale(1.15) rotate(15deg);
 }
 
 /* MATÉRIAS */
-.sidebar-item {
+.item {
   padding: 12px;
   border-radius: 12px;
-  color: #cfcfff;
   margin: 5px 0;
-  transition: 0.3s;
+  background: transparent;
   cursor: pointer;
+  transition: 0.3s;
+  color: #cfcfff;
 }
 
-.sidebar-item:hover {
+.item:hover {
   background: rgba(255,255,255,0.08);
-  transform: translateX(5px);
+  transform: translateX(6px);
 }
 
-.sidebar-item.active {
+.item.active {
   background: linear-gradient(90deg, #6c63ff, #8b5cf6);
   color: white;
 }
 
-/* BOTÕES DE BAIXO */
+/* PARTE DE BAIXO */
 .bottom {
   margin-top: auto;
 }
 
-.bottom-button {
+/* BOTÕES NOVOS ESTILO CARD */
+.card {
+  background: linear-gradient(135deg, #2a2d5f, #3b3ecf);
   padding: 14px;
-  border-radius: 14px;
-  margin: 8px 0;
-  color: white;
+  border-radius: 16px;
+  margin: 10px 0;
   cursor: pointer;
   transition: 0.3s;
-  background: linear-gradient(135deg, #2a2d5f, #3b3ecf);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.bottom-button:hover {
-  transform: translateY(-5px) scale(1.02);
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
-/* CONTEÚDO */
+/* CONTEÚDO PRINCIPAL */
 .main {
   flex: 1;
-  background: linear-gradient(135deg, #1e1f4b, #3a3d9f, #5f60ff);
+  background: radial-gradient(circle at top, #3a3d9f, #1e1f4b, #0b0f1a);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-}
-
-/* TEXTO */
-.main h1 {
-  font-size: 42px;
   color: white;
+  padding: 20px;
 }
 
-.main p {
-  color: #d1d5ff;
-  margin-top: 10px;
+/* CARTÃO CENTRAL */
+.box {
+  background: rgba(255,255,255,0.05);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 /* ANIMAÇÃO */
-.main img {
-  width: 100px;
-  margin-bottom: 20px;
-  animation: float 3s infinite ease-in-out;
+.box h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+.box p {
+  color: #cfd3ff;
 }
 
 </style>
@@ -149,30 +153,32 @@ body {
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <h2>🎒 Minha Mochila</h2>
+
+  <div class="logo">🎒 Minha Mochila</div>
 
   <input placeholder="Buscar matéria...">
   <input placeholder="Nova matéria...">
-  <button class="add-button">+</button>
 
-  <div class="sidebar-item active">Português</div>
-  <div class="sidebar-item">Matemática</div>
-  <div class="sidebar-item">História</div>
-  <div class="sidebar-item">Geografia</div>
+  <button class="add">+</button>
+
+  <div class="item active">📘 Português</div>
+  <div class="item">📐 Matemática</div>
+  <div class="item">📜 História</div>
+  <div class="item">🌎 Geografia</div>
 
   <div class="bottom">
-    <div class="bottom-button">🧑‍🦯 Braille</div>
-    <div class="bottom-button">📚 Aulas</div>
-    <div class="bottom-button">🎓 CAPS</div>
+    <div class="card">🧑‍🦯 Braille</div>
+    <div class="card">📚 Aulas</div>
+    <div class="card">🎓 CAPS</div>
   </div>
+
 </div>
 
 <!-- CONTEÚDO -->
 <div class="main">
-  <div>
-    <img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png">
-    <h1>Bem-vindo à sua Mochila!</h1>
-    <p>Organize suas aulas e anotações aqui.</p>
+  <div class="box">
+    <h1>Bem-vindo à sua Mochila 🎒</h1>
+    <p>Organize suas matérias e anotações de forma simples e bonita.</p>
   </div>
 </div>
 
