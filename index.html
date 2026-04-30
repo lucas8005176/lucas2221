@@ -6,11 +6,7 @@
   <title>👜 Minha Mochila Escolar</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
@@ -35,33 +31,12 @@
       text-align: center;
     }
 
-    header h1 {
-      font-size: 2.8em;
-      margin-bottom: 8px;
-    }
+    header h1 { font-size: 2.8em; margin-bottom: 8px; }
+    header p { font-size: 1.1em; opacity: 0.95; }
 
-    header p {
-      font-size: 1.1em;
-      opacity: 0.95;
-    }
-
-    .main {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 25px;
-      padding: 30px;
-    }
-
-    /* Coluna Esquerda */
-    .left {
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .right {
-      flex: 1.6;
-      min-width: 380px;
-    }
+    .main { display: flex; flex-wrap: wrap; gap: 25px; padding: 30px; }
+    .left { flex: 1; min-width: 300px; }
+    .right { flex: 1.6; min-width: 380px; }
 
     h2 {
       font-size: 1.6em;
@@ -72,7 +47,6 @@
       gap: 10px;
     }
 
-    /* Matérias Disponíveis */
     .materias-disponiveis {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
@@ -88,7 +62,6 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: 600;
-      color: #1e2937;
     }
 
     .card:hover {
@@ -97,13 +70,6 @@
       box-shadow: 0 15px 25px rgba(99, 102, 241, 0.2);
     }
 
-    .card i {
-      font-size: 1.8em;
-      margin-bottom: 10px;
-      color: #6366f1;
-    }
-
-    /* Mochila */
     .mochila {
       background: #f8fafc;
       border-radius: 20px;
@@ -134,17 +100,19 @@
       margin-bottom: 10px;
     }
 
-    .item-header h3 {
-      font-size: 1.2em;
-      color: #4338ca;
-    }
-
     .anotacao {
       font-size: 0.95em;
       color: #475569;
       line-height: 1.4;
       padding-left: 5px;
       border-left: 3px solid #6366f1;
+      margin-top: 8px;
+    }
+
+    .meta-anotacao {
+      font-size: 0.85em;
+      color: #64748b;
+      margin-top: 8px;
     }
 
     .btn-remover {
@@ -154,22 +122,11 @@
       padding: 6px 12px;
       border-radius: 8px;
       font-size: 0.85em;
-      cursor: pointer;
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 80px 20px;
-      color: #64748b;
-    }
+    .empty-state { text-align: center; padding: 80px 20px; color: #64748b; }
+    .empty-state i { font-size: 4em; margin-bottom: 15px; opacity: 0.3; }
 
-    .empty-state i {
-      font-size: 4em;
-      margin-bottom: 15px;
-      opacity: 0.3;
-    }
-
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -192,13 +149,45 @@
 
     textarea {
       width: 100%;
-      height: 220px;
+      height: 180px;
       padding: 15px;
       border: 2px solid #e0e7ff;
       border-radius: 14px;
       font-size: 1em;
       resize: vertical;
       margin-top: 10px;
+    }
+
+    .campos-data-hora {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .campo {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .campo label {
+      font-size: 0.92em;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .campo input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e7ff;
+      border-radius: 12px;
+      font-size: 1em;
+      outline: none;
+    }
+
+    .campo input:focus, textarea:focus {
+      border-color: #6366f1;
     }
 
     .modal-buttons {
@@ -214,25 +203,22 @@
       border-radius: 12px;
       font-weight: 600;
       cursor: pointer;
-      font-size: 1em;
     }
 
-    .btn-cancel {
-      background: #e2e8f0;
-      color: #334155;
-    }
-
-    .btn-save {
-      background: #6366f1;
-      color: white;
-    }
+    .btn-cancel { background: #e2e8f0; color: #334155; }
+    .btn-save { background: #6366f1; color: white; }
 
     .footer {
       text-align: center;
       padding: 22px;
       background: #f8fafc;
       color: #64748b;
-      font-size: 0.95em;
+    }
+
+    @media (max-width: 640px) {
+      .campos-data-hora {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -241,22 +227,18 @@
   <div class="container">
     <header>
       <h1><i class="fas fa-backpack"></i> Minha Mochila</h1>
-      <p>Organize suas matérias e anotações do semestre</p>
+      <p>Organize suas matérias e anotações</p>
     </header>
 
     <div class="main">
-      <!-- Matérias Disponíveis -->
       <div class="left">
         <h2><i class="fas fa-book"></i> Matérias Disponíveis</h2>
         <div class="materias-disponiveis" id="lista-disponiveis"></div>
       </div>
 
-      <!-- Mochila -->
       <div class="right">
         <h2><i class="fas fa-school"></i> Minha Mochila (<span id="contador">0</span>)</h2>
-        <div class="mochila" id="mochila">
-          <!-- Preenchido pelo JavaScript -->
-        </div>
+        <div class="mochila" id="mochila"></div>
         <br>
         <button onclick="limparMochila()" style="background:#ef4444; color:white;">
           <i class="fas fa-trash"></i> Limpar Mochila
@@ -265,7 +247,7 @@
     </div>
 
     <div class="footer">
-      Mochila Escolar • Feita com carinho para o GitHub
+      Suas anotações são salvas no navegador (funciona no GitHub Pages)
     </div>
   </div>
 
@@ -273,7 +255,19 @@
   <div class="modal" id="modalAnotacao">
     <div class="modal-content">
       <h2 id="modalTitulo">Anotações - Matemática</h2>
-      <textarea id="textoAnotacao" placeholder="Escreva aqui suas anotações, tarefas, provas, links..."></textarea>
+      
+      <textarea id="textoAnotacao" placeholder="Escreva suas anotações aqui..."></textarea>
+
+      <div class="campos-data-hora">
+        <div class="campo">
+          <label for="dataAnotacao">Data</label>
+          <input type="date" id="dataAnotacao">
+        </div>
+        <div class="campo">
+          <label for="horaAnotacao">Hora</label>
+          <input type="time" id="horaAnotacao">
+        </div>
+      </div>
       
       <div class="modal-buttons">
         <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
@@ -289,7 +283,68 @@
       "Noções de Robótica", "Projeto de Vida", "Estudos Orientados", "Programação Web"
     ];
 
-    let mochila = []; // { nome: "", anotacao: "" }
+    let mochila = [];
+    let indexAtual = null;
+
+    function formatarHoraAgora() {
+      const agora = new Date();
+      const h = String(agora.getHours()).padStart(2, '0');
+      const m = String(agora.getMinutes()).padStart(2, '0');
+      return `${h}:${m}`;
+    }
+
+    function formatarDataAgora() {
+      const agora = new Date();
+      const ano = agora.getFullYear();
+      const mes = String(agora.getMonth() + 1).padStart(2, '0');
+      const dia = String(agora.getDate()).padStart(2, '0');
+      return `${ano}-${mes}-${dia}`;
+    }
+
+    function normalizarDados() {
+      mochila = mochila.map(item => {
+        if (typeof item.anotacao === 'string') {
+          return {
+            nome: item.nome,
+            anotacao: {
+              texto: item.anotacao,
+              data: '',
+              hora: ''
+            }
+          };
+        }
+
+        return {
+          nome: item.nome,
+          anotacao: {
+            texto: item.anotacao?.texto || '',
+            data: item.anotacao?.data || '',
+            hora: item.anotacao?.hora || ''
+          }
+        };
+      });
+    }
+
+    // ==================== SALVAMENTO ALTERNATIVO ====================
+    function salvarDados() {
+      try {
+        localStorage.setItem('mochilaEscolar', JSON.stringify(mochila));
+      } catch (e) {
+        console.warn("localStorage bloqueado. As anotações não serão salvas após fechar a aba.");
+      }
+    }
+
+    function carregarDados() {
+      try {
+        const dados = localStorage.getItem('mochilaEscolar');
+        if (dados) mochila = JSON.parse(dados);
+        normalizarDados();
+      } catch (e) {
+        console.warn("Não foi possível carregar os dados salvos.");
+        mochila = [];
+      }
+    }
+    // ============================================================
 
     function renderizarDisponiveis() {
       const container = document.getElementById('lista-disponiveis');
@@ -298,10 +353,7 @@
       materiasDisponiveis.forEach(materia => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `
-          <i class="fas fa-book-open"></i>
-          <div>${materia}</div>
-        `;
+        card.innerHTML = `<i class="fas fa-book-open"></i><div>${materia}</div>`;
         card.onclick = () => adicionarNaMochila(materia);
         container.appendChild(card);
       });
@@ -313,7 +365,16 @@
         return;
       }
 
-      mochila.push({ nome: materia, anotacao: "" });
+      mochila.push({
+        nome: materia,
+        anotacao: {
+          texto: "",
+          data: "",
+          hora: ""
+        }
+      });
+
+      salvarDados();
       renderizarMochila();
     }
 
@@ -327,14 +388,17 @@
           <div class="empty-state">
             <i class="fas fa-backpack"></i>
             <h3>Sua mochila está vazia</h3>
-            <p>Clique nas matérias à esquerda para começar</p>
-          </div>
-        `;
+            <p>Clique nas matérias à esquerda para adicionar</p>
+          </div>`;
         return;
       }
 
       let html = '';
       mochila.forEach((item, index) => {
+        const texto = item.anotacao?.texto || '';
+        const data = item.anotacao?.data || '';
+        const hora = item.anotacao?.hora || '';
+
         html += `
           <div class="item-mochila" onclick="abrirModal(${index})">
             <div class="item-header">
@@ -343,22 +407,31 @@
                 <i class="fas fa-trash"></i>
               </button>
             </div>
-            ${item.anotacao ? 
-              `<p class="anotacao">${item.anotacao.substring(0, 120)}${item.anotacao.length > 120 ? '...' : ''}</p>` 
+            ${texto 
+              ? `<p class="anotacao">${texto.substring(0, 120)}${texto.length > 120 ? '...' : ''}</p>` 
               : '<p style="color:#94a3b8; font-style:italic;">Clique para adicionar anotações...</p>'}
-          </div>
-        `;
+            ${(data || hora) 
+              ? `<div class="meta-anotacao">
+                   <i class="fas fa-calendar"></i> ${data || 'sem data'}
+                   &nbsp; | &nbsp;
+                   <i class="fas fa-clock"></i> ${hora || 'sem hora'}
+                 </div>` 
+              : ''}
+          </div>`;
       });
+
       container.innerHTML = html;
     }
 
-    let indexAtual = null;
-
     function abrirModal(index) {
       indexAtual = index;
-      const item = mochila[index];
-      document.getElementById('modalTitulo').textContent = `Anotações - ${item.nome}`;
-      document.getElementById('textoAnotacao').value = item.anotacao || "";
+
+      document.getElementById('modalTitulo').textContent = `Anotações - ${mochila[index].nome}`;
+      document.getElementById('textoAnotacao').value = mochila[index].anotacao?.texto || "";
+
+      document.getElementById('dataAnotacao').value = mochila[index].anotacao?.data || formatarDataAgora();
+      document.getElementById('horaAnotacao').value = mochila[index].anotacao?.hora || formatarHoraAgora();
+
       document.getElementById('modalAnotacao').style.display = 'flex';
     }
 
@@ -368,29 +441,37 @@
 
     function salvarAnotacao() {
       if (indexAtual !== null) {
-        const texto = document.getElementById('textoAnotacao').value.trim();
-        mochila[indexAtual].anotacao = texto;
+        mochila[indexAtual].anotacao = {
+          texto: document.getElementById('textoAnotacao').value.trim(),
+          data: document.getElementById('dataAnotacao').value,
+          hora: document.getElementById('horaAnotacao').value
+        };
+
+        salvarDados();
         fecharModal();
         renderizarMochila();
       }
     }
 
     function removerDaMochila(index) {
-      if (confirm(`Deseja remover ${mochila[index].nome} da mochila?`)) {
+      if (confirm(`Remover ${mochila[index].nome}?`)) {
         mochila.splice(index, 1);
+        salvarDados();
         renderizarMochila();
       }
     }
 
     function limparMochila() {
-      if (confirm("⚠️ Tem certeza que deseja limpar TODA a mochila?")) {
+      if (confirm("Limpar toda a mochila?")) {
         mochila = [];
+        salvarDados();
         renderizarMochila();
       }
     }
 
     // Inicialização
     window.onload = () => {
+      carregarDados();
       renderizarDisponiveis();
       renderizarMochila();
     };
