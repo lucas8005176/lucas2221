@@ -1,186 +1,160 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Minha Mochila</title>
+  <meta charset="UTF-8">
+  <title>Minha Mochila</title>
 
-<style>
+  <!-- Fonte bonita -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-/* LAYOUT GERAL */
-body {
-  display: flex;
-  height: 100vh;
-  background: #0b0f1a;
-  overflow: hidden;
-}
+    body {
+      display: flex;
+      height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+    }
 
-/* SIDEBAR MODERNA */
-.sidebar {
-  width: 280px;
-  background: rgba(18, 18, 35, 0.95);
-  backdrop-filter: blur(15px);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  color: white;
-}
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
 
-/* TÍTULO */
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
+    .logo {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
 
-/* INPUTS */
-input {
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  margin-bottom: 10px;
-  background: #1c1f3a;
-  color: white;
-  outline: none;
-}
+    .search {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 15px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
 
-/* BOTÃO + */
-.add {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: none;
-  background: linear-gradient(135deg, #6c63ff, #8b5cf6);
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  margin: 10px 0;
-  transition: 0.3s;
-}
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #6a5acd, #836fff);
+      color: white;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
 
-.add:hover {
-  transform: scale(1.15) rotate(15deg);
-}
+    .btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
 
-/* MATÉRIAS */
-.item {
-  padding: 12px;
-  border-radius: 12px;
-  margin: 5px 0;
-  background: transparent;
-  cursor: pointer;
-  transition: 0.3s;
-  color: #cfcfff;
-}
+    .item {
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-.item:hover {
-  background: rgba(255,255,255,0.08);
-  transform: translateX(6px);
-}
+    .item:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateX(5px);
+    }
 
-.item.active {
-  background: linear-gradient(90deg, #6c63ff, #8b5cf6);
-  color: white;
-}
+    /* CONTEÚDO */
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
 
-/* PARTE DE BAIXO */
-.bottom {
-  margin-top: auto;
-}
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+      animation: fadeIn 1s ease;
+    }
 
-/* BOTÕES NOVOS ESTILO CARD */
-.card {
-  background: linear-gradient(135deg, #2a2d5f, #3b3ecf);
-  padding: 14px;
-  border-radius: 16px;
-  margin: 10px 0;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
+    .card img {
+      width: 120px;
+      margin-bottom: 20px;
+      animation: float 3s infinite ease-in-out;
+    }
 
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-}
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
 
-/* CONTEÚDO PRINCIPAL */
-.main {
-  flex: 1;
-  background: radial-gradient(circle at top, #3a3d9f, #1e1f4b, #0b0f1a);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  padding: 20px;
-}
+    p {
+      opacity: 0.7;
+    }
 
-/* CARTÃO CENTRAL */
-.box {
-  background: rgba(255,255,255,0.05);
-  padding: 40px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
+    /* ANIMAÇÕES */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
 
-/* ANIMAÇÃO */
-.box h1 {
-  font-size: 38px;
-  margin-bottom: 10px;
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-.box p {
-  color: #cfd3ff;
-}
-
-</style>
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
+  <div class="sidebar">
+    <div class="logo">🎒 Minha Mochila</div>
 
-  <div class="logo">🎒 Minha Mochila</div>
+    <input class="search" placeholder="Buscar matéria...">
 
-  <input placeholder="Buscar matéria...">
-  <input placeholder="Nova matéria...">
+    <button class="btn">+ Nova Matéria</button>
 
-  <button class="add">+</button>
+    <div class="item">📘 Artes</div>
+    <div class="item">🏃 Educação Física</div>
+    <div class="item">💻 Lógica de Programação</div>
+    <div class="item">🌐 HTML & CSS</div>
+    <div class="item">🚀 Programação Web</div>
 
-  <div class="item active">📘 Português</div>
-  <div class="item">📐 Matemática</div>
-  <div class="item">📜 História</div>
-  <div class="item">🌎 Geografia</div>
-
-  <div class="bottom">
-    <div class="card">🧑‍🦯 Braille</div>
-    <div class="card">📚 Aulas</div>
-    <div class="card">🎓 CAPS</div>
   </div>
 
-</div>
-
-<!-- CONTEÚDO -->
-<div class="main">
-  <div class="box">
-    <h1>Bem-vindo à sua Mochila 🎒</h1>
-    <p>Organize suas matérias e anotações de forma simples e bonita.</p>
+  <div class="content">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046876.png">
+      <h1>Bem-vindo à sua Mochila!</h1>
+      <p>Organize suas aulas e anotações aqui.</p>
+    </div>
   </div>
-</div>
 
 </body>
 </html>
