@@ -2,159 +2,293 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Minha Mochila</title>
-
-  <!-- Fonte bonita -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Mochila - Aulas & Anotações</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
     }
 
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f172a;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
       display: flex;
       height: 100vh;
-      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-      color: #fff;
     }
 
-    /* SIDEBAR */
+    /* Sidebar */
     .sidebar {
-      width: 260px;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-right: 1px solid rgba(255,255,255,0.1);
+      width: 280px;
+      background-color: #1e2937;
+      padding: 20px 16px;
+      border-right: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
     }
 
-    .logo {
-      font-size: 22px;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .header img {
+      width: 48px;
+      height: 48px;
+    }
+
+    .header h1 {
+      font-size: 24px;
       font-weight: 600;
-      margin-bottom: 20px;
     }
 
-    .search {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
+    .search-box {
+      background-color: #334155;
       border: none;
-      margin-bottom: 15px;
-      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 12px 16px;
       color: white;
+      width: 100%;
+      margin-bottom: 16px;
+      font-size: 15px;
     }
 
-    .btn {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(135deg, #6a5acd, #836fff);
-      color: white;
+    .new-subject {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: #334155;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
       cursor: pointer;
-      margin-bottom: 20px;
-      transition: 0.3s;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
+    .new-subject span {
+      flex: 1;
+      font-size: 15px;
     }
 
-    .item {
-      padding: 10px;
+    .add-btn {
+      width: 40px;
+      height: 40px;
+      background-color: #8b5cf6;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .subjects {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .subject-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .subject-item:hover {
+      background-color: #334155;
+    }
+
+    .subject-item span {
+      font-size: 15px;
+    }
+
+    .subject-count {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-left: auto;
+    }
+
+    .other-projects {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid #334155;
+    }
+
+    .other-projects h3 {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      padding-left: 16px;
+    }
+
+    .project-item {
+      padding: 12px 16px;
+      background-color: #334155;
       border-radius: 8px;
       margin-bottom: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .item:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateX(5px);
-    }
-
-    /* CONTEÚDO */
-    .content {
-      flex: 1;
       display: flex;
-      justify-content: center;
       align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .empty {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      background-color: #1e2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .welcome-content {
       text-align: center;
-      padding: 20px;
+      color: white;
     }
 
-    .card {
-      background: rgba(255,255,255,0.05);
-      padding: 40px;
-      border-radius: 20px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
-      animation: fadeIn 1s ease;
+    .backpack {
+      width: 180px;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
     }
 
-    .card img {
-      width: 120px;
-      margin-bottom: 20px;
-      animation: float 3s infinite ease-in-out;
+    .welcome-title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.1;
     }
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+    .welcome-subtitle {
+      font-size: 18px;
+      color: #94a3b8;
     }
 
-    p {
-      opacity: 0.7;
+    /* Top bar */
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #0f172a;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      border-bottom: 1px solid #334155;
     }
 
-    /* ANIMAÇÕES */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* RESPONSIVO */
-    @media (max-width: 768px) {
-      .sidebar {
-        display: none;
-      }
+    .tab {
+      padding: 8px 20px;
+      background-color: #1e2937;
+      border-radius: 6px 6px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
     }
   </style>
 </head>
-
 <body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="header">
+        <img src="https://i.imgur.com/9Z8Z8Z8.png" alt="Mochila"> <!-- Substitua pela sua imagem da mochila -->
+        <h1>Minha Mochila</h1>
+      </div>
 
-  <div class="sidebar">
-    <div class="logo">🎒 Minha Mochila</div>
+      <input type="text" class="search-box" placeholder="Buscar matéria...">
 
-    <input class="search" placeholder="Buscar matéria...">
+      <div class="new-subject">
+        <span>Nova matéria (ex: Física)</span>
+        <button class="add-btn">+</button>
+      </div>
 
-    <button class="btn">+ Nova Matéria</button>
+      <div class="subjects">
+        <div class="subject-item">
+          <span>🎨</span>
+          <span>Artes</span>
+          <span class="subject-count">0 anotações</span>
+        </div>
+        <div class="subject-item">
+          <span>🏃</span>
+          <span>Educação Física</span>
+          <span class="subject-count">0 anotações</span>
+        </div>
+        <div class="subject-item">
+          <span>💻</span>
+          <span>Lógica de Programação</span>
+          <span class="subject-count">0 anotações</span>
+        </div>
+        <div class="subject-item">
+          <span>🌐</span>
+          <span>HTML & CSS</span>
+          <span class="subject-count">0 anotações</span>
+        </div>
+        <div class="subject-item">
+          <span>🖥️</span>
+          <span>Programação Web</span>
+          <span class="subject-count">0 anotações</span>
+        </div>
+      </div>
 
-    <div class="item">📘 Artes</div>
-    <div class="item">🏃 Educação Física</div>
-    <div class="item">💻 Lógica de Programação</div>
-    <div class="item">🌐 HTML & CSS</div>
-    <div class="item">🚀 Programação Web</div>
+      <div class="other-projects">
+        <h3>OUTROS PROJETOS</h3>
+        <div class="project-item">
+          <span>♿</span>
+          <span>Braille</span>
+        </div>
+        <div class="project-item">
+          <span>📚</span>
+          <span>Aulas</span>
+        </div>
+        <div class="project-item">
+          <span>🎓</span>
+          <span>CAPS</span>
+        </div>
+      </div>
 
-  </div>
+      <div style="margin-top: 20px; color: #ef4444; font-size: 14px; cursor: pointer;">
+        🗑️ Esvaziar mochila
+      </div>
+    </div>
 
-  <div class="content">
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046876.png">
-      <h1>Bem-vindo à sua Mochila!</h1>
-      <p>Organize suas aulas e anotações aqui.</p>
+    <!-- Main Content -->
+    <div class="main">
+      <div class="top-bar">
+        <div class="tab">
+          📝 Aulas & Anotações
+        </div>
+      </div>
+
+      <div class="welcome-content">
+        <img src="https://i.imgur.com/0ZfK7qL.png" alt="Mochila Vermelha" class="backpack">
+        <h1 class="welcome-title">Bem-vindo à sua<br>Mochila!</h1>
+        <p class="welcome-subtitle">Organize suas aulas e anotações aqui.</p>
+      </div>
     </div>
   </div>
-
 </body>
 </html>
