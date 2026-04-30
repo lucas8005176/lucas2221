@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minha Mochila de Estudos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👜 Minha Mochila Escolar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --bg: #0f0f1a;
-      --card: #1a1a2e;
-      --accent: #00d4ff;
-      --text: #e0e0ff;
-      --danger: #ff4d6d;
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -20,273 +13,387 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
       min-height: 100vh;
-      padding: 20px 16px;
-      line-height: 1.5;
+      color: #1e2937;
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
     }
 
-    h1 {
-      text-align: center;
-      margin: 0 0 1.8rem;
-      font-size: 2.1rem;
-      color: var(--accent);
-    }
-
-    .add-area {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      min-width: 220px;
-      padding: 12px 16px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      background: #222;
+    header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
       color: white;
-      font-size: 1rem;
+      padding: 35px 40px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.8em;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1.1em;
+      opacity: 0.95;
+    }
+
+    .main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 30px;
+    }
+
+    /* Coluna Esquerda */
+    .left {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .right {
+      flex: 1.6;
+      min-width: 380px;
+    }
+
+    h2 {
+      font-size: 1.6em;
+      color: #4338ca;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Matérias Disponíveis */
+    .materias-disponiveis {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+      border: 2px solid #e0e7ff;
+      border-radius: 16px;
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      color: #1e2937;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      border-color: #6366f1;
+      box-shadow: 0 15px 25px rgba(99, 102, 241, 0.2);
+    }
+
+    .card i {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: #6366f1;
+    }
+
+    /* Mochila */
+    .mochila {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 520px;
+      border: 3px dashed #c4d0ff;
+    }
+
+    .item-mochila {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .item-mochila:hover {
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .item-header h3 {
+      font-size: 1.2em;
+      color: #4338ca;
+    }
+
+    .anotacao {
+      font-size: 0.95em;
+      color: #475569;
+      line-height: 1.4;
+      padding-left: 5px;
+      border-left: 3px solid #6366f1;
+    }
+
+    .btn-remover {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      cursor: pointer;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #64748b;
+    }
+
+    .empty-state i {
+      font-size: 4em;
+      margin-bottom: 15px;
+      opacity: 0.3;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.65);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 520px;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    textarea {
+      width: 100%;
+      height: 220px;
+      padding: 15px;
+      border: 2px solid #e0e7ff;
+      border-radius: 14px;
+      font-size: 1em;
+      resize: vertical;
+      margin-top: 10px;
+    }
+
+    .modal-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
     }
 
     button {
       padding: 12px 24px;
-      background: var(--accent);
-      color: #000;
       border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    button:hover {
-      background: #00eaff;
-      transform: translateY(-1px);
-    }
-
-    .mochila {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .materia {
-      background: var(--card);
       border-radius: 12px;
-      padding: 16px;
-      border: 1px solid #2a2a4a;
-      transition: all 0.18s;
-      position: relative;
-    }
-
-    .materia:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 212, 255, 0.12);
-      border-color: var(--accent);
-    }
-
-    .nome {
-      font-size: 1.25rem;
       font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
       cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
-      display: inline-block;
+      font-size: 1em;
     }
 
-    .nome:hover {
-      background: rgba(0, 212, 255, 0.12);
+    .btn-cancel {
+      background: #e2e8f0;
+      color: #334155;
     }
 
-    .anotacao {
-      font-size: 0.95rem;
-      color: #c0c0e0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      min-height: 1.2em;
+    .btn-save {
+      background: #6366f1;
+      color: white;
     }
 
-    .anotacao:empty::before {
-      content: "Clique no nome para adicionar anotação...";
-      color: #555;
-      font-style: italic;
-    }
-
-    .remover {
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      color: var(--danger);
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1.4rem;
-      line-height: 1;
-      opacity: 0.7;
-    }
-
-    .remover:hover {
-      opacity: 1;
-      transform: scale(1.15);
-    }
-
-    @media (max-width: 500px) {
-      .add-area { flex-direction: column; }
-      button { width: 100%; }
+    .footer {
+      text-align: center;
+      padding: 22px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>🎒 Minha Mochila</h1>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-backpack"></i> Minha Mochila</h1>
+      <p>Organize suas matérias e anotações do semestre</p>
+    </header>
 
-  <div class="add-area">
-    <input type="text" id="novaMateria" placeholder="Digite o nome da matéria..." autocomplete="off"/>
-    <button onclick="adicionarMateria()">Adicionar</button>
+    <div class="main">
+      <!-- Matérias Disponíveis -->
+      <div class="left">
+        <h2><i class="fas fa-book"></i> Matérias Disponíveis</h2>
+        <div class="materias-disponiveis" id="lista-disponiveis"></div>
+      </div>
+
+      <!-- Mochila -->
+      <div class="right">
+        <h2><i class="fas fa-school"></i> Minha Mochila (<span id="contador">0</span>)</h2>
+        <div class="mochila" id="mochila">
+          <!-- Preenchido pelo JavaScript -->
+        </div>
+        <br>
+        <button onclick="limparMochila()" style="background:#ef4444; color:white;">
+          <i class="fas fa-trash"></i> Limpar Mochila
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Mochila Escolar • Feita com carinho para o GitHub
+    </div>
   </div>
 
-  <div class="mochila" id="mochila"></div>
-</div>
+  <!-- Modal de Anotações -->
+  <div class="modal" id="modalAnotacao">
+    <div class="modal-content">
+      <h2 id="modalTitulo">Anotações - Matemática</h2>
+      <textarea id="textoAnotacao" placeholder="Escreva aqui suas anotações, tarefas, provas, links..."></textarea>
+      
+      <div class="modal-buttons">
+        <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+        <button class="btn-save" onclick="salvarAnotacao()">Salvar Anotação</button>
+      </div>
+    </div>
+  </div>
 
-<script>
-const mochilaEl = document.getElementById('mochila');
-const inputEl   = document.getElementById('novaMateria');
+  <script>
+    const materiasDisponiveis = [
+      "Português", "Matemática", "História", "Filosofia", "Sociologia",
+      "Inglês", "Geografia", "Artes", "HTML", "AMC", "Lógica de Programação",
+      "Noções de Robótica", "Projeto de Vida", "Estudos Orientados", "Programação Web"
+    ];
 
-let materias = JSON.parse(localStorage.getItem('mochila-materias') || '[]');
+    let mochila = []; // { nome: "", anotacao: "" }
 
-function salvar() {
-  localStorage.setItem('mochila-materias', JSON.stringify(materias));
-  renderizar();
-}
+    function renderizarDisponiveis() {
+      const container = document.getElementById('lista-disponiveis');
+      container.innerHTML = '';
 
-function renderizar() {
-  mochilaEl.innerHTML = '';
-
-  materias.forEach((item, i) => {
-    const div = document.createElement('div');
-    div.className = 'materia';
-
-    // Nome editável
-    const nome = document.createElement('div');
-    nome.className = 'nome';
-    nome.textContent = item.nome;
-    nome.onclick = () => editarNome(i, nome);
-
-    // Anotação editável
-    const anot = document.createElement('div');
-    anot.className = 'anotacao';
-    anot.textContent = item.anotacao || '';
-    anot.onclick = () => editarAnotacao(i, anot);
-
-    // Botão remover
-    const btnRem = document.createElement('span');
-    btnRem.className = 'remover';
-    btnRem.textContent = '×';
-    btnRem.onclick = (e) => {
-      e.stopPropagation();
-      if (confirm(`Remover ${item.nome}?`)) {
-        materias.splice(i, 1);
-        salvar();
-      }
-    };
-
-    div.append(btnRem, nome, anot);
-    mochilaEl.appendChild(div);
-  });
-}
-
-function adicionarMateria() {
-  const texto = inputEl.value.trim();
-  if (!texto) return;
-
-  materias.push({ nome: texto, anotacao: '' });
-  inputEl.value = '';
-  salvar();
-}
-
-// Pressionar Enter também adiciona
-inputEl.onkeydown = e => {
-  if (e.key === 'Enter') {
-    adicionarMateria();
-  }
-};
-
-function editarNome(idx, elemento) {
-  const original = materias[idx].nome;
-  const inp = document.createElement('input');
-  inp.type = 'text';
-  inp.value = original;
-  inp.style.width = '100%';
-  inp.style.background = 'rgba(0,212,255,0.1)';
-  inp.style.border = '1px solid var(--accent)';
-  inp.style.color = 'white';
-  inp.style.padding = '4px 8px';
-  inp.style.borderRadius = '6px';
-
-  elemento.replaceWith(inp);
-  inp.focus();
-  inp.select();
-
-  const salvarNome = () => {
-    const novo = inp.value.trim() || original;
-    materias[idx].nome = novo;
-    salvar();
-  };
-
-  inp.onblur = salvarNome;
-  inp.onkeydown = e => {
-    if (e.key === 'Enter') { e.preventDefault(); salvarNome(); }
-    if (e.key === 'Escape') { salvarNome(); }
-  };
-}
-
-function editarAnotacao(idx, elemento) {
-  const original = materias[idx].anotacao || '';
-  const inp = document.createElement('textarea');
-  inp.value = original;
-  inp.style.width = '100%';
-  inp.style.minHeight = '80px';
-  inp.style.background = 'rgba(0,212,255,0.08)';
-  inp.style.border = '1px solid #444';
-  inp.style.color = 'white';
-  inp.style.padding = '8px';
-  inp.style.borderRadius = '6px';
-  inp.style.resize = 'vertical';
-  inp.style.fontFamily = 'inherit';
-  inp.style.fontSize = '0.95rem';
-
-  elemento.replaceWith(inp);
-  inp.focus();
-
-  const salvarAnot = () => {
-    materias[idx].anotacao = inp.value.trim();
-    salvar();
-  };
-
-  inp.onblur = salvarAnot;
-  inp.onkeydown = e => {
-    if (e.ctrlKey && e.key === 'Enter') {
-      e.preventDefault();
-      salvarAnot();
+      materiasDisponiveis.forEach(materia => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <i class="fas fa-book-open"></i>
+          <div>${materia}</div>
+        `;
+        card.onclick = () => adicionarNaMochila(materia);
+        container.appendChild(card);
+      });
     }
-  };
-}
 
-// Primeira renderização
-renderizar();
-</script>
+    function adicionarNaMochila(materia) {
+      if (mochila.some(item => item.nome === materia)) {
+        alert(`⚠️ ${materia} já está na sua mochila!`);
+        return;
+      }
+
+      mochila.push({ nome: materia, anotacao: "" });
+      renderizarMochila();
+    }
+
+    function renderizarMochila() {
+      const container = document.getElementById('mochila');
+      const contador = document.getElementById('contador');
+      contador.textContent = mochila.length;
+
+      if (mochila.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-backpack"></i>
+            <h3>Sua mochila está vazia</h3>
+            <p>Clique nas matérias à esquerda para começar</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      mochila.forEach((item, index) => {
+        html += `
+          <div class="item-mochila" onclick="abrirModal(${index})">
+            <div class="item-header">
+              <h3><i class="fas fa-book"></i> ${item.nome}</h3>
+              <button class="btn-remover" onclick="event.stopImmediatePropagation(); removerDaMochila(${index});">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            ${item.anotacao ? 
+              `<p class="anotacao">${item.anotacao.substring(0, 120)}${item.anotacao.length > 120 ? '...' : ''}</p>` 
+              : '<p style="color:#94a3b8; font-style:italic;">Clique para adicionar anotações...</p>'}
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    let indexAtual = null;
+
+    function abrirModal(index) {
+      indexAtual = index;
+      const item = mochila[index];
+      document.getElementById('modalTitulo').textContent = `Anotações - ${item.nome}`;
+      document.getElementById('textoAnotacao').value = item.anotacao || "";
+      document.getElementById('modalAnotacao').style.display = 'flex';
+    }
+
+    function fecharModal() {
+      document.getElementById('modalAnotacao').style.display = 'none';
+    }
+
+    function salvarAnotacao() {
+      if (indexAtual !== null) {
+        const texto = document.getElementById('textoAnotacao').value.trim();
+        mochila[indexAtual].anotacao = texto;
+        fecharModal();
+        renderizarMochila();
+      }
+    }
+
+    function removerDaMochila(index) {
+      if (confirm(`Deseja remover ${mochila[index].nome} da mochila?`)) {
+        mochila.splice(index, 1);
+        renderizarMochila();
+      }
+    }
+
+    function limparMochila() {
+      if (confirm("⚠️ Tem certeza que deseja limpar TODA a mochila?")) {
+        mochila = [];
+        renderizarMochila();
+      }
+    }
+
+    // Inicialização
+    window.onload = () => {
+      renderizarDisponiveis();
+      renderizarMochila();
+    };
+  </script>
 </body>
 </html>
