@@ -1,294 +1,226 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minha Mochila - Aulas & Anotações</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Mochila Pro</title>
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0f172a;
-      color: white;
-      height: 100vh;
-      overflow: hidden;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    .container {
-      display: flex;
-      height: 100vh;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* Sidebar */
-    .sidebar {
-      width: 280px;
-      background-color: #1e2937;
-      padding: 20px 16px;
-      border-right: 1px solid #334155;
-      display: flex;
-      flex-direction: column;
-    }
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
 
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
+.container {
+  display: flex;
+  height: 100vh;
+}
 
-    .header img {
-      width: 48px;
-      height: 48px;
-    }
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  border-right: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+}
 
-    .header h1 {
-      font-size: 24px;
-      font-weight: 600;
-    }
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-    .search-box {
-      background-color: #334155;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 16px;
-      color: white;
-      width: 100%;
-      margin-bottom: 16px;
-      font-size: 15px;
-    }
+.header h1 {
+  font-size: 22px;
+}
 
-    .new-subject {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background-color: #334155;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 24px;
-      cursor: pointer;
-    }
+/* Input */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
 
-    .new-subject span {
-      flex: 1;
-      font-size: 15px;
-    }
+.input-group input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #334155;
+  color: white;
+}
 
-    .add-btn {
-      width: 40px;
-      height: 40px;
-      background-color: #8b5cf6;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.add-btn {
+  background: #8b5cf6;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s;
+}
 
-    .subjects {
-      flex: 1;
-      overflow-y: auto;
-    }
+.add-btn:hover {
+  background: #7c3aed;
+}
 
-    .subject-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 4px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+/* Subjects */
+.subjects {
+  flex: 1;
+  overflow-y: auto;
+}
 
-    .subject-item:hover {
-      background-color: #334155;
-    }
+.subject {
+  background: #334155;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-    .subject-item span {
-      font-size: 15px;
-    }
+.subject:hover {
+  transform: translateX(5px);
+  background: #475569;
+}
 
-    .subject-count {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-left: auto;
-    }
+/* Projects */
+.projects {
+  margin-top: 20px;
+}
 
-    .other-projects {
-      margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid #334155;
-    }
+.projects a {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #334155;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
 
-    .other-projects h3 {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 8px;
-      padding-left: 16px;
-    }
+.projects a:hover {
+  background: #475569;
+}
 
-    .project-item {
-      padding: 12px 16px;
-      background-color: #334155;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 15px;
-      cursor: pointer;
-    }
+/* Main */
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 
-    .empty {
-      color: #64748b;
-      font-size: 13px;
-    }
+.card {
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
 
-    /* Main Content */
-    .main {
-      flex: 1;
-      background-color: #1e2937;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
+.card img {
+  width: 160px;
+  margin-bottom: 20px;
+}
 
-    .welcome-content {
-      text-align: center;
-      color: white;
-    }
+.card h2 {
+  font-size: 36px;
+}
 
-    .backpack {
-      width: 180px;
-      margin-bottom: 32px;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
-    }
+.card p {
+  color: #94a3b8;
+}
 
-    .welcome-title {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      line-height: 1.1;
-    }
-
-    .welcome-subtitle {
-      font-size: 18px;
-      color: #94a3b8;
-    }
-
-    /* Top bar */
-    .top-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background-color: #0f172a;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      border-bottom: 1px solid #334155;
-    }
-
-    .tab {
-      padding: 8px 20px;
-      background-color: #1e2937;
-      border-radius: 6px 6px 0 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 15px;
-    }
-  </style>
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="header">
-        <img src="https://i.imgur.com/9Z8Z8Z8.png" alt="Mochila"> <!-- Substitua pela sua imagem da mochila -->
-        <h1>Minha Mochila</h1>
-      </div>
 
-      <input type="text" class="search-box" placeholder="Buscar matéria...">
+<div class="container">
 
-      <div class="new-subject">
-        <span>Nova matéria (ex: Física)</span>
-        <button class="add-btn">+</button>
-      </div>
-
-      <div class="subjects">
-        <div class="subject-item">
-          <span>🎨</span>
-          <span>Artes</span>
-          <span class="subject-count">0 anotações</span>
-        </div>
-        <div class="subject-item">
-          <span>🏃</span>
-          <span>Educação Física</span>
-          <span class="subject-count">0 anotações</span>
-        </div>
-        <div class="subject-item">
-          <span>💻</span>
-          <span>Lógica de Programação</span>
-          <span class="subject-count">0 anotações</span>
-        </div>
-        <div class="subject-item">
-          <span>🌐</span>
-          <span>HTML & CSS</span>
-          <span class="subject-count">0 anotações</span>
-        </div>
-        <div class="subject-item">
-          <span>🖥️</span>
-          <span>Programação Web</span>
-          <span class="subject-count">0 anotações</span>
-        </div>
-      </div>
-
-      <div class="other-projects">
-        <h3>OUTROS PROJETOS</h3>
-        <div class="project-item">
-          <span>♿</span>
-          <span>Braille</span>
-        </div>
-        <div class="project-item">
-          <span>📚</span>
-          <span>Aulas</span>
-        </div>
-        <div class="project-item">
-          <span>🎓</span>
-          <span>CAPS</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 20px; color: #ef4444; font-size: 14px; cursor: pointer;">
-        🗑️ Esvaziar mochila
-      </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="header">
+      🎒 <h1>Minha Mochila</h1>
     </div>
 
-    <!-- Main Content -->
-    <div class="main">
-      <div class="top-bar">
-        <div class="tab">
-          📝 Aulas & Anotações
-        </div>
-      </div>
+    <div class="input-group">
+      <input id="inputMateria" placeholder="Nova matéria...">
+      <button class="add-btn" onclick="addMateria()">+</button>
+    </div>
 
-      <div class="welcome-content">
-        <img src="https://i.imgur.com/0ZfK7qL.png" alt="Mochila Vermelha" class="backpack">
-        <h1 class="welcome-title">Bem-vindo à sua<br>Mochila!</h1>
-        <p class="welcome-subtitle">Organize suas aulas e anotações aqui.</p>
-      </div>
+    <div class="subjects" id="lista"></div>
+
+    <div class="projects">
+      <h4 style="margin-bottom:10px;color:#94a3b8;">Projetos</h4>
+
+      <a href="https://www.google.com" target="_blank">♿ Braille</a>
+      <a href="https://www.youtube.com" target="_blank">📚 Aulas</a>
+      <a href="https://www.github.com" target="_blank">🎓 CAPS</a>
     </div>
   </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png">
+      <h2>Bem-vindo 👋</h2>
+      <p>Organize suas matérias de forma simples e bonita</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let materias = JSON.parse(localStorage.getItem("materias")) || [];
+
+function render() {
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
+
+  materias.forEach((m, i) => {
+    const div = document.createElement("div");
+    div.className = "subject";
+    div.innerHTML = "📘 " + m;
+    lista.appendChild(div);
+  });
+
+  localStorage.setItem("materias", JSON.stringify(materias));
+}
+
+function addMateria() {
+  const input = document.getElementById("inputMateria");
+  if (input.value.trim() === "") return;
+
+  materias.push(input.value);
+  input.value = "";
+  render();
+}
+
+render();
+</script>
+
 </body>
 </html>
