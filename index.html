@@ -1,226 +1,292 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Minha Mochila Pro</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minha Mochila de Estudos</title>
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --card: #1a1a2e;
+      --accent: #00d4ff;
+      --text: #e0e0ff;
+      --danger: #ff4d6d;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px 16px;
+      line-height: 1.5;
+    }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: white;
-  height: 100vh;
-  overflow: hidden;
-}
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-.container {
-  display: flex;
-  height: 100vh;
-}
+    h1 {
+      text-align: center;
+      margin: 0 0 1.8rem;
+      font-size: 2.1rem;
+      color: var(--accent);
+    }
 
-/* Sidebar */
-.sidebar {
-  width: 300px;
-  background: rgba(30, 41, 59, 0.9);
-  backdrop-filter: blur(12px);
-  padding: 20px;
-  border-right: 1px solid #334155;
-  display: flex;
-  flex-direction: column;
-}
+    .add-area {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+    input[type="text"] {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px 16px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #222;
+      color: white;
+      font-size: 1rem;
+    }
 
-.header h1 {
-  font-size: 22px;
-}
+    button {
+      padding: 12px 24px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-/* Input */
-.input-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
+    button:hover {
+      background: #00eaff;
+      transform: translateY(-1px);
+    }
 
-.input-group input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  background: #334155;
-  color: white;
-}
+    .mochila {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
 
-.add-btn {
-  background: #8b5cf6;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  transition: 0.2s;
-}
+    .materia {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #2a2a4a;
+      transition: all 0.18s;
+      position: relative;
+    }
 
-.add-btn:hover {
-  background: #7c3aed;
-}
+    .materia:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 212, 255, 0.12);
+      border-color: var(--accent);
+    }
 
-/* Subjects */
-.subjects {
-  flex: 1;
-  overflow-y: auto;
-}
+    .nome {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
 
-.subject {
-  background: #334155;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    .nome:hover {
+      background: rgba(0, 212, 255, 0.12);
+    }
 
-.subject:hover {
-  transform: translateX(5px);
-  background: #475569;
-}
+    .anotacao {
+      font-size: 0.95rem;
+      color: #c0c0e0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 1.2em;
+    }
 
-/* Projects */
-.projects {
-  margin-top: 20px;
-}
+    .anotacao:empty::before {
+      content: "Clique no nome para adicionar anotação...";
+      color: #555;
+      font-style: italic;
+    }
 
-.projects a {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  background: #334155;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  text-decoration: none;
-  color: white;
-  transition: 0.2s;
-}
+    .remover {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      color: var(--danger);
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.4rem;
+      line-height: 1;
+      opacity: 0.7;
+    }
 
-.projects a:hover {
-  background: #475569;
-}
+    .remover:hover {
+      opacity: 1;
+      transform: scale(1.15);
+    }
 
-/* Main */
-.main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.card {
-  text-align: center;
-  animation: fadeIn 1s ease;
-}
-
-.card img {
-  width: 160px;
-  margin-bottom: 20px;
-}
-
-.card h2 {
-  font-size: 36px;
-}
-
-.card p {
-  color: #94a3b8;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-</style>
+    @media (max-width: 500px) {
+      .add-area { flex-direction: column; }
+      button { width: 100%; }
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
+  <h1>🎒 Minha Mochila</h1>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="header">
-      🎒 <h1>Minha Mochila</h1>
-    </div>
-
-    <div class="input-group">
-      <input id="inputMateria" placeholder="Nova matéria...">
-      <button class="add-btn" onclick="addMateria()">+</button>
-    </div>
-
-    <div class="subjects" id="lista"></div>
-
-    <div class="projects">
-      <h4 style="margin-bottom:10px;color:#94a3b8;">Projetos</h4>
-
-      <a href="https://www.google.com" target="_blank">♿ Braille</a>
-      <a href="https://www.youtube.com" target="_blank">📚 Aulas</a>
-      <a href="https://www.github.com" target="_blank">🎓 CAPS</a>
-    </div>
+  <div class="add-area">
+    <input type="text" id="novaMateria" placeholder="Digite o nome da matéria..." autocomplete="off"/>
+    <button onclick="adicionarMateria()">Adicionar</button>
   </div>
 
-  <!-- Main -->
-  <div class="main">
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png">
-      <h2>Bem-vindo 👋</h2>
-      <p>Organize suas matérias de forma simples e bonita</p>
-    </div>
-  </div>
-
+  <div class="mochila" id="mochila"></div>
 </div>
 
 <script>
-let materias = JSON.parse(localStorage.getItem("materias")) || [];
+const mochilaEl = document.getElementById('mochila');
+const inputEl   = document.getElementById('novaMateria');
 
-function render() {
-  const lista = document.getElementById("lista");
-  lista.innerHTML = "";
+let materias = JSON.parse(localStorage.getItem('mochila-materias') || '[]');
 
-  materias.forEach((m, i) => {
-    const div = document.createElement("div");
-    div.className = "subject";
-    div.innerHTML = "📘 " + m;
-    lista.appendChild(div);
+function salvar() {
+  localStorage.setItem('mochila-materias', JSON.stringify(materias));
+  renderizar();
+}
+
+function renderizar() {
+  mochilaEl.innerHTML = '';
+
+  materias.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'materia';
+
+    // Nome editável
+    const nome = document.createElement('div');
+    nome.className = 'nome';
+    nome.textContent = item.nome;
+    nome.onclick = () => editarNome(i, nome);
+
+    // Anotação editável
+    const anot = document.createElement('div');
+    anot.className = 'anotacao';
+    anot.textContent = item.anotacao || '';
+    anot.onclick = () => editarAnotacao(i, anot);
+
+    // Botão remover
+    const btnRem = document.createElement('span');
+    btnRem.className = 'remover';
+    btnRem.textContent = '×';
+    btnRem.onclick = (e) => {
+      e.stopPropagation();
+      if (confirm(`Remover ${item.nome}?`)) {
+        materias.splice(i, 1);
+        salvar();
+      }
+    };
+
+    div.append(btnRem, nome, anot);
+    mochilaEl.appendChild(div);
   });
-
-  localStorage.setItem("materias", JSON.stringify(materias));
 }
 
-function addMateria() {
-  const input = document.getElementById("inputMateria");
-  if (input.value.trim() === "") return;
+function adicionarMateria() {
+  const texto = inputEl.value.trim();
+  if (!texto) return;
 
-  materias.push(input.value);
-  input.value = "";
-  render();
+  materias.push({ nome: texto, anotacao: '' });
+  inputEl.value = '';
+  salvar();
 }
 
-render();
+// Pressionar Enter também adiciona
+inputEl.onkeydown = e => {
+  if (e.key === 'Enter') {
+    adicionarMateria();
+  }
+};
+
+function editarNome(idx, elemento) {
+  const original = materias[idx].nome;
+  const inp = document.createElement('input');
+  inp.type = 'text';
+  inp.value = original;
+  inp.style.width = '100%';
+  inp.style.background = 'rgba(0,212,255,0.1)';
+  inp.style.border = '1px solid var(--accent)';
+  inp.style.color = 'white';
+  inp.style.padding = '4px 8px';
+  inp.style.borderRadius = '6px';
+
+  elemento.replaceWith(inp);
+  inp.focus();
+  inp.select();
+
+  const salvarNome = () => {
+    const novo = inp.value.trim() || original;
+    materias[idx].nome = novo;
+    salvar();
+  };
+
+  inp.onblur = salvarNome;
+  inp.onkeydown = e => {
+    if (e.key === 'Enter') { e.preventDefault(); salvarNome(); }
+    if (e.key === 'Escape') { salvarNome(); }
+  };
+}
+
+function editarAnotacao(idx, elemento) {
+  const original = materias[idx].anotacao || '';
+  const inp = document.createElement('textarea');
+  inp.value = original;
+  inp.style.width = '100%';
+  inp.style.minHeight = '80px';
+  inp.style.background = 'rgba(0,212,255,0.08)';
+  inp.style.border = '1px solid #444';
+  inp.style.color = 'white';
+  inp.style.padding = '8px';
+  inp.style.borderRadius = '6px';
+  inp.style.resize = 'vertical';
+  inp.style.fontFamily = 'inherit';
+  inp.style.fontSize = '0.95rem';
+
+  elemento.replaceWith(inp);
+  inp.focus();
+
+  const salvarAnot = () => {
+    materias[idx].anotacao = inp.value.trim();
+    salvar();
+  };
+
+  inp.onblur = salvarAnot;
+  inp.onkeydown = e => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      salvarAnot();
+    }
+  };
+}
+
+// Primeira renderização
+renderizar();
 </script>
-
 </body>
 </html>
