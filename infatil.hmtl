@@ -1,0 +1,317 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web, Empreendedorismo Digital e Trabalho Infantil</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    color:#333;
+    line-height:1.6;
+}
+
+header{
+    background:linear-gradient(135deg,#0066cc,#00b894);
+    color:white;
+    text-align:center;
+    padding:50px 20px;
+}
+
+header h1{
+    font-size:3rem;
+}
+
+nav{
+    background:#222;
+    padding:15px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#00e676;
+}
+
+section{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    margin:20px 0;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.card h2{
+    color:#0066cc;
+    margin-bottom:15px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+ul{
+    margin-left:20px;
+}
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+
+.botao{
+    display:inline-block;
+    background:#00b894;
+    color:white;
+    padding:12px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    margin-top:15px;
+}
+
+.botao:hover{
+    background:#00916e;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:12px;
+    text-align:left;
+}
+
+th{
+    background:#0066cc;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Web, Empreendedorismo Digital e Trabalho Infantil</h1>
+    <p>Conhecimento, Tecnologia e Responsabilidade Social</p>
+</header>
+
+<nav>
+    <a href="#web">Web</a>
+    <a href="#empreendedorismo">Empreendedorismo Digital</a>
+    <a href="#trabalho">Trabalho Infantil</a>
+    <a href="#conclusao">Conclusão</a>
+</nav>
+
+<section id="web">
+
+<div class="card">
+<h2>🌐 O que é a Web?</h2>
+
+<p>
+A Web (World Wide Web) é um sistema de páginas e conteúdos acessados pela internet.
+Ela permite a comunicação entre pessoas, empresas, escolas e organizações em todo o mundo.
+</p>
+
+<p>
+Atualmente a Web é utilizada para estudar, trabalhar, comprar produtos, assistir vídeos,
+ouvir músicas, jogar e compartilhar informações.
+</p>
+
+<h3>Principais Tecnologias da Web</h3>
+
+<ul>
+<li>HTML - Estrutura das páginas.</li>
+<li>CSS - Aparência e design.</li>
+<li>JavaScript - Interatividade.</li>
+<li>Banco de Dados - Armazenamento de informações.</li>
+<li>Servidores - Hospedagem dos sites.</li>
+</ul>
+
+</div>
+
+</section>
+
+<section id="empreendedorismo">
+
+<div class="card">
+<h2>💻 Empreendedorismo Digital</h2>
+
+<p>
+O empreendedorismo digital consiste na criação de negócios utilizando a internet
+como principal ferramenta de trabalho.
+</p>
+
+<p>
+Muitas empresas surgem através de lojas virtuais, aplicativos, produção de conteúdo,
+marketing digital e desenvolvimento de sistemas.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h3>📱 Marketing Digital</h3>
+<p>
+Uso das redes sociais, anúncios e estratégias online para divulgar produtos e serviços.
+</p>
+</div>
+
+<div class="card">
+<h3>🛒 E-commerce</h3>
+<p>
+Venda de produtos pela internet através de lojas virtuais.
+</p>
+</div>
+
+<div class="card">
+<h3>🎥 Produção de Conteúdo</h3>
+<p>
+Criação de vídeos, blogs, podcasts e conteúdos educativos.
+</p>
+</div>
+
+</div>
+
+<h3>Vantagens</h3>
+
+<ul>
+<li>Alcance global.</li>
+<li>Baixo investimento inicial.</li>
+<li>Flexibilidade de horários.</li>
+<li>Possibilidade de inovação.</li>
+<li>Maior conexão com clientes.</li>
+</ul>
+
+</div>
+
+</section>
+
+<section id="trabalho">
+
+<div class="card">
+<h2>🚫 Trabalho Infantil</h2>
+
+<p>
+O trabalho infantil ocorre quando crianças ou adolescentes realizam atividades
+econômicas inadequadas para sua idade e que prejudicam seu desenvolvimento,
+educação, saúde ou bem-estar.
+</p>
+
+<p>
+Segundo a legislação brasileira, crianças devem ter acesso à educação, lazer,
+proteção e desenvolvimento saudável.
+</p>
+
+<h3>Consequências do Trabalho Infantil</h3>
+
+<ul>
+<li>Abandono escolar.</li>
+<li>Problemas físicos e emocionais.</li>
+<li>Redução das oportunidades futuras.</li>
+<li>Prejuízos ao desenvolvimento infantil.</li>
+<li>Maior vulnerabilidade social.</li>
+</ul>
+
+<h3>Como Combater?</h3>
+
+<ul>
+<li>Garantir acesso à educação.</li>
+<li>Conscientização da sociedade.</li>
+<li>Fiscalização das leis.</li>
+<li>Apoio às famílias.</li>
+<li>Denúncia de casos de exploração.</li>
+</ul>
+
+<table>
+<tr>
+<th>Direito</th>
+<th>Importância</th>
+</tr>
+
+<tr>
+<td>Educação</td>
+<td>Desenvolvimento intelectual e profissional.</td>
+</tr>
+
+<tr>
+<td>Lazer</td>
+<td>Bem-estar e convivência social.</td>
+</tr>
+
+<tr>
+<td>Saúde</td>
+<td>Crescimento saudável.</td>
+</tr>
+
+<tr>
+<td>Proteção</td>
+<td>Segurança física e emocional.</td>
+</tr>
+</table>
+
+</div>
+
+</section>
+
+<section id="conclusao">
+
+<div class="card">
+<h2>📚 Conclusão</h2>
+
+<p>
+A Web e o empreendedorismo digital oferecem oportunidades de aprendizado,
+inovação e geração de renda. Entretanto, o desenvolvimento tecnológico deve
+sempre estar aliado à responsabilidade social e ao respeito aos direitos das
+crianças e adolescentes.
+</p>
+
+<p>
+Combater o trabalho infantil e incentivar a educação são passos fundamentais
+para construir uma sociedade mais justa e preparada para o futuro digital.
+</p>
+
+<a href="#top" class="botao">Voltar ao Topo</a>
+
+</div>
+
+</section>
+
+<footer>
+<p>Projeto Educacional - Web, Empreendedorismo Digital e Trabalho Infantil © 2026</p>
+</footer>
+
+</body>
+</html>
+```
