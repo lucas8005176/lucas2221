@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voz Contra o Racismo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#111;
+color:white;
+transition:.5s;
+}
+
+body.claro{
+background:#f5f5f5;
+color:#222;
+}
+
+header{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80");
+background-size:cover;
+background-position:center;
+}
+
+header h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+header p{
+font-size:22px;
+max-width:700px;
+}
+
+button{
+padding:14px 30px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+margin-top:20px;
+font-size:18px;
+background:#FFD700;
+font-weight:bold;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:25px;
+background:#000;
+padding:15px;
+z-index:1000;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+section{
+padding:80px 10%;
+}
+
+.card{
+background:#1e1e1e;
+padding:30px;
+border-radius:15px;
+margin:20px 0;
+transition:.4s;
+}
+
+body.claro .card{
+background:white;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.timeline{
+border-left:4px solid gold;
+padding-left:20px;
+}
+
+.timeline div{
+margin:30px 0;
+}
+
+.quiz button{
+display:block;
+margin:15px 0;
+width:100%;
+}
+
+#resultado{
+font-size:22px;
+margin-top:20px;
+color:gold;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+font-size:16px;
+}
+
+textarea{
+height:120px;
+resize:none;
+}
+
+#mural div{
+background:#333;
+padding:15px;
+margin-top:10px;
+border-radius:10px;
+}
+
+body.claro #mural div{
+background:#ddd;
+}
+
+footer{
+padding:30px;
+text-align:center;
+background:#000;
+}
+
+#contador{
+font-size:60px;
+color:gold;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<nav>
+<a href="#sobre">Sobre</a>
+<a href="#historia">História</a>
+<a href="#quiz">Quiz</a>
+<a href="#mural">Mural</a>
+<a href="#contato">Contato</a>
+</nav>
+
+<header>
+
+<h1>✊ Voz Contra o Racismo</h1>
+
+<p>
+Respeito, igualdade e inclusão fazem uma sociedade melhor.
+Todos merecem os mesmos direitos e oportunidades.
+</p>
+
+<button onclick="document.getElementById('sobre').scrollIntoView()">
+Saiba Mais
+</button>
+
+<button onclick="modo()">
+🌙 Modo Claro/Escuro
+</button>
+
+</header>
+
+<section id="sobre">
+
+<h2>Sobre</h2>
+
+<div class="card">
+
+<p>
+
+O racismo é uma forma de discriminação baseada na cor da pele ou origem.
+Combater o preconceito é responsabilidade de toda a sociedade.
+
+</p>
+
+</div>
+
+<center>
+
+<h2>Pessoas conscientizadas</h2>
+
+<div id="contador">0</div>
+
+</center>
+
+</section>
+
+<section id="historia">
+
+<h2>Linha do Tempo</h2>
+
+<div class="timeline">
+
+<div>
+
+<h3>1888</h3>
+
+<p>Abolição da escravidão no Brasil.</p>
+
+</div>
+
+<div>
+
+<h3>1988</h3>
+
+<p>A Constituição Federal fortalece o combate ao racismo.</p>
+
+</div>
+
+<div>
+
+<h3>2003</h3>
+
+<p>Ensino da História e Cultura Afro-Brasileira nas escolas.</p>
+
+</div>
+
+<div>
+
+<h3>Hoje</h3>
+
+<p>A conscientização continua sendo essencial.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="quiz">
+
+<h2>Quiz</h2>
+
+<div class="card quiz">
+
+<h3>O racismo é crime no Brasil?</h3>
+
+<button onclick="errado()">Não</button>
+
+<button onclick="certo()">Sim</button>
+
+<div id="resultado"></div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Curiosidade</h2>
+
+<div class="card">
+
+<p id="curiosidade">
+
+Clique no botão.
+
+</p>
+
+<button onclick="curiosidade()">
+
+Mostrar Curiosidade
+
+</button>
+
+</div>
+
+</section>
+
+<section id="mural">
+
+<h2>Mural de Mensagens</h2>
+
+<input id="nome" placeholder="Seu nome">
+
+<textarea id="mensagem" placeholder="Escreva uma mensagem"></textarea>
+
+<button onclick="enviar()">
+
+Publicar
+
+</button>
+
+<div id="lista"></div>
+
+</section>
+
+<section id="contato">
+
+<h2>Contato</h2>
+
+<div class="card">
+
+<input placeholder="Nome">
+
+<input placeholder="E-mail">
+
+<textarea placeholder="Mensagem"></textarea>
+
+<button onclick="alert('Mensagem enviada com sucesso!')">
+
+Enviar
+
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>
+
+Projeto Educativo Contra o Racismo
+
+</h3>
+
+<p>
+
+Desenvolvido por Lucas Vinícius de Oliveira Rocha
+
+</p>
+
+<p>
+
+© 2026
+
+</p>
+
+</footer>
+
+<script>
+
+function modo(){
+
+document.body.classList.toggle("claro");
+
+}
+
+function certo(){
+
+document.getElementById("resultado").innerHTML=
+"✅ Parabéns! Resposta correta.";
+
+}
+
+function errado(){
+
+document.getElementById("resultado").innerHTML=
+"❌ Resposta incorreta. O racismo é crime no Brasil.";
+
+}
+
+let numero=0;
+
+let contador=setInterval(function(){
+
+numero+=50;
+
+document.getElementById("contador").innerHTML=numero.toLocaleString();
+
+if(numero>=10000){
+
+clearInterval(contador);
+
+}
+
+},20);
+
+const frases=[
+
+"Todos somos iguais em dignidade e direitos.",
+
+"A diversidade fortalece nossa sociedade.",
+
+"O respeito transforma vidas.",
+
+"Combater o preconceito é dever de todos.",
+
+"Educação é uma das principais ferramentas contra o racismo."
+
+];
+
+function curiosidade(){
+
+let aleatorio=Math.floor(Math.random()*frases.length);
+
+document.getElementById("curiosidade").innerHTML=frases[aleatorio];
+
+}
+
+function enviar(){
+
+let nome=document.getElementById("nome").value;
+
+let mensagem=document.getElementById("mensagem").value;
+
+if(nome=="" || mensagem==""){
+
+alert("Preencha todos os campos.");
+
+return;
+
+}
+
+let div=document.createElement("div");
+
+div.innerHTML="<strong>"+nome+"</strong><br>"+mensagem;
+
+document.getElementById("lista").prepend(div);
+
+document.getElementById("nome").value="";
+
+document.getElementById("mensagem").value="";
+
+alert("Mensagem publicada!");
+
+}
+
+</script>
+
+</body>
+</html>
