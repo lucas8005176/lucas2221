@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Inicialização</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #000;
+        }
+
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        .etapa {
+            background: #334155;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid #38bdf8;
+        }
+
+        button {
+            display: block;
+            margin: 25px auto 0;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #38bdf8;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #7dd3fc;
+        }
+
+        #resultado {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🔧 Diagnóstico de Inicialização</h1>
+
+    <div class="etapa">
+        <h2>1. BIOS/UEFI</h2>
+        <p>Verificar se o HD ou SSD está sendo reconhecido pelo computador.</p>
+    </div>
+
+    <div class="etapa">
+        <h2>2. Ordem de Inicialização</h2>
+        <p>Verificar se o HD/SSD correto está selecionado como primeiro dispositivo de boot.</p>
+    </div>
+
+    <div class="etapa">
+        <h2>3. UEFI ou Legacy</h2>
+        <p>Conferir se o modo de inicialização está correto para o sistema instalado.</p>
+    </div>
+
+    <div class="etapa">
+        <h2>4. Sistema</h2>
+        <p>Verificar possíveis problemas no gerenciador de inicialização e nos arquivos do sistema.</p>
+    </div>
+
+    <div class="etapa">
+        <h2>⚠️ Por que não formatar?</h2>
+        <p>
+            A formatação pode apagar os arquivos e não resolver o problema.
+            Primeiro é necessário descobrir a causa da falha.
+        </p>
+    </div>
+
+    <button onclick="mostrarResultado()">Ver conclusão</button>
+
+    <div id="resultado"></div>
+
+</div>
+
+<script>
+    function mostrarResultado() {
+        document.getElementById("resultado").innerHTML =
+            "✅ Primeiro diagnosticar o problema. Só depois considerar a formatação.";
+    }
+</script>
+
+</body>
+</html>
