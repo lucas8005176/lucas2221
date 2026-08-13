@@ -3,36 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico de Inicialização</title>
+    <title>Diagnóstico do Computador</title>
 
     <style>
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
             background: #0f172a;
             color: white;
-            margin: 0;
-            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
+        .caixa {
+            max-width: 750px;
+            margin: 20px;
+            padding: 35px;
             background: #1e293b;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px #000;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
         }
 
         h1 {
             text-align: center;
             color: #38bdf8;
+            margin-bottom: 25px;
         }
 
-        .etapa {
+        p {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .destaque {
             background: #334155;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 12px;
             border-left: 5px solid #38bdf8;
         }
 
@@ -44,6 +52,7 @@
             border-radius: 8px;
             background: #38bdf8;
             color: #0f172a;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -52,9 +61,10 @@
             background: #7dd3fc;
         }
 
-        #resultado {
+        #mensagem {
             text-align: center;
             margin-top: 20px;
+            color: #4ade80;
             font-weight: bold;
         }
     </style>
@@ -62,50 +72,40 @@
 
 <body>
 
-<div class="container">
+    <div class="caixa">
 
-    <h1>🔧 Diagnóstico de Inicialização</h1>
+        <h1>💻 Diagnóstico do Computador</h1>
 
-    <div class="etapa">
-        <h2>1. BIOS/UEFI</h2>
-        <p>Verificar se o HD ou SSD está sendo reconhecido pelo computador.</p>
+        <div class="destaque">
+            <p>
+                Eu verificaria primeiro a <strong>BIOS/UEFI</strong> para confirmar
+                se o HD/SSD está sendo reconhecido e depois conferiria a
+                <strong>ordem de inicialização (Boot Order)</strong> e o modo
+                <strong>UEFI/Legacy</strong>.
+            </p>
+
+            <p>
+                Também verificaria possíveis erros no sistema.
+                <strong>Não formataria de imediato</strong>, pois isso pode apagar
+                os arquivos e não resolver o problema se a causa for apenas uma
+                configuração de boot.
+            </p>
+        </div>
+
+        <button onclick="mostrarMensagem()">
+            Ver conclusão
+        </button>
+
+        <div id="mensagem"></div>
+
     </div>
 
-    <div class="etapa">
-        <h2>2. Ordem de Inicialização</h2>
-        <p>Verificar se o HD/SSD correto está selecionado como primeiro dispositivo de boot.</p>
-    </div>
-
-    <div class="etapa">
-        <h2>3. UEFI ou Legacy</h2>
-        <p>Conferir se o modo de inicialização está correto para o sistema instalado.</p>
-    </div>
-
-    <div class="etapa">
-        <h2>4. Sistema</h2>
-        <p>Verificar possíveis problemas no gerenciador de inicialização e nos arquivos do sistema.</p>
-    </div>
-
-    <div class="etapa">
-        <h2>⚠️ Por que não formatar?</h2>
-        <p>
-            A formatação pode apagar os arquivos e não resolver o problema.
-            Primeiro é necessário descobrir a causa da falha.
-        </p>
-    </div>
-
-    <button onclick="mostrarResultado()">Ver conclusão</button>
-
-    <div id="resultado"></div>
-
-</div>
-
-<script>
-    function mostrarResultado() {
-        document.getElementById("resultado").innerHTML =
-            "✅ Primeiro diagnosticar o problema. Só depois considerar a formatação.";
-    }
-</script>
+    <script>
+        function mostrarMensagem() {
+            document.getElementById("mensagem").innerHTML =
+                "✅ Primeiro devemos diagnosticar o problema antes de formatar o computador.";
+        }
+    </script>
 
 </body>
 </html>
