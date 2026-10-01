@@ -1,0 +1,265 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Saúde e Segurança na Escola</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f8e9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            text-align: center;
+            padding: 55px 20px;
+        }
+
+        header h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        nav {
+            background: white;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            color: #1b5e20;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 25px;
+            font-size: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px #ccc;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #388e3c;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            line-height: 1.6;
+        }
+
+        .aviso {
+            background: #fff3cd;
+            border-left: 6px solid #ffca28;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .lista {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #ccc;
+        }
+
+        .lista li {
+            margin: 12px 0;
+            font-size: 17px;
+        }
+
+        footer {
+            background: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 30px;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🏫 Saúde e Segurança na Escola</h1>
+        <p>Uma escola segura começa com o respeito e o cuidado de todos.</p>
+    </header>
+
+    <nav>
+        <a href="#saude">❤️ Saúde</a>
+        <a href="#seguranca">🛡️ Segurança</a>
+        <a href="#respeito">🤝 Respeito</a>
+        <a href="#cuidados">💧 Cuidados</a>
+    </nav>
+
+    <section id="saude">
+        <h2>❤️ Cuidados com a Saúde</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="icon">💧</div>
+                <h3>Água Limpa</h3>
+                <p>
+                    A escola deve oferecer água limpa e adequada
+                    para que os alunos possam se hidratar com segurança.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🧼</div>
+                <h3>Higiene</h3>
+                <p>
+                    Lavar as mãos, manter os espaços limpos e cuidar
+                    da higiene ajudam a prevenir doenças.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🍎</div>
+                <h3>Alimentação</h3>
+                <p>
+                    Uma alimentação saudável contribui para o crescimento,
+                    a energia e a concentração dos estudantes.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="seguranca">
+        <h2>🛡️ Segurança na Escola</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="icon">🚫</div>
+                <h3>Não Roubar</h3>
+                <p>
+                    Não devemos pegar ou esconder objetos que pertencem
+                    aos colegas. Cada pessoa deve respeitar os bens dos outros.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🤝</div>
+                <h3>Respeitar os Colegas</h3>
+                <p>
+                    Devemos tratar todos com respeito, evitando brigas,
+                    ameaças, bullying e agressões.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🚨</div>
+                <h3>Comunicar Problemas</h3>
+                <p>
+                    Ao perceber uma situação perigosa ou um problema,
+                    procure um professor ou funcionário da escola.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="respeito">
+        <h2>🤝 Respeito e Boa Convivência</h2>
+
+        <div class="aviso">
+            <strong>Uma escola segura é responsabilidade de todos!</strong>
+            <br><br>
+
+            Não roubar, não destruir objetos, não agredir colegas,
+            respeitar professores e cuidar dos espaços da escola são
+            atitudes importantes para uma boa convivência.
+        </div>
+    </section>
+
+    <section id="cuidados">
+        <h2>🌱 Atitudes Importantes</h2>
+
+        <div class="lista">
+            <ul>
+                <li>💧 Beber água limpa e manter os bebedouros organizados.</li>
+                <li>🧼 Lavar as mãos e manter a higiene pessoal.</li>
+                <li>🚫 Não pegar objetos que pertencem aos colegas.</li>
+                <li>🤝 Respeitar alunos, professores e funcionários.</li>
+                <li>🚯 Não jogar lixo no chão.</li>
+                <li>🏫 Cuidar das salas, banheiros e demais espaços.</li>
+                <li>🚨 Avisar um adulto sobre situações perigosas.</li>
+                <li>❤️ Ajudar a construir um ambiente seguro e saudável.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>🏫 Saúde e Segurança na Escola</p>
+        <p>Projeto escolar - 2026</p>
+    </footer>
+
+</body>
+</html>
+```
